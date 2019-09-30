@@ -57,7 +57,7 @@
                             <asp:TextBox ID="txtUPassword" Text='<%# Eval("user_password") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Right1">
+                    <asp:TemplateField HeaderText="Admin">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("Admin") %>' runat="server" />
                         </ItemTemplate>
@@ -65,7 +65,7 @@
                             <asp:TextBox ID="txtRights1" Text='<%# Eval("Admin") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Right2">
+                    <asp:TemplateField HeaderText="Editor">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("Editor") %>' runat="server" />
                         </ItemTemplate>
@@ -73,7 +73,7 @@
                             <asp:TextBox ID="txtRights2" Text='<%# Eval("Editor") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Right3">
+                    <asp:TemplateField HeaderText="Worker">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("Worker") %>' runat="server" />
                         </ItemTemplate>
@@ -81,7 +81,7 @@
                             <asp:TextBox ID="txtRights3" Text='<%# Eval("Worker") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Right4">
+                    <asp:TemplateField HeaderText="Extra">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("Extra") %>' runat="server" />
                         </ItemTemplate>

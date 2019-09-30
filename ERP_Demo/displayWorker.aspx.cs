@@ -29,7 +29,6 @@ namespace ERP_Demo
                     " STUFF((SELECT ', ' + WR.rights FROM worker_rights WR WHERE WR.worker_id = WM.worker_id " +
                     "FOR XML PATH('')), 1, 1, '') [rights] FROM worker_master WM GROUP BY WM.id, WM.worker_id," +
                     " WM.worker_name, WM.user_id, WM.user_password ORDER BY 1;";*/
-                //string stuffQuery = "SELECT WM.id, WM.worker_name, WR.rights, WM.user_id, WM.user_password, WM.worker_id FROM worker_master WM LEFT JOIN worker_rights WR ON WR.worker_id = WM.worker_id ORDER BY 1, 2 FOR XML PATH('')";
                 string stuffQuery = "SELECT * FROM worker_master;";
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(stuffQuery, sqlCon);

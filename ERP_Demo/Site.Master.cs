@@ -14,7 +14,7 @@ namespace ERP_Demo
 
             if (!IsPostBack)
             {
-                if (Session["role"] != null)
+                /*if (Session["role"] != null)
                 {
                     Message.Text += Session["username"].ToString();
                     if (Session["roleWorker"].ToString().Trim() == "YES" && Session["roleAdmin"].ToString().Trim() != "YES"
@@ -31,7 +31,7 @@ namespace ERP_Demo
                 else
                 {
                     Response.Redirect("Login.aspx");
-                }
+                }*/
             }
         }
 
