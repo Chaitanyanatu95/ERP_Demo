@@ -59,34 +59,34 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Right1">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("right1") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Admin") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights1" Text='<%# Eval("right1") %>' runat="server" />
+                            <asp:TextBox ID="txtRights1" Text='<%# Eval("Admin") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Right2">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("right2") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Editor") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights2" Text='<%# Eval("right2") %>' runat="server" />
+                            <asp:TextBox ID="txtRights2" Text='<%# Eval("Editor") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Right3">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("right3") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Worker") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights3" Text='<%# Eval("right3") %>' runat="server" />
+                            <asp:TextBox ID="txtRights3" Text='<%# Eval("Worker") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Right4">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("right4") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Extra") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights4" Text='<%# Eval("right4") %>' runat="server" />
+                            <asp:TextBox ID="txtRights4" Text='<%# Eval("Extra") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>

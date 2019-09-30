@@ -58,38 +58,38 @@ namespace ERP_Demo
 
                 if (Application["editFlag"] is true)
                 {
-                    string updateData = "UPDATE worker_master SET right1='NO',right2='NO',right3='NO',right4='NO' WHERE id='" + Application["workerId"] + "'";
-                    SqlCommand comdUpdate= new SqlCommand(updateData, con);
+                    string updateData = "UPDATE worker_master SET Admin='NO',Editor='NO',Worker='NO',Extra='NO' WHERE id='" + Application["workerId"] + "'";
+                    SqlCommand comdUpdate = new SqlCommand(updateData, con);
                     comdUpdate.ExecuteNonQuery();
 
                     foreach (ListItem li in rightsToBeAllocatedCheckBoxList.Items)
                     {
                         if (li.Selected)
                         {
-                            if (li.Value.ToString() == "right1")
+                            if (li.Value.ToString() == "Admin")
                             {
-                                string query1 = "UPDATE worker_master SET right1 = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                                string query1 = "UPDATE worker_master SET Admin = 'YES' WHERE id = '" + Application["workerId"] + "'";
                                 SqlCommand comd1 = new SqlCommand(query1.ToString(), con);
                                 comd1.ExecuteNonQuery();
                             }
 
-                            if (li.Text.Trim() == "right2")
+                            if (li.Text.Trim() == "Editor")
                             {
-                                string query2 = "UPDATE worker_master SET right2 = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                                string query2 = "UPDATE worker_master SET Editor = 'YES' WHERE id = '" + Application["workerId"] + "'";
                                 SqlCommand comd2 = new SqlCommand(query2.ToString(), con);
                                 comd2.ExecuteNonQuery();
                             }
 
-                            if (li.Text.Trim() == "right3")
+                            if (li.Text.Trim() == "Worker")
                             {
-                                string query3 = "UPDATE worker_master SET right3 = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                                string query3 = "UPDATE worker_master SET Worker = 'YES' WHERE id = '" + Application["workerId"] + "'";
                                 SqlCommand comd3 = new SqlCommand(query3.ToString(), con);
                                 comd3.ExecuteNonQuery();
                             }
 
-                            if (li.Text.Trim() == "right4")
+                            if (li.Text.Trim() == "Extra")
                             {
-                                string query4 = "UPDATE worker_master SET right4 = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                                string query4 = "UPDATE worker_master SET Extra = 'YES' WHERE id = '" + Application["workerId"] + "'";
                                 SqlCommand comd4 = new SqlCommand(query4.ToString(), con);
                                 comd4.ExecuteNonQuery();
                             }
@@ -104,42 +104,42 @@ namespace ERP_Demo
                 else
                 {
                     //INSERT INTO WORKER MASTER
-                    string right1 = string.Empty;
-                    string right2 = string.Empty;
-                    string right3 = string.Empty;
-                    string right4 = string.Empty;
+                    string Admin = string.Empty;
+                    string Editor = string.Empty;
+                    string Worker = string.Empty;
+                    string Extra = string.Empty;
                     foreach (ListItem li in rightsToBeAllocatedCheckBoxList.Items)
                     {
                         if (li.Selected)
                         {
-                            if (li.Text.Trim() == "right1")
+                            if (li.Text.Trim() == "Admin")
                             {
-                                right1 = "YES";
+                                Admin = "YES";
                             }
 
-                            if (li.Text.Trim() == "right2")
+                            if (li.Text.Trim() == "Editor")
                             {
-                                right2 = "YES";
+                                Editor = "YES";
                             }
 
-                            if (li.Text.Trim() == "right3")
+                            if (li.Text.Trim() == "Worker")
                             {
-                                right3 = "YES";
+                                Worker = "YES";
                             }
 
-                            if (li.Text.Trim() == "right4")
+                            if (li.Text.Trim() == "Extra")
                             {
-                                right4 = "YES";
+                                Extra = "YES";
                             }
                         }
                     }
 
-                    if (right1.ToString() != "YES") { right1 = "NO"; }
-                    if (right2.ToString() != "YES") { right2 = "NO"; }
-                    if (right3.ToString() != "YES") { right3 = "NO"; }
-                    if (right4.ToString() != "YES") { right4 = "NO"; }
+                    if (Admin.ToString() != "YES") { Admin = "NO"; }
+                    if (Editor.ToString() != "YES") { Editor = "NO"; }
+                    if (Worker.ToString() != "YES") { Worker = "NO"; }
+                    if (Extra.ToString() != "YES") { Extra = "NO"; }
 
-                    string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,right1,right2,right3,right4)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + right1.ToString() + "','" + right2.ToString() + "','" + right3.ToString() + "','" + right4.ToString() + "')";
+                    string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Admin,Editor,Worker,Extra)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + Admin.ToString() + "','" + Editor.ToString() + "','" + Worker.ToString() + "','" + Extra.ToString() + "')";
                     Application["query"] = query;
                     SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
                     cmd.ExecuteNonQuery();
