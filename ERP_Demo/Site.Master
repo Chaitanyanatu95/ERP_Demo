@@ -1,0 +1,84 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ERP_Demo.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <link href="~/Content/Menu1.css" rel="stylesheet" runat="server" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body runat="server">
+    <form runat="server">
+        <!--<asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>-->
+    <header id="header">
+                   <img src="~/Images/logoc.png" alt="Plastic Injection Molding" width="60" height="60" runat="server" style="padding-bottom:9px;">
+                    <h1 style="text-align:center; display:inline-block; font-family:'Raleway-Regular'; font-size:40px;">PLASTIC INJECTION MOLDING
+                    </h1>
+                    <asp:label id="Message" Text="Welcome: " style="font-size:15px; padding-left:250px;" runat="server"/>
+                    <asp:Menu ID="Menu1" runat="server" OnMenuItemClick="Menu1_MenuItemClick" CssClass="MYMenuClass" Orientation="Horizontal">
+                        <Items>
+                            <asp:MenuItem Text="Home" Value="Home" NavigateUrl="/Default.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Masters" Value="Masters">
+                                <asp:MenuItem Text="Product Category" Value="Product Category" NavigateUrl="/displayFamily.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="UOM" Value="UOM" NavigateUrl="/displayUnitOfMeasurement.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Raw Material" Value="Raw Material" NavigateUrl="/displayRawMaterial.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Masterbatch" Value="Masterbatch" NavigateUrl="/displayMasterBatch.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Post Operation" Value="Post Operation"  NavigateUrl="/displayPostOperation.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Packaging" Value="Packaging"  NavigateUrl="/displayPackaging.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Rejection" Value="Rejection"  NavigateUrl="/displayRejection.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Shift" Value="Shift" NavigateUrl="/displayShift.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Machine" Value="Machine"  NavigateUrl="/displayMachine.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Down Time Code" Value="Down Time Code"  NavigateUrl="/displayDownTimeCode.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Customer" Value="Customer" NavigateUrl="/displayCustomer.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Worker" Value="Worker" NavigateUrl="/displayWorker.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Vendor" Value="Vendor" NavigateUrl="/displayVendor.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Parts" Value="Parts" NavigateUrl="/displayParts.aspx"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Transaction" Value="Transaction">
+                                <asp:MenuItem Text="DPR" NavigateUrl="/DPR-Operator.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="FPA" NavigateUrl="/Fpa.aspx"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Reports" Value="Reports" NavigateUrl="/reports.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="LogOut" Value="LogOut"></asp:MenuItem>
+                        </Items>
+                    </asp:Menu>
+                </header>
+        
+    <div id="page-container">
+   <div id="content-wrap">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+   </div>
+   <footer id="footer">
+       <b>Copyright © 2019 PB Plastics - All Rights Reserved</b>
+   </footer>
+ </div>
+
+
+    </form>
+
+</body>
+</html>

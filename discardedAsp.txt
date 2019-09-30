@@ -1,0 +1,81 @@
+<tr> <td></td> <td>           <asp:Label Text='<%# Eval("mold_name") %>' runat="server" /></td></tr>
+               <tr> <td></td> <td>           <asp:Label Text='<%# Eval("mold_mfg_year") %>' runat="server" /></td></tr>
+
+               <tr> <td></td> <td>           <asp:Label Text='<%# Eval("mold_life") %>' runat="server" /></td></tr>
+
+                <tr><td></td>  <td>          <asp:Label Text='<%# Eval("no_of_cavities") %>' runat="server" /></td></tr>
+
+                 <tr><td></td> <td>          <asp:Label Text='<%# Eval("unit_of_measurement") %>' runat="server" /></td></tr>
+
+                 <tr> <td></td> <td>         <asp:Label Text='<%# Eval("part_weight") %>' runat="server" /></td></tr>
+
+                  <tr> <td></td>  <td>       <asp:Label Text='<%# Eval("shot_weight") %>' runat="server" /></td></tr>
+                            
+                   <tr> <td></td>  <td>      <asp:Label Text='<%# Eval("cycle_time") %>' runat="server" /></td></tr>
+                            
+                    <tr><td></td>   <td>     <asp:Label Text='<%# Eval("jig_fix_req") %>' runat="server" /></tr>
+                    <tr><td></td>  <td>     <asp:Label Text='<%# Eval("production_in_pcs") %>' runat="server" /></td></tr>
+                            
+                     <tr><td></td><td>       <asp:Label Text='<%# Eval("mould_spec_sheet") %>' runat="server" />
+
+
+
+if (isMasterBatch == "YES")
+            {
+                $("table.tableRawMaterial tr:#rowMasterbatchName").show();
+                $("table.tableRawMaterial tr:#rowMasterbatchGrade").show();
+                $("table.tableRawMaterial tr:#rowMasterbatchMfg").show();
+                $("table.tableRawMaterial tr:#rowMasterbatchColor").show();
+                $("table.tableRawMaterial tr:#rowMasterbatchColorCode").show();
+            }
+            else
+            {
+                $("table.tableRawMaterial tr:#rowMasterbatchName").hide();
+                $("table.tableRawMaterial tr:#rowMasterbatchGrade").hide();
+                $("table.tableRawMaterial tr:#rowMasterbatchMfg").hide();
+                $("table.tableRawMaterial tr:#rowMasterbatchColor").hide();
+                $("table.tableRawMaterial tr:#rowMasterbatchColorCode").hide();
+            }
+
+
+                     function onAltRawMaterial()
+        {
+            var isAltRawMaterial = $('#dataAltRawMaterial').text();
+                
+            if (isAltRawMaterial == "YES")
+            {
+                $("#rowAltRawMaterialName").show();
+                $("#rowAltRawMaterialGrade").show();
+                $("#rowAltRawMaterialMake").show();
+                $("#rowAltRawMaterialColor").show();
+            }
+            else
+            {
+                $("#rowAltRawMaterialName").hide();
+                $("#rowAltRawMaterialGrade").hide();
+                $("#rowAltRawMaterialMake").hide();
+                $("#rowAltRawMaterialColor").hide();
+            }
+        }
+
+        function onAltRMMasterBatch()
+        {
+            var isAltRMMasterBatch = $('#dataAltMasterbatch').text();
+                
+            if (isAltRMMasterBatch == "YES")
+            {
+                $("#rowAltMasterbatchName").show();
+                $("#rowAltMasterbatchGrade").show();
+                $("#rowAltMasterbatchMfg").show();
+                $("#rowAltMasterbatchColor").show();
+                $("#rowAltMasterbatchColorCode").show();
+            }
+            else
+            {
+                $("#rowAltMasterbatchName").hide();
+                $("#rowAltMasterbatchGrade").hide();
+                $("#rowAltMasterbatchMfg").hide();
+                $("#rowAltMasterbatchColor").hide();
+                $("#rowAltMasterbatchColorCode").hide();
+            }
+        }
