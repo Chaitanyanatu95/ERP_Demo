@@ -26,16 +26,17 @@ namespace ERP_Demo
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
+                    Session["roleAdmin"] = Session["roleEditor"] = Session["roleWorker"] = Session["roleExtra"] = string.Empty;
                     Session["username"] = reader["worker_name"].ToString();
                     //System.Diagnostics.Debug.WriteLine(reader["rights"].ToString());
-                    if (reader["right1"].ToString() == "YES")
-                        Session["roleAdmin"] = reader["right1"].ToString();
-                    if (reader["right2"].ToString() == "YES")
-                        Session["roleEditor"] = reader["right2"].ToString();
-                    if (reader["right3"].ToString() == "YES")
-                        Session["roleWorker"] = reader["right3"].ToString();
-                    if (reader["right4"].ToString() == "YES")
-                        Session["roleExtra"] = reader["right4"].ToString();
+                    if (reader["Admin"].ToString() == "YES")
+                        Session["roleAdmin"] = reader["Admin"].ToString();
+                    if (reader["Editor"].ToString() == "YES")
+                        Session["roleEditor"] = reader["Editor"].ToString();
+                    if (reader["Worker"].ToString() == "YES")
+                        Session["roleWorker"] = reader["Worker"].ToString();
+                    if (reader["Extra"].ToString() == "YES")
+                        Session["roleExtra"] = reader["Extra"].ToString();
                     Response.Redirect("~/Default.aspx/");
                 }
                 else

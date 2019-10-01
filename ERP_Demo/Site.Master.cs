@@ -14,24 +14,24 @@ namespace ERP_Demo
 
             if (!IsPostBack)
             {
-                /*if (Session["role"] != null)
+                if (Session["roleAdmin"] != null || Session["roleEditor"] != null || Session["roleWorker"] != null || Session["roleExtra"] != null)
                 {
-                    Message.Text += Session["username"].ToString();
+                    Message.Text = "WELCOME:" + Session["username"].ToString();
                     if (Session["roleWorker"].ToString().Trim() == "YES" && Session["roleAdmin"].ToString().Trim() != "YES"
-                        && Session["roleEditor"].ToString().Trim() != "YES")
+                        && Session["roleEditor"].ToString().Trim() != "YES" && Session["roleExtra"].ToString().Trim() != "YES")
                     {
                         Menu1.Items.Remove(Menu1.FindItem("Reports"));
                         Menu1.Items.Remove(Menu1.FindItem("Masters"));
                     }
-                    else if(Session["roleEditor"].ToString().Trim() == "YES" && Session["roleAdmin"].ToString().Trim() != "YES" && Session["roleWorker"].ToString().Trim() != "YES")
+                    else if (Session["roleEditor"].ToString().Trim() == "YES" && Session["roleAdmin"].ToString().Trim() != "YES" && Session["roleWorker"].ToString().Trim() != "YES" && Session["roleExtra"].ToString().Trim() != "YES")
                     {
                         Menu1.Items.Remove(Menu1.FindItem("Masters"));
                     }
                 }
                 else
                 {
-                    Response.Redirect("Login.aspx");
-                }*/
+                    Response.Redirect("~/Login.aspx");
+                }
             }
         }
 
@@ -44,10 +44,12 @@ namespace ERP_Demo
         {
             if(e.Item.Text == "LogOut")
             {
-                Response.Write("You Clicked"+ e.Item.Text);
                 Session["username"] = null;
-                Session["role"] = null;
-                Response.Redirect("/Login.aspx");
+                Session["roleAdmin"] = null;
+                Session["roleWorker"] = null;
+                Session["roleEditor"] = null;
+                Session["roleExtra"] = null;
+                Response.Redirect("~/Login.aspx");
             }
         }
     }
