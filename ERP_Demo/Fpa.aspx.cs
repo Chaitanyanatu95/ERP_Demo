@@ -21,26 +21,28 @@ namespace ERP_Demo
 
         protected void BindControlsOnPageLoad()
         {
-            /*if(Session["username"] is null)
+            if (Session["username"] is null)
             {
                 Response.Redirect("~/Login.aspx/");
             }
             else
             {
+                productionTagLabel.Visible = false;
+                productionTagDropDownList.Visible = false;
                 operatorNameTextBox.Text = Session["username"].ToString();
-            }*/
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT part_name FROM parts_master", con))
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                using (con)
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    partNameDropDownList.DataSource = reader;
-                    partNameDropDownList.DataBind();
-                    reader.Close();
-                    partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
-                    operationTypeList.Items.Insert(0, new ListItem("Select Operation", ""));
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM production", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        partNameDropDownList.DataSource = reader;
+                        partNameDropDownList.DataBind();
+                        reader.Close();
+                        partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
+                        operationTypeList.Items.Insert(0, new ListItem("Select Operation", ""));
+                    }
                 }
             }
         }
@@ -50,10 +52,14 @@ namespace ERP_Demo
             if (partNameDropDownList.SelectedItem.Text == "Select Part Name")
             {
                 Application["fpaPartName"] = null;
+                productionTagLabel.Visible = false;
+                productionTagDropDownList.Visible = false;
             }
             else
             {
                 Application["fpaPartName"] = partNameDropDownList.SelectedItem.Text;
+                productionTagLabel.Visible = true;
+                productionTagDropDownList.Visible = true;
                 LoadProductTagDetailsValues();
             }
         }
@@ -181,7 +187,7 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO fpa(worker_name,part_name,date,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,wip_qty,rej_code,prod_tag_details)VALUES('" + operatorNameTextBox.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateTextBox.Text + "','" + operationTypeList.SelectedItem.Text + "','" + totalQtyTextBox.Text + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + acceptedQtyTextBox.Text + "','" + rejectionQtyTextBox.Text + "','" + wipQtyTextBox.Text + "','" + rejectionCodeList.SelectedItem.Text + "','" + productionTagDropDownList.SelectedItem.Text + "')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO fpa(worker_name,part_name,date,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,wip_qty,rej_code,prod_tag_details)VALUES('" + operatorNameTextBox.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + datePickerTextBox.Value + "','" + operationTypeList.SelectedItem.Text + "','" + totalQtyTextBox.Text + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + rejectionQtyTextBox.Text + "','" + wipQtyTextBox.Text + "','" + rejectionCodeList.SelectedItem.Text + "','" + productionTagDropDownList.SelectedItem.Text + "')", con);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";

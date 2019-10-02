@@ -1,54 +1,49 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Fpa.aspx.cs" Inherits="ERP_Demo.Fpa" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<!DOCTYPE html>
 <html>
 <head>
-    <style>
-        textarea {
-            resize: none;
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+        function onProductionTagDetailsSelected() {
+            var isProductTagDetails = $('#<%=productionTagDropDownList.ClientID %> option:selected').text();
+
+            if (isProductTagDetails == "YES") {
+                $("#<%=prodTagDetailsGrid.ClientID %>").show();
+            }
+            else {
+                $("#<%=prodTagDetailsGrid.ClientID %>").hide();
+            }
         }
+
+        $( function() {
+            $("#<%=datePickerTextBox.ClientID %>").datepicker({ showAnim: "fold" , dateFormat: "dd-mm-yy", currentText: "Now"});
+        } );
+    </script>
+    <style>
         table{
-            margin-left:100px;
-            height:100%;
-            width:100%;
+            padding-top:15px;
         }
     </style>
-    <title>pbplastics | fpa</title>
-    <script type="text/javascript">
-        function Warning() {
-                confirm("Are you sure?");
-            }
-        function changeColor() {
-            document.getElementById("selectPartNameCell").textContent.changeColor = "green";
-        }
-            window.onload = function () {
-                    onProductionTagDetailsSelected();                 
-        }
-        function onProductionTagDetailsSelected() {
-                var isProductTagDetails = $('#<%=productionTagDropDownList.ClientID %> option:selected').text();
-                
-                if (isProductTagDetails == "YES") {
-                    $("#<%=prodTagDetailsGrid.ClientID %>").show();
-                }
-                else{
-                    $("#<%=prodTagDetailsGrid.ClientID %>").hide();
-                }
-            }
-    </script>
+    <title>pb plastics | fpa</title>
 </head>
 <body>
      <div id="page">
-    <table>
+    <table runat="server" class="tableClass" style="width:80%; height:70%">
         <tr>
-            <td><asp:Label ID="lblOperatorName" runat="server">Operator Name</asp:Label></td>
+            <th runat="server" style="background-color:skyblue;text-align:center" colspan="4"><h3>FPA Worker</h3></th>
+        </tr>
+        <tr>
+            <td><asp:Label ID="lblOperatorName" runat="server" style="font-weight:700; color:black">Operator Name</asp:Label></td>
             <td><asp:Label ID="lblPartName" runat="server">Part Name</asp:Label></td>
-            <td><asp:Label ID="lblDate" runat="server">Date</asp:Label></td>
+            <td><asp:Label ID="lblDate" runat="server"/>Date</td>
             <td><asp:Label ID="lblOperationType" runat="server">Operation Type</asp:Label></td>
        </tr>
         <tr>
             <td><asp:TextBox ID="operatorNameTextBox" runat="server" ReadOnly="true"></asp:TextBox></td>
-            <td><asp:DropDownList ID="partNameDropDownList" DataValueField="part_name" DataTextField="part_name" onselectedindexchanged="partNameChanged" onclick="changeColor()" runat="server" AutoPostBack="true"></asp:DropDownList></td>
-            <td><asp:TextBox ID="dateTextBox" runat="server"></asp:TextBox></td>
+            <td><asp:DropDownList ID="partNameDropDownList" DataValueField="part_name" DataTextField="part_name" onselectedindexchanged="partNameChanged" runat="server" AutoPostBack="true"></asp:DropDownList></td>
+            <td><input type="text" ID="datePickerTextBox" runat="server"/></td>
             <td>
                 <asp:DropDownList ID="operationTypeList" runat="server">
                     <asp:ListItem Text="Finishing"></asp:ListItem>
@@ -61,13 +56,13 @@
             <td><asp:Label ID="lblTotalQty" runat="server">Total Quantity</asp:Label></td>
             <td><asp:Label ID="lblnoofparts" runat="server">No.of.parts<br/>per hr</asp:Label></td>
             <td><asp:Label ID="lblTotalTime" runat="server">Total Time</asp:Label></td>
-            <td><asp:Label ID="lblAcceptedQty" runat="server">Accepted Quantity</asp:Label></td>
+            <td><asp:Label ID="lblAcceptedQty" runat="server">Actual Quantity</asp:Label></td>
        </tr>
         <tr>
             <td><asp:TextBox ID="totalQtyTextBox" runat="server" Width="50px"></asp:TextBox></td>
             <td><asp:TextBox ID="noOfPartsTextBox" runat="server" Width="57px" ></asp:TextBox></td>
             <td><asp:TextBox ID="timeTextBox" runat="server" Width="50px"></asp:TextBox></td>
-            <td><asp:TextBox ID="acceptedQtyTextBox" runat="server" Width="50px"></asp:TextBox></td>
+            <td><asp:TextBox ID="actualQtyTextBox" runat="server" Width="50px"></asp:TextBox></td>
         </tr>
         <tr>
             <td><asp:Label ID="lblRejectionQty" runat="server">Rejection Quantity</asp:Label></td>
@@ -79,24 +74,21 @@
             <td><asp:TextBox ID="rejectionQtyTextBox" runat="server" Width="50px" AutoPostBack="True" OnTextChanged="rejectionQtyTextBox_TextChanged"></asp:TextBox></td>
             <td><asp:TextBox ID="wipQtyTextBox" runat="server" Width="50px" ReadOnly="true"></asp:TextBox></td>
             <td>
-                <!-- Calculate efficiency while generating report on admin side-->
                 <asp:DropDownList ID="rejectionCodeList" runat="server">
                     <asp:ListItem Text="Select DropDown Value" Value="-1"></asp:ListItem>
                     <asp:ListItem Text="1"></asp:ListItem>
                     <asp:ListItem Text="2"></asp:ListItem>
                     <asp:ListItem Text="3"></asp:ListItem>
                 </asp:DropDownList></td>
-            <td></tr>
-        <tr>
-            <td><asp:Label ID="lblProductionTag" runat="server">Production Tag</asp:Label></td>
+            </tr>
+            <tr>
+                <td><asp:Label ID="lblProductionTag" runat="server">Production Tag</asp:Label></td>
             </tr>
         </table>
-        <asp:Table runat="server" CssClass="Table1" Width="20%">
+
+        <asp:Table runat="server" CssClass="tableClass" Width="20%">
         <asp:TableRow runat="server" HorizontalAlign="Center">
-            <asp:TableCell ID="selectPartNameCell" runat="server" ColumnSpan="2" ForeColor="#0099ff" Font-Bold="true"><u>Note:- Please Select Part Name First</u></asp:TableCell>
-           </asp:TableRow>
-        <asp:TableRow runat="server" HorizontalAlign="Center">
-            <asp:TableCell runat="server" HorizontalAlign="Center">PRODUCTION TAG (REQ)</asp:TableCell>
+            <asp:TableCell ID="productionTagLabel" runat="server" HorizontalAlign="Center">PRODUCTION TAG (REQ)</asp:TableCell>
             <asp:TableCell runat="server" ColumnSpan="3"><asp:DropDownList ID="productionTagDropDownList" runat="server" onchange="onProductionTagDetailsSelected()">
                     <asp:ListItem Value="NO">NO</asp:ListItem>
                     <asp:ListItem Value="YES">YES</asp:ListItem>

@@ -43,48 +43,52 @@ namespace ERP_Demo
 
         protected void LoadValuesInControlls()
         {
-            /*if (Session["username"] is null)
+            if (Session["username"] is null)
             {
                 Response.Redirect("~/Login.aspx/");
-            }*/
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            }
+            else
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT part_name FROM parts_master", con))
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                using (con)
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    partNameDropDownList.DataSource = reader;
-                    partNameDropDownList.DataBind();
-                    reader.Close();
-                    partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
-                }
+                    workerName.Text = Session["username"].ToString();
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM parts_master", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        partNameDropDownList.DataSource = reader;
+                        partNameDropDownList.DataBind();
+                        reader.Close();
+                        partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
+                    }
 
-                using (SqlCommand cmd = new SqlCommand("SELECT shift_time FROM shift_master", con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    shiftDetailsDropDownList.DataSource = reader;
-                    shiftDetailsDropDownList.DataBind();
-                    reader.Close();
-                    shiftDetailsDropDownList.Items.Insert(0, new ListItem("Select Shift Details", ""));
-                }
+                    using (SqlCommand cmd = new SqlCommand("SELECT shift_time FROM shift_master", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        shiftDetailsDropDownList.DataSource = reader;
+                        shiftDetailsDropDownList.DataBind();
+                        reader.Close();
+                        shiftDetailsDropDownList.Items.Insert(0, new ListItem("Select Shift Details", ""));
+                    }
 
-                using (SqlCommand cmd = new SqlCommand("SELECT machine_no FROM machine_master", con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    machineUsedDropDownList.DataSource = reader;
-                    machineUsedDropDownList.DataBind();
-                    reader.Close();
-                    machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
-                }
+                    using (SqlCommand cmd = new SqlCommand("SELECT machine_no FROM machine_master", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        machineUsedDropDownList.DataSource = reader;
+                        machineUsedDropDownList.DataBind();
+                        reader.Close();
+                        machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
+                    }
 
-                using (SqlCommand cmd = new SqlCommand("SELECT down_time_code FROM down_time_master", con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    downTimeCodeDropDownList.DataSource = reader;
-                    downTimeCodeDropDownList.DataBind();
-                    reader.Close();
-                    downTimeCodeDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
+                    using (SqlCommand cmd = new SqlCommand("SELECT down_time_code FROM down_time_master", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        downTimeCodeDropDownList.DataSource = reader;
+                        downTimeCodeDropDownList.DataBind();
+                        reader.Close();
+                        downTimeCodeDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
+                    }
                 }
             }
         }
@@ -152,64 +156,16 @@ namespace ERP_Demo
             }
         }
 
-        /*protected void materialGradeChanged(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
-            {
-                con.Open();
-                using (SqlCommand cmd2 = new SqlCommand("SELECT material_qty FROM raw_material_master where material_grade = '" + materialGradeDropDownList.SelectedItem.Value + "'", con))
-                {
-                    SqlDataReader reader = cmd2.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Application["oldQuantity"] = int.Parse(reader["material_qty"].ToString());
-                        materialQtyLabel.Text = "Quantity Available In Stock:- " + Application["oldQuantity"].ToString();
-                    }
-                    reader.Close();
-                }
-            }
-        }*/
-
-        /*protected void materialQtyTextBox_changed(object sender, EventArgs e)
-        {
-            Application["newQty"] = int.Parse(materialQtyTextBox.Text);
-            if (int.Parse(Application["oldQuantity"].ToString()) < 200)
-            {
-                lblErrorMessage.Text = "STOCK QTY = " + Application["oldQuantity"].ToString() + "(STOCK QTY BELOW THRESHOLD.(200))";
-                materialQtyTextBox.Text = "";
-                lblSuccessMessage.Text = "";
-                materialQtyTextBox.ReadOnly = true;
-            }
-            else if (int.Parse(Application["newQty"].ToString()) > int.Parse(Application["oldQuantity"].ToString()))
-            {
-                lblErrorMessage.Text = "Quantity entered more than the stock quantity..! please enter again!";
-                materialQtyTextBox.Text = "";
-                lblSuccessMessage.Text = "";
-            }
-            else if((int.Parse(Application["oldQuantity"].ToString()) - int.Parse(Application["newQty"].ToString())) < 200)
-            {
-                lblErrorMessage.Text = "Quantity entered will make stock quantity get below threshold..! please enter again!";
-                materialQtyTextBox.Text = "";
-                lblSuccessMessage.Text = "";
-            }
-            else
-            {
-                lblErrorMessage.Text = "";
-                lblSuccessMessage.Text = "Accepted Value";
-            }
-        }*/
-
         protected void calculateExpectedQuantity()
         {
             expQuantityTextBox.Text = Convert.ToString((3600 / Convert.ToInt32(Application["cycleTime"])) * (Convert.ToInt32(Application["noOfCavities"]) * Convert.ToInt32(Application["shiftTime"]) * 0.9));
-            System.Diagnostics.Debug.WriteLine(expQuantityTextBox.Text, "Exp. Qty");
+            //System.Diagnostics.Debug.WriteLine(expQuantityTextBox.Text, "Exp. Qty");
         }
 
         protected void calculateActualQuantity()
         {
             actQuantityTextBox.Text = Convert.ToString(((int.Parse(noShotsTextBox.Text) * Convert.ToInt32(Application["noOfCavities"])) - int.Parse(rejectionPCSTextBox.Text)));
-            System.Diagnostics.Debug.WriteLine(actQuantityTextBox.Text, "Act. Qty");
+            //System.Diagnostics.Debug.WriteLine(actQuantityTextBox.Text, "Act. Qty");
         }
 
         protected void calculateEfficiency()
@@ -227,7 +183,7 @@ namespace ERP_Demo
         {
             try
             {
-                if (Application["cycleTime"].ToString() == "" || Application["noOfCavities"].ToString() == "")
+                if (Application["noOfCavities"].ToString() == "" || Application["cycleTime"].ToString() == "" || noShotsTextBox.Text == "" || actQuantityTextBox.Text == "" || machineUsedDropDownList.SelectedItem.Text == "")
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
                 }
@@ -235,7 +191,7 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelection.Value + "')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "')", con);
                     cmd.ExecuteNonQuery();
 
                     /*if (materialQtyTextBox.Text != null)
@@ -255,6 +211,28 @@ namespace ERP_Demo
             {
                 lblSuccessMessage.Text = "";
                 lblErrorMessage.Text = ex.Message;
+            }
+        }
+
+        protected void noShotsEndTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (int.Parse(noShotsStartTextBox.Text.ToString().Trim()) > int.Parse(noShotsEndTextBox.Text.ToString().Trim()) || int.Parse(noShotsEndTextBox.Text.ToString().Trim()) == '0' || int.Parse(noShotsStartTextBox.Text.ToString().Trim()) == '0')
+                {
+                    noShotsEndTextBox.Text = string.Empty;
+                    noShotsTextBox.Text = string.Empty;
+                    validationShots.Text = "Value cannot be 0 or less starting value of shots";
+                }
+                else
+                {
+                    noShotsTextBox.Text = (int.Parse(noShotsEndTextBox.Text.ToString().Trim()) - int.Parse(noShotsStartTextBox.Text.ToString().Trim())).ToString();
+                    validationShots.Text = string.Empty;
+                }
+            }
+            catch(Exception ne)
+            {
+              ne.Message.ToString();
             }
         }
     }

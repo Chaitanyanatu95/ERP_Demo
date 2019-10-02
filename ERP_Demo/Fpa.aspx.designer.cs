@@ -67,13 +67,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
         
         /// <summary>
-        /// dateTextBox control.
+        /// datePickerTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dateTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText datePickerTextBox;
         
         /// <summary>
         /// operationTypeList control.
@@ -148,13 +148,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox timeTextBox;
         
         /// <summary>
-        /// acceptedQtyTextBox control.
+        /// actualQtyTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox acceptedQtyTextBox;
+        protected global::System.Web.UI.WebControls.TextBox actualQtyTextBox;
         
         /// <summary>
         /// lblRejectionQty control.
@@ -220,13 +220,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblProductionTag;
         
         /// <summary>
-        /// selectPartNameCell control.
+        /// productionTagLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell selectPartNameCell;
+        protected global::System.Web.UI.WebControls.TableCell productionTagLabel;
         
         /// <summary>
         /// productionTagDropDownList control.

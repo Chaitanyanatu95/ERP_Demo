@@ -22,6 +22,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
+        /// workerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label workerName;
+        
+        /// <summary>
         /// Date control.
         /// </summary>
         /// <remarks>
@@ -31,22 +40,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label Date;
         
         /// <summary>
-        /// dateSelection control.
+        /// dateSelectionTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection;
-        
-        /// <summary>
-        /// materialQtyLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label materialQtyLabel;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText dateSelectionTextBox;
         
         /// <summary>
         /// partNameDropDownList control.
@@ -119,6 +119,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox noShotsTextBox;
+        
+        /// <summary>
+        /// validationShots control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label validationShots;
         
         /// <summary>
         /// rejectionPCSTextBox control.

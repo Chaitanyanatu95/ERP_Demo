@@ -1,14 +1,22 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPR-Operator.aspx.cs" Inherits="ERP_Demo.Dpr" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Table ID="Table1" runat="server" CssClass="tableClass" Width="84%" Height="60%" style="padding-top:80px;">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+         $( function() {
+             $("#<%=dateSelectionTextBox.ClientID %>").datepicker({ showAnim: "fold", dateFormat: "dd-mm-yy"});
+        } );
+    </script>
+    <asp:Table ID="Table1" runat="server" CssClass="tableClass" Width="85%" Height="70%" style="padding-top:70px;">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" BackColor="SkyBlue">
             <asp:TableCell runat="server" ColumnSpan="6"><h3>DPR OPERATOR</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center">
+            <asp:TableCell runat="server" ColumnSpan="1"><br /><asp:Label ID="workerName" runat="server" style="font-weight:700; color:black"></asp:Label></asp:TableCell>
             <asp:TableCell runat="server" ColumnSpan="1"><asp:Label ID="Date" runat="server">Date</asp:Label><br />
-                <input type="Date" id="dateSelection" runat="server" /></asp:TableCell>
-            <asp:TableCell runat="server" ColumnSpan="1"><asp:Label ID="materialQtyLabel" Text="" runat="server" ForeColor="#3399ff"></asp:Label><br /></asp:TableCell>
+                <input type="text" id="dateSelectionTextBox" runat="server" /></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
             <asp:TableCell runat="server">Part Name</asp:TableCell>
@@ -47,10 +55,11 @@
                 <asp:TextBox ID="noShotsStartTextBox" runat="server"></asp:TextBox>
             </asp:TableCell>
              <asp:TableCell runat="server">
-                <asp:TextBox ID="noShotsEndTextBox" runat="server"></asp:TextBox>
+                <asp:TextBox ID="noShotsEndTextBox" runat="server" OnTextChanged="noShotsEndTextBox_TextChanged" AutoPostBack="true"></asp:TextBox><br />
             </asp:TableCell>
            <asp:TableCell runat="server">
-                <asp:TextBox ID="noShotsTextBox" runat="server"></asp:TextBox>
+                <asp:TextBox ID="noShotsTextBox" runat="server" ReadOnly="true" OnTextChanged="noShotsEndTextBox_TextChanged"></asp:TextBox>
+               <br /><asp:Label ID="validationShots" runat="server" CssClass="required"></asp:Label>
             </asp:TableCell>
             <asp:TableCell runat="server">
                 <asp:TextBox ID="rejectionPCSTextBox" runat="server" AutoPostBack="true"></asp:TextBox>
