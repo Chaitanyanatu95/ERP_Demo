@@ -25,7 +25,7 @@
                 <SortedDescendingCellStyle BackColor="#CAC9C9" />
                 <SortedDescendingHeaderStyle BackColor="#00547E" />        
                 <Columns>
-                    <asp:TemplateField HeaderText="Worker Name">
+                    <asp:TemplateField HeaderText="Employee Name">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("worker_name") %>' runat="server" />
                         </ItemTemplate>
@@ -33,7 +33,7 @@
                             <asp:TextBox ID="txtWName" Text='<%# Eval("worker_name") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Worker Id">
+                    <asp:TemplateField HeaderText="Employee Id">
                         <ItemTemplate>
                             <asp:Label ID="lblWId" Text='<%# Eval("worker_id") %>' runat="server" Width="200"/>
                         </ItemTemplate>
@@ -73,7 +73,7 @@
                             <asp:TextBox ID="txtRights2" Text='<%# Eval("Editor") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Worker Right">
+                    <asp:TemplateField HeaderText="Employee Right">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("Worker") %>' runat="server" />
                         </ItemTemplate>

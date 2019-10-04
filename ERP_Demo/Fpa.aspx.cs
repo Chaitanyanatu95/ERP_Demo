@@ -135,7 +135,7 @@ namespace ERP_Demo
         protected void rejectionQtyTextBox_TextChanged(object sender, EventArgs e)
         {
             int totalQty = int.Parse(totalQtyTextBox.Text);
-            int acceptedQty = int.Parse(acceptedQtyTextBox.Text);
+            int acceptedQty = int.Parse(actualQtyTextBox.Text);
             int rejectedQty = int.Parse(rejectionQtyTextBox.Text);
             if (totalQty != 0 && acceptedQty != 0 && rejectedQty != 0)
             {

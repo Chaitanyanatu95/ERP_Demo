@@ -16,7 +16,7 @@
 </script>
         <asp:Table ID="Table1" runat="server" Height="25%" Width="90%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="7"><h3>WORKER MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="7"><h3>EMPLOYEE MASTER</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin">EMPLOYEE NAME</asp:TableCell>

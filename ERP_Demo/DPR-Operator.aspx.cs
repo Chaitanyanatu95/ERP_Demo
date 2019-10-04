@@ -52,7 +52,7 @@ namespace ERP_Demo
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                 using (con)
                 {
-                    workerName.Text = Session["username"].ToString();
+                    workerNameTextBox.Text = Session["username"].ToString();
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM parts_master", con))
                     {

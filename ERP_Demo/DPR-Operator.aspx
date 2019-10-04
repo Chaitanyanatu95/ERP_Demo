@@ -14,82 +14,63 @@
             <asp:TableCell runat="server" ColumnSpan="6"><h3>DPR OPERATOR</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center">
-            <asp:TableCell runat="server" ColumnSpan="1"><br /><asp:Label ID="workerName" runat="server" style="font-weight:700; color:black"></asp:Label></asp:TableCell>
-            <asp:TableCell runat="server" ColumnSpan="1"><asp:Label ID="Date" runat="server">Date</asp:Label><br />
-                <input type="text" id="dateSelectionTextBox" runat="server" /></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="employeeName" runat="server" style="font-weight:700; color:black">Employee Name</asp:Label><br /><asp:TextBox ID="workerNameTextBox" runat="server" ReadOnly="true"></asp:TextBox></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="Date" runat="server" style="font-weight:700; color:black">Date</asp:Label><br />
+                <input type="text" id="dateSelectionTextBox" runat="server" style="font-weight:700; color:black; text-align:center"/></asp:TableCell>
         </asp:TableRow>
-        <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
-            <asp:TableCell runat="server">Part Name</asp:TableCell>
-            <asp:TableCell runat="server">Material Grade</asp:TableCell>
-            <asp:TableCell runat="server">Machine Used</asp:TableCell>
-            <asp:TableCell runat="server">Shift Details</asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow runat="server" HorizontalAlign="Center">
-            <asp:TableCell runat="server">
+        <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom" >
+            <asp:TableCell runat="server" ColumnSpan="1"><div style="font-weight:700; color:black">Part Name</div>
                 <asp:DropDownList ID="partNameDropDownList" DataTextField="part_name" DataValueField="part_name" runat="server" onselectedindexchanged="partNameChanged" AutoPostBack="true"></asp:DropDownList>
             </asp:TableCell>
-            <asp:TableCell runat="server">
-                <asp:DropDownList ID="materialGradeDropDownList" runat="server" DataTextField="rm_grade" DataValueField="rm_grade" AutoPostBack="true">
-                </asp:DropDownList>
+            <asp:TableCell runat="server" ColumnSpan="2"><div style="font-weight:700; color:black">Material Grade</div>
+                <asp:DropDownList ID="materialGradeDropDownList" runat="server" DataTextField="rm_grade" DataValueField="rm_grade" AutoPostBack="true"></asp:DropDownList>
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server" ColumnSpan="1"><div style="font-weight:700; color:black">Machine Used</div>
                 <asp:DropDownList ID="machineUsedDropDownList" DataTextField="machine_no" DataValueField="machine_no" runat="server" onselectedindexchanged="machineUsedChanged"></asp:DropDownList>
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server" ColumnSpan="2"><div style="font-weight:700; color:black">Shift Details</div>
                 <asp:DropDownList ID="shiftDetailsDropDownList" DataTextField="shift_time" DataValueField="shift_time" runat="server" onselectedindexchanged="shiftDetailsChanged" AutoPostBack="true"></asp:DropDownList>
             </asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
-            <asp:TableCell runat="server">EXP. QTY. (PCS)</asp:TableCell>
-            <asp:TableCell runat="server">No. of Shots (Start Counter)</asp:TableCell>
-            <asp:TableCell runat="server">No. of Shots (End Counter)</asp:TableCell>
-            <asp:TableCell runat="server">Total No. of Shots </asp:TableCell>
-            <asp:TableCell runat="server">Rejection (PCS)</asp:TableCell>
-            <asp:TableCell runat="server">Rejection (KGS)</asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow runat="server" HorizontalAlign="Center">
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">EXP. QTY. (PCS)</div>
                 <asp:TextBox ID="expQuantityTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">No. of Shots (Start Counter)</div>
                 <asp:TextBox ID="noShotsStartTextBox" runat="server"></asp:TextBox>
+
             </asp:TableCell>
-             <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">No. of Shots (End Counter)</div>
                 <asp:TextBox ID="noShotsEndTextBox" runat="server" OnTextChanged="noShotsEndTextBox_TextChanged" AutoPostBack="true"></asp:TextBox><br />
+
             </asp:TableCell>
-           <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">Total No. of Shots</div>
                 <asp:TextBox ID="noShotsTextBox" runat="server" ReadOnly="true" OnTextChanged="noShotsEndTextBox_TextChanged"></asp:TextBox>
-               <br /><asp:Label ID="validationShots" runat="server" CssClass="required"></asp:Label>
+                <br /><asp:Label ID="validationShots" runat="server" CssClass="required"></asp:Label>
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">Rejection (PCS)</div>
                 <asp:TextBox ID="rejectionPCSTextBox" runat="server" AutoPostBack="true"></asp:TextBox>
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">Rejection (KGS)</div>
                 <asp:TextBox ID="rejectionKGSTextBox" runat="server"></asp:TextBox>
             </asp:TableCell>
-            
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
-            <asp:TableCell runat="server">ACT. QTY. (PCS)</asp:TableCell>
-            <asp:TableCell runat="server">Down Time(Hrs)</asp:TableCell>
-            <asp:TableCell runat="server">Down Time Code</asp:TableCell>
-            <asp:TableCell runat="server">EFFICIENCY</asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow runat="server" HorizontalAlign="Center">
-             <asp:TableCell runat="server">
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">ACT. QTY. (PCS)</div>
                 <asp:TextBox ID="actQuantityTextBox" runat="server" ReadOnly="true"></asp:TextBox>
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server" ><div style="font-weight:700; color:black">Down Time(Hrs)</div>
                 <asp:TextBox ID="downTimeTextBox" runat="server" AutoPostBack="true"></asp:TextBox>
             </asp:TableCell>
-            <asp:TableCell runat="server">
+            <asp:TableCell runat="server" ><div style="font-weight:700; color:black">Down Time Code</div>
                 <asp:DropDownList ID="downTimeCodeDropDownList" DataTextField="down_time_code" DataValueField="down_time_code" runat="server" >
                 </asp:DropDownList>
             </asp:TableCell>
-            <asp:TableCell runat="server">
-                <asp:TextBox ID="efficiencyTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+            <asp:TableCell runat="server"><div style="font-weight:700; color:black">EFFICIENCY</div>
+                <asp:TextBox ID="efficiencyTextBox" runat="server" ReadOnly="true" style="font-weight:700; color:black"></asp:TextBox>
             </asp:TableCell>
-            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE DETAILS" OnClick="SaveBtn_Click"  CssClass="nextPage"/></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="2"><asp:Button runat="server" Text="SAVE DETAILS" OnClick="SaveBtn_Click"  CssClass="nextPage"/></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
     <center>
