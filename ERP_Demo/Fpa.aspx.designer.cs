@@ -31,22 +31,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblPartName;
         
         /// <summary>
-        /// lblDate control.
+        /// lblProductionHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDate;
-        
-        /// <summary>
-        /// lblOperationType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOperationType;
+        protected global::System.Web.UI.WebControls.Label lblProductionHistory;
         
         /// <summary>
         /// operatorNameTextBox control.
@@ -67,22 +58,58 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
         
         /// <summary>
-        /// datePickerTextBox control.
+        /// lblShiftDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText datePickerTextBox;
+        protected global::System.Web.UI.WebControls.Label lblShiftDetails;
         
         /// <summary>
-        /// operationTypeList control.
+        /// shiftDetailsDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList operationTypeList;
+        protected global::System.Web.UI.WebControls.DropDownList shiftDetailsDropDownList;
+        
+        /// <summary>
+        /// lblEmployeeName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmployeeName;
+        
+        /// <summary>
+        /// workerNameDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList workerNameDropDownList;
+        
+        /// <summary>
+        /// lblProductionDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProductionDate;
+        
+        /// <summary>
+        /// dateDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dateDropDownList;
         
         /// <summary>
         /// lblTotalQty control.
@@ -94,33 +121,6 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblTotalQty;
         
         /// <summary>
-        /// lblnoofparts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblnoofparts;
-        
-        /// <summary>
-        /// lblTotalTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalTime;
-        
-        /// <summary>
-        /// lblAcceptedQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAcceptedQty;
-        
-        /// <summary>
         /// totalQtyTextBox control.
         /// </summary>
         /// <remarks>
@@ -128,6 +128,33 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox totalQtyTextBox;
+        
+        /// <summary>
+        /// lblOperationType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOperationType;
+        
+        /// <summary>
+        /// operationTypeList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList operationTypeList;
+        
+        /// <summary>
+        /// lblnoofparts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblnoofparts;
         
         /// <summary>
         /// noOfPartsTextBox control.
@@ -139,6 +166,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox noOfPartsTextBox;
         
         /// <summary>
+        /// lblTotalTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalTime;
+        
+        /// <summary>
         /// timeTextBox control.
         /// </summary>
         /// <remarks>
@@ -146,6 +182,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox timeTextBox;
+        
+        /// <summary>
+        /// lblAcceptedQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAcceptedQty;
         
         /// <summary>
         /// actualQtyTextBox control.
@@ -157,13 +202,22 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox actualQtyTextBox;
         
         /// <summary>
-        /// lblRejectionQty control.
+        /// lblProdRejectionQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRejectionQty;
+        protected global::System.Web.UI.WebControls.Label lblProdRejectionQty;
+        
+        /// <summary>
+        /// lblFpaRejectionQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFpaRejectionQty;
         
         /// <summary>
         /// lblWipQty control.
@@ -184,13 +238,22 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblRejectionCode;
         
         /// <summary>
-        /// rejectionQtyTextBox control.
+        /// prodRejectionQtyTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox rejectionQtyTextBox;
+        protected global::System.Web.UI.WebControls.TextBox prodRejectionQtyTextBox;
+        
+        /// <summary>
+        /// FpaRejectionQtyTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FpaRejectionQtyTextBox;
         
         /// <summary>
         /// wipQtyTextBox control.
@@ -209,6 +272,24 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList rejectionCodeList;
+        
+        /// <summary>
+        /// lblEfficiency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEfficiency;
+        
+        /// <summary>
+        /// efficiencyTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox efficiencyTextBox;
         
         /// <summary>
         /// productionTagLabel control.

@@ -57,36 +57,44 @@
                             <asp:TextBox ID="txtUPassword" Text='<%# Eval("user_password") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Admin Right">
+                    <asp:TemplateField HeaderText="Full Access">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("Admin") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Full_Access") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights1" Text='<%# Eval("Admin") %>' runat="server" />
+                            <asp:TextBox ID="txtRights1" Text='<%# Eval("Full_Access") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Editor Right">
+                    <asp:TemplateField HeaderText="Transactions">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("Editor") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Transactions") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights2" Text='<%# Eval("Editor") %>' runat="server" />
+                            <asp:TextBox ID="txtRights2" Text='<%# Eval("Transactions") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Employee Right">
+                    <asp:TemplateField HeaderText="Reports">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("Worker") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Reports") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights3" Text='<%# Eval("Worker") %>' runat="server" />
+                            <asp:TextBox ID="txtRights3" Text='<%# Eval("Reports") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Extra Right">
+                    <asp:TemplateField HeaderText="Selected Access">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("Extra") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("Selected_Access") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtRights4" Text='<%# Eval("Extra") %>' runat="server" />
+                            <asp:TextBox ID="txtRights4" Text='<%# Eval("Selected_Access") %>' runat="server" />
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                     <asp:TemplateField HeaderText="Access">
+                        <ItemTemplate>
+                            <asp:Label Text='<%# Eval("Access") %>' runat="server" />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtRights4" Text='<%# Eval("Access") %>' runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>

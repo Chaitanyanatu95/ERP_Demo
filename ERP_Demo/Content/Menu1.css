@@ -71,11 +71,13 @@
 }
 
 .margin {
+    font-weight: 700;
+    color: black;
+    text-align: center;
     font-size: 13px;
-    font-weight: 400;
     margin-left: 40px;
     resize: none;
-    padding:4px 7px 4px 40px;
+    padding: 4px 7px 4px 40px;
 }
 
 .marginTextBox {

@@ -191,18 +191,8 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value.ToString() + "')", con);
                     cmd.ExecuteNonQuery();
-
-                    /*if (materialQtyTextBox.Text != null)
-                    {
-                        string command = "";
-                        command = "UPDATE raw_material_master SET material_qty = '" + (int.Parse(Application["oldQuantity"].ToString()) - int.Parse(Application["newQty"].ToString())).ToString() + "' where material_grade = '" + materialGradeDropDownList.SelectedItem.Text + "'";
-                        SqlCommand cmd2 = new SqlCommand(command, con);
-                        cmd2.ExecuteNonQuery();
-                        con.Close();
-                    }*/
-
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";
                 }

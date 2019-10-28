@@ -26,17 +26,20 @@ namespace ERP_Demo
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    Session["roleAdmin"] = Session["roleEditor"] = Session["roleWorker"] = Session["roleExtra"] = string.Empty;
+                    Session["roleFullAccess"] = Session["roleTransactions"] = Session["roleReports"] = Session["roleSelectedAccess"] = Session["roleAccess"] = string.Empty;
                     Session["username"] = reader["worker_name"].ToString();
                     //System.Diagnostics.Debug.WriteLine(reader["rights"].ToString());
-                    if (reader["Admin"].ToString() == "YES")
-                        Session["roleAdmin"] = reader["Admin"].ToString();
-                    if (reader["Editor"].ToString() == "YES")
-                        Session["roleEditor"] = reader["Editor"].ToString();
-                    if (reader["Worker"].ToString() == "YES")
-                        Session["roleWorker"] = reader["Worker"].ToString();
-                    if (reader["Extra"].ToString() == "YES")
-                        Session["roleExtra"] = reader["Extra"].ToString();
+                    if (reader["Full_Access"].ToString() == "YES")
+                        Session["roleFullAccess"] = reader["Full_Access"].ToString();
+                    if (reader["Transactions"].ToString() == "YES")
+                        Session["roleTransactions"] = reader["Transactions"].ToString();
+                    if (reader["Reports"].ToString() == "YES")
+                        Session["roleReports"] = reader["Reports"].ToString();
+                    if (reader["Selected_Access"].ToString() == "YES")
+                    {
+                        Session["roleSelectedAccess"] = reader["Selected_Access"].ToString();
+                        Session["roleAccess"] = reader["Access"].ToString();
+                    }
                     Response.Redirect("~/Default.aspx/");
                 }
                 else
