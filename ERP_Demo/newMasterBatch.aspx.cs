@@ -48,33 +48,27 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (mbnameTextBox.Text == "" || mbgradeTextBox.Text == "" || mbmfgTextBox.Text == "" || mbcolorTextBox.Text == "" || mbcolorcodeTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
+                string query = "UPDATE masterbatch_master SET mb_name='" + mbnameTextBox.Text.ToString() + "',mb_grade='" + mbgradeTextBox.Text.ToString() + "',mb_mfg='" + mbmfgTextBox.Text.ToString() + "',mb_color='" + mbcolorTextBox.Text.ToString() + "',mb_color_code='" + mbcolorcodeTextBox.Text.ToString() + "' WHERE Id='" + Application["masterbatchId"] + "'";
+                Application["query"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                    string query = "UPDATE masterbatch_master SET mb_name='" + mbnameTextBox.Text.ToString() + "',mb_grade='" + mbgradeTextBox.Text.ToString() + "',mb_mfg='" + mbmfgTextBox.Text.ToString() + "',mb_color='" + mbcolorTextBox.Text.ToString() + "',mb_color_code='" + mbcolorcodeTextBox.Text.ToString() + "' WHERE Id='" + Application["masterbatchId"] + "'";
-                    Application["query"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO masterbatch_master(mb_name,mb_grade,mb_mfg,mb_color,mb_color_code)VALUES('" + mbnameTextBox.Text + "','" + mbgradeTextBox.Text + "','" + mbmfgTextBox.Text + "','" + mbcolorTextBox.Text + "','" + mbcolorcodeTextBox.Text + "')";
-                    Application["query"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                Application["masterbatchId"] = null;
-                Application["query"] = null;
-                Application["editFlag"] = null;
-                con.Close();
-                Response.Redirect("~/displayMasterBatch.aspx");
+                string query = "INSERT INTO masterbatch_master(mb_name,mb_grade,mb_mfg,mb_color,mb_color_code)VALUES('" + mbnameTextBox.Text + "','" + mbgradeTextBox.Text + "','" + mbmfgTextBox.Text + "','" + mbcolorTextBox.Text + "','" + mbcolorcodeTextBox.Text + "')";
+                Application["query"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            Application["masterbatchId"] = null;
+            Application["query"] = null;
+            Application["editFlag"] = null;
+            con.Close();
+            Response.Redirect("~/displayMasterBatch.aspx");
+            
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

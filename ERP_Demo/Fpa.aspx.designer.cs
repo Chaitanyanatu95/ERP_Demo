@@ -211,6 +211,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblProdRejectionQty;
         
         /// <summary>
+        /// prodRejHisGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView prodRejHisGrid;
+        
+        /// <summary>
         /// lblFpaRejectionQty control.
         /// </summary>
         /// <remarks>
@@ -218,33 +227,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFpaRejectionQty;
-        
-        /// <summary>
-        /// lblWipQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWipQty;
-        
-        /// <summary>
-        /// lblRejectionCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRejectionCode;
-        
-        /// <summary>
-        /// prodRejectionQtyTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prodRejectionQtyTextBox;
         
         /// <summary>
         /// FpaRejectionQtyTextBox control.
@@ -256,6 +238,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox FpaRejectionQtyTextBox;
         
         /// <summary>
+        /// lblWipQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWipQty;
+        
+        /// <summary>
         /// wipQtyTextBox control.
         /// </summary>
         /// <remarks>
@@ -263,15 +254,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox wipQtyTextBox;
-        
-        /// <summary>
-        /// rejectionCodeList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList rejectionCodeList;
         
         /// <summary>
         /// lblEfficiency control.
@@ -290,33 +272,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox efficiencyTextBox;
-        
-        /// <summary>
-        /// productionTagLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell productionTagLabel;
-        
-        /// <summary>
-        /// productionTagDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList productionTagDropDownList;
-        
-        /// <summary>
-        /// prodTagDetailsGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView prodTagDetailsGrid;
         
         /// <summary>
         /// lblSuccessMessage control.

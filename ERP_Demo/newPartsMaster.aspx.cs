@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.Common;
+using System.Text.RegularExpressions;
 
 namespace ERP_Demo
 {
@@ -192,11 +193,21 @@ namespace ERP_Demo
             using (con)
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM parts_master", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM parts_master ORDER BY ID DESC", con))
                 {
-                    Int32 count = (Int32)cmd.ExecuteScalar();
-                    System.Diagnostics.Debug.WriteLine(count);
-                    partNoTextBox.Text = "PBP#" + (count + 1);
+                    // Int32 count = (Int32)cmd.ExecuteScalar();
+                    //System.Diagnostics.Debug.WriteLine(count);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while(reader.Read())
+                    {
+                        Application["input"] = reader["part_no"];
+                    }
+                    reader.Close();
+                    if (Application["input"] == null)
+                        Application["input"] = 0;
+                    int input = int.Parse(Regex.Replace(Application["input"].ToString(), "[^0-9]+", string.Empty));
+                    //System.Diagnostics.Debug.WriteLine(input);
+                    partNoTextBox.Text = "PBP#" + (input + 1);               
                 }
 
                 using (SqlCommand cmd = new SqlCommand("SELECT Family FROM family_master", con))
@@ -238,7 +249,7 @@ namespace ERP_Demo
             bool isCavitiesNum = double.TryParse(noOfCavities, out cavitiesNum);
 
             if (isCycleNum && isCavitiesNum && cycleNum != 0 && cavitiesNum != 0)
-                moldProductionCycleTextBox.Text = ((3600 / int.Parse(cycleTime)) * int.Parse(noOfCavities) * 0.9).ToString();
+                moldProductionCycleTextBox.Text = Math.Ceiling((3600 / double.Parse(cycleTime)) * double.Parse(noOfCavities) * 0.9).ToString();
             else
                 moldProductionCycleTextBox.Text = "Invalid cavities/cycle time!";
         }

@@ -114,6 +114,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="displayPartsWorker.aspx" />
     <Content Include="displayVendor.aspx" />
     <Content Include="displayRejection.aspx" />
     <Content Include="displayPackaging.aspx" />
@@ -215,6 +216,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="displayPartsWorker.aspx.cs">
+      <DependentUpon>displayPartsWorker.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="displayPartsWorker.aspx.designer.cs">
+      <DependentUpon>displayPartsWorker.aspx</DependentUpon>
+    </Compile>
     <Compile Include="displayVendor.aspx.cs">
       <DependentUpon>displayVendor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

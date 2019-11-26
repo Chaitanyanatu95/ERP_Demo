@@ -37,7 +37,7 @@
                    <img src="~/Images/logoc.png" alt="Plastic Injection Molding" width="60" height="60" runat="server" style="padding-bottom:9px;">
                     <h1 style="text-align:center; display:inline-block; font-family:'Raleway-Regular'; font-size:40px;">PLASTIC INJECTION MOLDING
                     </h1>
-                    <asp:label id="Message" Text="Welcome: " style="font-size:15px; padding-left:250px;" runat="server"/>
+                    <asp:label id="Message" Text="Welcome: &nbsp;" style="font-size:15px; padding-left:250px; font-weight:bold;" runat="server"/>
                     <asp:Menu ID="Menu1" runat="server" OnMenuItemClick="Menu1_MenuItemClick" CssClass="MYMenuClass" Orientation="Horizontal">
                         <Items>
                             <asp:MenuItem Text="Home" Value="Home" NavigateUrl="/Default.aspx"></asp:MenuItem>

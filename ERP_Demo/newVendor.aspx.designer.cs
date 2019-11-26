@@ -49,6 +49,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox vendorNameTextBox;
         
         /// <summary>
+        /// vendorNameReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorNameReq;
+        
+        /// <summary>
         /// vendorAddressOneLabel control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorAddressOneTextBox;
+        
+        /// <summary>
+        /// vendorAddressOneReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorAddressOneReq;
         
         /// <summary>
         /// vendorAddressTwoLabel control.
@@ -103,6 +121,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox vendorContactNoTextBox;
         
         /// <summary>
+        /// vendorContactReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorContactReq;
+        
+        /// <summary>
         /// vendorEmailLabel control.
         /// </summary>
         /// <remarks>
@@ -121,6 +148,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox vendorEmailIdTextBox;
         
         /// <summary>
+        /// vendorEmailReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorEmailReq;
+        
+        /// <summary>
         /// vendorContactPersonLabel control.
         /// </summary>
         /// <remarks>
@@ -137,6 +173,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorContactPersonTextBox;
+        
+        /// <summary>
+        /// vendorContactPersonReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorContactPersonReq;
         
         /// <summary>
         /// vendorGstNumberLabel control.

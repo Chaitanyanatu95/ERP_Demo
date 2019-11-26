@@ -48,33 +48,27 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (rmName.Text == "" || rmGrade.Text == "" || rmColor.Text == "" || rmMake.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
+                string query = "UPDATE raw_material_master SET material_name='" + rmName.Text.ToString() + "',material_grade='" + rmGrade.Text.ToString() + "',material_color='" + rmColor.Text.ToString() + "',material_make='" + rmMake.Text.ToString() + "' WHERE Id='" + Application["rawMaterialId"] + "'";
+                Application["query"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                    string query = "UPDATE raw_material_master SET material_name='" + rmName.Text.ToString() + "',material_grade='" + rmGrade.Text.ToString() + "',material_color='" + rmColor.Text.ToString() + "',material_make='" + rmMake.Text.ToString() + "' WHERE Id='" + Application["rawMaterialId"] + "'";
-                    Application["query"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO raw_material_master(material_name,material_grade,material_color,material_make)VALUES('" + rmName.Text + "','" + rmGrade.Text + "','" + rmColor.Text + "','" + rmMake.Text + "')";
-                    Application["query"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                Application["editFlag"] = null;
-                Application["query"] = null;
-                Application["rawMaterialId"] = null;
-                con.Close();
-                Response.Redirect("~/displayRawMaterial.aspx");
-            }           
+                string query = "INSERT INTO raw_material_master(material_name,material_grade,material_color,material_make)VALUES('" + rmName.Text + "','" + rmGrade.Text + "','" + rmColor.Text + "','" + rmMake.Text + "')";
+                Application["query"] = query;
+            }
+            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            Application["editFlag"] = null;
+            Application["query"] = null;
+            Application["rawMaterialId"] = null;
+            con.Close();
+            Response.Redirect("~/displayRawMaterial.aspx");
+                    
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

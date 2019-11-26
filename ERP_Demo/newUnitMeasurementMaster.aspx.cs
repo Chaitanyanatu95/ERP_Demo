@@ -45,33 +45,27 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (unitofmeasurementTextBox.Text == "" || abbreviationTextBox.Text == "" )
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
+                string query = "UPDATE unit_of_measurement_master SET unit_of_measurement='" + unitofmeasurementTextBox.Text.ToString() + "',abbreviation='" + abbreviationTextBox.Text.ToString() + "' WHERE Id='" + Application["unitOfMeasurementId"] + "'";
+                Application["query"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                    string query = "UPDATE unit_of_measurement_master SET unit_of_measurement='" + unitofmeasurementTextBox.Text.ToString() + "',abbreviation='" + abbreviationTextBox.Text.ToString() + "' WHERE Id='" + Application["unitOfMeasurementId"] + "'";
-                    Application["query"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO unit_of_measurement_master(unit_of_measurement,abbreviation)VALUES('" + unitofmeasurementTextBox.Text + "','" + abbreviationTextBox.Text + "')";
-                    Application["query"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                Application["query"] = null;
-                Application["unitOfMeasurementId"] = null;
-                Application["editFlag"] = null;
-                con.Close();
-                Response.Redirect("~/displayUnitOfMeasurement.aspx");
+                string query = "INSERT INTO unit_of_measurement_master(unit_of_measurement,abbreviation)VALUES('" + unitofmeasurementTextBox.Text + "','" + abbreviationTextBox.Text + "')";
+                Application["query"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            Application["query"] = null;
+            Application["unitOfMeasurementId"] = null;
+            Application["editFlag"] = null;
+            con.Close();
+            Response.Redirect("~/displayUnitOfMeasurement.aspx");
+            
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

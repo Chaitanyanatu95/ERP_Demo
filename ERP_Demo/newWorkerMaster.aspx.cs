@@ -47,111 +47,104 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (empNameTextBox.Text == "" || empIdTextBox.Text == "" || userIdTextBox.Text == "" || userPasswordTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                string updateData = "UPDATE worker_master SET Full_Access='NO', Transactions='NO', Reports='NO', Selected_Access='NO', Access = '' WHERE id='" + Application["workerId"] + "'";
+                SqlCommand comdUpdate = new SqlCommand(updateData, con);
+                comdUpdate.ExecuteNonQuery();
+
+                foreach (ListItem li in rightsToBeAllocatedCheckBoxList.Items)
+                {
+                    if (li.Selected)
+                    {
+                        if (li.Text.Trim() == "Full Access")
+                        {
+                            string query1 = "UPDATE worker_master SET Full_Access = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                            SqlCommand comd1 = new SqlCommand(query1.ToString(), con);
+                            comd1.ExecuteNonQuery();
+                        }
+
+                        if (li.Text.Trim() == "Transactions")
+                        {
+                            string query2 = "UPDATE worker_master SET Transactions = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                            SqlCommand comd2 = new SqlCommand(query2.ToString(), con);
+                            comd2.ExecuteNonQuery();
+                        }
+
+                        if (li.Text.Trim() == "Reports")
+                        {
+                            string query3 = "UPDATE worker_master SET Reports = 'YES' WHERE id = '" + Application["workerId"] + "'";
+                            SqlCommand comd3 = new SqlCommand(query3.ToString(), con);
+                            comd3.ExecuteNonQuery();
+                        }
+
+                        if (li.Text.Trim() == "Selected Access")
+                        {
+                            string query4 = "UPDATE worker_master SET Selected_Access = 'YES', Access = '"+ selectedAccessDropDownList.SelectedValue.ToString() + "' WHERE id = '" + Application["workerId"] + "'";
+                            SqlCommand comd4 = new SqlCommand(query4.ToString(), con);
+                            comd4.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                //UPDATE WORKER MASTER 
+                string query = "UPDATE worker_master SET worker_name='" + empNameTextBox.Text.ToString() + "',worker_id ='" + empIdTextBox.Text.ToString() + "',user_id = '" + userIdTextBox.Text.ToString() + "',user_password = '" + userPasswordTextBox.Text.ToString() + "' WHERE id='" + Application["workerId"] + "'";
+                SqlCommand comd = new SqlCommand(query.ToString(), con);
+                comd.ExecuteNonQuery();
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-
-                if (Application["editFlag"] is true)
+                //INSERT INTO WORKER MASTER
+                string fullAccess = string.Empty;
+                string transactions = string.Empty;
+                string reports = string.Empty;
+                string selectedAccess = string.Empty;
+                string Access = string.Empty;
+                foreach (ListItem li in rightsToBeAllocatedCheckBoxList.Items)
                 {
-                    string updateData = "UPDATE worker_master SET Full_Access='NO', Transactions='NO', Reports='NO', Selected_Access='NO', Access = '' WHERE id='" + Application["workerId"] + "'";
-                    SqlCommand comdUpdate = new SqlCommand(updateData, con);
-                    comdUpdate.ExecuteNonQuery();
-
-                    foreach (ListItem li in rightsToBeAllocatedCheckBoxList.Items)
+                    if (li.Selected)
                     {
-                        if (li.Selected)
+                        if (li.Value.Trim() == "Full Access")
                         {
-                            if (li.Text.Trim() == "Full Access")
-                            {
-                                string query1 = "UPDATE worker_master SET Full_Access = 'YES' WHERE id = '" + Application["workerId"] + "'";
-                                SqlCommand comd1 = new SqlCommand(query1.ToString(), con);
-                                comd1.ExecuteNonQuery();
-                            }
+                            fullAccess = "YES";
+                        }
 
-                            if (li.Text.Trim() == "Transactions")
-                            {
-                                string query2 = "UPDATE worker_master SET Transactions = 'YES' WHERE id = '" + Application["workerId"] + "'";
-                                SqlCommand comd2 = new SqlCommand(query2.ToString(), con);
-                                comd2.ExecuteNonQuery();
-                            }
+                        if (li.Value.Trim() == "Transactions")
+                        {
+                            transactions = "YES";
+                        }
 
-                            if (li.Text.Trim() == "Reports")
-                            {
-                                string query3 = "UPDATE worker_master SET Reports = 'YES' WHERE id = '" + Application["workerId"] + "'";
-                                SqlCommand comd3 = new SqlCommand(query3.ToString(), con);
-                                comd3.ExecuteNonQuery();
-                            }
+                        if (li.Value.Trim() == "Reports")
+                        {
+                            reports = "YES";
+                        }
 
-                            if (li.Text.Trim() == "Selected Access")
-                            {
-                                string query4 = "UPDATE worker_master SET Selected_Access = 'YES', Access = '"+ selectedAccessDropDownList.SelectedValue.ToString() + "' WHERE id = '" + Application["workerId"] + "'";
-                                SqlCommand comd4 = new SqlCommand(query4.ToString(), con);
-                                comd4.ExecuteNonQuery();
-                            }
+                        if (li.Value.Trim() == "Selected Access")
+                        {
+                            selectedAccess = "YES";
+                            Access = selectedAccessDropDownList.SelectedValue.ToString();
                         }
                     }
-
-                    //UPDATE WORKER MASTER 
-                    string query = "UPDATE worker_master SET worker_name='" + empNameTextBox.Text.ToString() + "',worker_id ='" + empIdTextBox.Text.ToString() + "',user_id = '" + userIdTextBox.Text.ToString() + "',user_password = '" + userPasswordTextBox.Text.ToString() + "' WHERE id='" + Application["workerId"] + "'";
-                    SqlCommand comd = new SqlCommand(query.ToString(), con);
-                    comd.ExecuteNonQuery();
                 }
-                else
-                {
-                    //INSERT INTO WORKER MASTER
-                    string fullAccess = string.Empty;
-                    string transactions = string.Empty;
-                    string reports = string.Empty;
-                    string selectedAccess = string.Empty;
-                    string Access = string.Empty;
-                    foreach (ListItem li in rightsToBeAllocatedCheckBoxList.Items)
-                    {
-                        if (li.Selected)
-                        {
-                            if (li.Value.Trim() == "Full Access")
-                            {
-                                fullAccess = "YES";
-                            }
 
-                            if (li.Value.Trim() == "Transactions")
-                            {
-                                transactions = "YES";
-                            }
+                if (fullAccess.ToString() != "YES") { fullAccess = "NO"; }
+                if (transactions.ToString() != "YES") { transactions = "NO"; }
+                if (reports.ToString() != "YES") { reports = "NO"; }
+                if (selectedAccess.ToString() != "YES") { selectedAccess = "NO"; Access = ""; }
 
-                            if (li.Value.Trim() == "Reports")
-                            {
-                                reports = "YES";
-                            }
-
-                            if (li.Value.Trim() == "Selected Access")
-                            {
-                                selectedAccess = "YES";
-                                Access = selectedAccessDropDownList.SelectedValue.ToString();
-                            }
-                        }
-                    }
-
-                    if (fullAccess.ToString() != "YES") { fullAccess = "NO"; }
-                    if (transactions.ToString() != "YES") { transactions = "NO"; }
-                    if (reports.ToString() != "YES") { reports = "NO"; }
-                    if (selectedAccess.ToString() != "YES") { selectedAccess = "NO"; Access = ""; }
-
-                    string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Full_Access,Transactions,Reports,Selected_Access,Access)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + fullAccess.ToString() + "','" + transactions.ToString() + "','" + reports.ToString() + "','" + selectedAccess.ToString() + "','" + Access.ToString() + "')";
-                    Application["query"] = query;
-                    SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                    cmd.ExecuteNonQuery();
-                }
-                Application["editFlag"] = null;
-                Application["query"] = null;
-                Application["workerId"] = null;
-                con.Close();
-                Response.Redirect("~/displayWorker.aspx");
+                string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Full_Access,Transactions,Reports,Selected_Access,Access)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + fullAccess.ToString() + "','" + transactions.ToString() + "','" + reports.ToString() + "','" + selectedAccess.ToString() + "','" + Access.ToString() + "')";
+                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+                cmd.ExecuteNonQuery();
             }
+            Application["editFlag"] = null;
+            Application["query"] = null;
+            Application["workerId"] = null;
+            con.Close();
+            Response.Redirect("~/displayWorker.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

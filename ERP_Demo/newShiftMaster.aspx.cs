@@ -45,33 +45,26 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (shiftNameTextBox.Text == "" || workingHoursTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
+                string query = "UPDATE shift_master SET shift_time='" + shiftNameTextBox.Text.ToString() + "',hours='" + workingHoursTextBox.Text.ToString() + "' WHERE Id='" + Application["shiftId"] + "'";
+                Application["query"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                    string query = "UPDATE shift_master SET shift_time='" + shiftNameTextBox.Text.ToString() + "',hours='" + workingHoursTextBox.Text.ToString() + "' WHERE Id='" + Application["shiftId"] + "'";
-                    Application["query"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO shift_master(shift_time, hours)VALUES('" + shiftNameTextBox.Text + "', '" + workingHoursTextBox.Text + "')";
-                    Application["query"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                Application["editFlag"] = null;
-                Application["query"] = null;
-                Application["shiftId"] = null;
-                con.Close();
-                Response.Redirect("~/displayShiftMaster.aspx");
+                string query = "INSERT INTO shift_master(shift_time, hours)VALUES('" + shiftNameTextBox.Text + "', '" + workingHoursTextBox.Text + "')";
+                Application["query"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            Application["editFlag"] = null;
+            Application["query"] = null;
+            Application["shiftId"] = null;
+            con.Close();
+            Response.Redirect("~/displayShift.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

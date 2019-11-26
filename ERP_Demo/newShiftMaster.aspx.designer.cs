@@ -31,6 +31,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox shiftNameTextBox;
         
         /// <summary>
+        /// shiftNameReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator shiftNameReq;
+        
+        /// <summary>
         /// workingHoursTextBox control.
         /// </summary>
         /// <remarks>
@@ -38,5 +47,14 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox workingHoursTextBox;
+        
+        /// <summary>
+        /// workingHoursReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator workingHoursReq;
     }
 }

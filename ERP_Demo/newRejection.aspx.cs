@@ -46,34 +46,27 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (rejectionTypeTextBox.Text == "" || codeTextBox.Text == "" || descTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
+                string query = "UPDATE rejection_master SET rejection_type='" + rejectionTypeTextBox.Text.ToString() + "',code='"+ codeTextBox.Text.ToString()+ "',description='" + descTextBox.Text.ToString() + "' WHERE Id='" + Application["rejectionId"] + "'";
+                Application["query"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                    string query = "UPDATE rejection_master SET rejection_type='" + rejectionTypeTextBox.Text.ToString() + "',code='"+ codeTextBox.Text.ToString()+ "',description='" + descTextBox.Text.ToString() + "' WHERE Id='" + Application["rejectionId"] + "'";
-                    Application["query"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO rejection_master(rejection_type,code,description)VALUES('" + rejectionTypeTextBox.Text + "','"+ codeTextBox.Text + "','" + descTextBox.Text + "')";
-                    Application["query"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                //System.Threading.Thread.Sleep(1500);
-                Application["rejectionId"] = null;
-                Application["query"] = null;
-                Application["editFlag"] = null;
-                con.Close();
-                Response.Redirect("~/displayRejection.aspx");
+                string query = "INSERT INTO rejection_master(rejection_type,code,description)VALUES('" + rejectionTypeTextBox.Text + "','"+ codeTextBox.Text + "','" + descTextBox.Text + "')";
+                Application["query"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            //System.Threading.Thread.Sleep(1500);
+            Application["rejectionId"] = null;
+            Application["query"] = null;
+            Application["editFlag"] = null;
+            con.Close();
+            Response.Redirect("~/displayRejection.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

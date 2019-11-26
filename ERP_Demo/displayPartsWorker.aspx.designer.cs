@@ -10,114 +10,96 @@
 namespace ERP_Demo {
     
     
-    public partial class newWorkerMaster {
+    public partial class displayPartsWorker {
         
         /// <summary>
-        /// Table1 control.
+        /// displayPartsTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
+        protected global::System.Web.UI.WebControls.Table displayPartsTable;
         
         /// <summary>
-        /// empNameTextBox control.
+        /// rowPartsDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox empNameTextBox;
+        protected global::System.Web.UI.WebControls.TableRow rowPartsDisplay;
         
         /// <summary>
-        /// empNameReq control.
+        /// cellParts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator empNameReq;
+        protected global::System.Web.UI.WebControls.TableCell cellParts;
         
         /// <summary>
-        /// empIdTextBox control.
+        /// partsLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox empIdTextBox;
+        protected global::System.Web.UI.WebControls.Label partsLabel;
         
         /// <summary>
-        /// empIdReq control.
+        /// rowPartsLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator empIdReq;
+        protected global::System.Web.UI.WebControls.TableRow rowPartsLink;
         
         /// <summary>
-        /// userIdTextBox control.
+        /// cellPartsSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox userIdTextBox;
+        protected global::System.Web.UI.WebControls.TableCell cellPartsSearch;
         
         /// <summary>
-        /// userIdReq control.
+        /// searchLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator userIdReq;
+        protected global::System.Web.UI.WebControls.Label searchLabel;
         
         /// <summary>
-        /// userPasswordTextBox control.
+        /// cellPartsSearchButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox userPasswordTextBox;
+        protected global::System.Web.UI.WebControls.TableCell cellPartsSearchButton;
         
         /// <summary>
-        /// userPassReq control.
+        /// searchTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator userPassReq;
+        protected global::System.Web.UI.WebControls.TextBox searchTextBox;
         
         /// <summary>
-        /// rightsToBeAllocatedCheckBoxList control.
+        /// partsGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList rightsToBeAllocatedCheckBoxList;
-        
-        /// <summary>
-        /// selectedAccessDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList selectedAccessDropDownList;
-        
-        /// <summary>
-        /// CustomValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+        protected global::System.Web.UI.WebControls.GridView partsGridView;
     }
 }

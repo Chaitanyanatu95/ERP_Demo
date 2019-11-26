@@ -9,10 +9,10 @@
             <asp:TableCell runat="server" CssClass="margin">ABBREVIATION</asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" >
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="unitofmeasurementTextBox" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="abbreviationTextBox" runat="server" CssClass="sizeAbbreviationTextbox"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" ColumnSpan="5"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage"/>
-            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" />
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="unitofmeasurementTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="umoReq" ControlToValidate="unitofmeasurementTextBox" CssClass="required" runat="server" ErrorMessage="please enter unit"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:8em">*</div><asp:TextBox ID="abbreviationTextBox" runat="server" CssClass="sizeAbbreviationTextbox"></asp:TextBox><br /><asp:RequiredFieldValidator ID="abrReq" ControlToValidate="abbreviationTextBox" runat="server" CssClass="required" ErrorMessage="please enter abbreviation"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="5"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="confirm('Do you want to save?');"/>
+            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>

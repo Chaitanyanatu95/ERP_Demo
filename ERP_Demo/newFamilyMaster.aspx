@@ -7,12 +7,12 @@
         <asp:TableRow runat="server" VerticalAlign="Bottom">
             <asp:TableCell runat="server" CssClass="margin">ADD NEW CATEGORY</asp:TableCell>
         </asp:TableRow>
-        <asp:TableRow runat="server">
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="familyTextBox" runat="server"></asp:TextBox></asp:TableCell>
+        <asp:TableRow runat="server"> 
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="familyTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="famReq" runat="server" CssClass="required" ErrorMessage="please enter category" ControlToValidate="familyTextBox"></asp:RequiredFieldValidator></asp:TableCell>
             </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="custButtonCss" />
-            <asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click" CausesValidation="false" CssClass="nextPage" /></asp:TableCell>
+            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="custButtonCss" OnClientClick="confirm('Do you want to save?');"/>
+            <asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click" CausesValidation="false" CssClass="nextPage" OnClientClick="return confirm('Do you want to cancel?');" /></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
 </asp:Content>

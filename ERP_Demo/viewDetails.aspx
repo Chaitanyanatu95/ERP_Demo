@@ -212,6 +212,6 @@
     <br/><br/>
 <center>
     <asp:Button ID="print" runat="server" CssClass="nextPage" Text="Print" OnClientClick="javascript:PrintPage()"/>
-    <asp:Button ID="back" runat="server" CssClass="nextPage" Text="Back" PostBackUrl="~/displayParts.aspx"/>
+    <asp:Button ID="back" runat="server" CssClass="nextPage" Text="Back" OnClick="back_Click"/>
 </center>
 </asp:Content>

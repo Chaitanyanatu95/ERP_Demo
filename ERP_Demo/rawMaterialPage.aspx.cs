@@ -453,35 +453,192 @@ namespace ERP_Demo
             Application["rmGrade"] = rmGradeDropDownList.SelectedItem.Text;
             Application["rmMake"] = rmMakeTextBox.Text;
             Application["rmColor"] = colourTextBox.Text;
-
             Application["masterbatch"] = masterbatchDropDownList.SelectedItem.Text;
-            if (Application["masterbatch"].ToString() == "YES")
-            {
-                Application["mbName"] = mbNameDropDownList.SelectedItem.Text;
-                Application["mbGrade"] = mbGradeDropDownList.SelectedItem.Text;
-                Application["mbMfg"] = mbMfgTextBox.Text;
-                Application["mbColor"] = mbColorTextBox.Text;
-                Application["mbColorCode"] = mbColorCodeTextBox.Text;
-            }
-                Application["altRawMaterial"] = altRawMaterialDropDownList.SelectedItem.Text;
-            if (Application["altRawMaterial"].ToString() == "YES")
-            {
-                Application["altRMName"] = altRMDropDownList.SelectedItem.Text;
-                Application["altRmGrade"] = altRawMaterialGradeDropDownList.SelectedItem.Text;
-                Application["altRmMake"] = altRawMaterialMakeTextBox.Text;
-                Application["altRmColor"] = altColourTextBox.Text;
-            }
+            Application["altRawMaterial"] = altRawMaterialDropDownList.SelectedItem.Text;
 
             Application["altMasterbatch"] = altRawMaterialMasterBatchDropDownList.SelectedItem.Text;
+
+            if (Application["masterbatch"].ToString() == "YES")
+            {
+                Application["mbName"] = mbNameDropDownList.SelectedItem.Text.ToString();
+                if(Application["mbName"].ToString() == "Select Masterbatch")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Select Masterbatch')", true);
+                }
+
+                if (Application["mbName"].ToString() != "Select Masterbatch")
+                { 
+                    Application["mbGrade"] = mbGradeDropDownList.SelectedItem.Text.ToString(); 
+                    if(Application["mbGrade"].ToString() == "Select MasterBatch Grade")
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Select Masterbatch Grade')", true);
+                    }
+                    
+                }
+
+                if (Application["mbName"].ToString() != "Select Masterbatch" && Application["mbGrade"].ToString() != "Select MasterBatch Grade")
+                {
+                    Application["mbMfg"] = mbMfgTextBox.Text;
+                    Application["mbColor"] = mbColorTextBox.Text;
+                    Application["mbColorCode"] = mbColorCodeTextBox.Text;
+                }
+
+                if (Application["mbName"] != null && Application["mbGrade"] != null && Application["mbMfg"] != null && Application["mbColor"] != null && Application["mbColorCode"] != null)
+                {
+                    Application["mbFlag"] = "YES";
+                }
+                else
+                {
+                    Application["mbFlag"] = "NO";
+                }
+
+            }
+            else
+            {
+                Application["mbFlag"] = "NO";
+            }
+                
+            if (Application["altRawMaterial"].ToString() == "YES")
+            {
+
+                Application["altRMName"] = altRMDropDownList.SelectedItem.Text;
+                if(Application["altRMName"].ToString() == "Select Raw Material")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Select Raw Material')", true);
+                }
+                if (Application["altRMName"].ToString() != "Select Raw Material")
+                {
+                    Application["altRmGrade"] = altRawMaterialGradeDropDownList.SelectedItem.Text;
+                    if(Application["altRmGrade"].ToString() == "Select Raw Material Grade")
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Select Raw Material Grade')", true);
+                    }
+                }
+                if (Application["altRMName"].ToString() != "Select Raw Material" && Application["altRmGrade"].ToString() != "Select Raw Material Grade")
+                {
+                    Application["altRmMake"] = altRawMaterialMakeTextBox.Text;
+                    Application["altRmColor"] = altColourTextBox.Text;
+                    
+                }
+                if (Application["altRmMake"] != null && Application["altRmColor"] != null)
+                {
+                    Application["altRmFlag"] = "YES";
+                }
+                else
+                {
+                    Application["altRmFlag"] = "NO";
+                }
+            }
+            else
+            {
+                Application["altRmFlag"] = "NO";
+            }
+            
             if (Application["altMasterbatch"].ToString() == "YES")
             {
                 Application["altMasterbatchName"] = altRMBNameDropDownList.SelectedItem.Text;
-                Application["altMasterbatchGrade"] = altRMBGradeDropDownList.SelectedItem.Text;
-                Application["altMasterbatchMfg"] = altRMBMfgTextBox.Text;
-                Application["altMasterbatchColor"] = altRMBColorTextBox.Text;
-                Application["altMasterbatchColorCode"] = altRMBColorCodeTextBox.Text;
+                if(Application["altMasterbatchName"].ToString() == "Select Masterbatch")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Select Masterbatch')", true);
+                }
+                if (Application["altMasterbatchName"].ToString() != "Select Masterbatch")
+                {
+                    Application["altMasterbatchGrade"] = altRMBGradeDropDownList.SelectedItem.Text;
+                    if(Application["altMasterbatchGrade"].ToString() == "Select MasterBatch Grade")
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Select Masterbatch Grade')", true);
+                    }
+                }
+                if (Application["altMasterbatchName"].ToString() != "Select Masterbatch" && Application["altMasterbatchGrade"].ToString() != "Select MasterBatch Grade")
+                {
+                    Application["altMasterbatchMfg"] = altRMBMfgTextBox.Text;
+                    Application["altMasterbatchColor"] = altRMBColorTextBox.Text;
+                    Application["altMasterbatchColorCode"] = altRMBColorCodeTextBox.Text;
+                }
+                if(Application["altMasterbatchMfg"] != null && Application["altMasterbatchColor"]!= null && Application["altMasterbatchColorCode"] != null)
+                {
+                    Application["altMBFlag"] = "YES";
+                }
+                else
+                {
+                    Application["altMBFlag"] = "NO";
+                }
             }
-            Response.Redirect("~/postOperationsPage.aspx");
+            else
+            {
+                Application["altMBFlag"] = "NO";
+            }
+
+            if (Application["masterbatch"].ToString() == "YES" && Application["altRawMaterial"].ToString() == "NO")
+            {
+                if(Application["mbFlag"].ToString() == "YES")
+                {
+                    Response.Redirect("~/postOperationsPage.aspx");
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Enter Masterbatch Fields.')", true);
+                }
+            }
+            else if(Application["masterbatch"].ToString() == "YES" && Application["altRawMaterial"].ToString() == "YES")
+            {
+                if (Application["mbFlag"].ToString() == "YES" && Application["altRmFlag"].ToString() == "YES")
+                {
+                    if(Application["altMasterbatch"].ToString() == "YES")
+                    {
+                        if(Application["altMBFlag"].ToString() == "YES")
+                        {
+                            Response.Redirect("~/postOperationsPage.aspx");
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Enter Alt Masterbatch Fields.')", true);
+                        }
+                    }
+                    else
+                    {
+                        Response.Redirect("~/postOperationsPage.aspx");
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Enter Missing Fields.')", true);
+                }
+            }
+            else if (Application["masterbatch"].ToString() == "NO" && Application["altRawMaterial"].ToString() == "YES")
+            {
+                if (Application["altRmFlag"].ToString() == "YES")
+                {
+                    if (Application["altMasterbatch"].ToString() == "YES")
+                    {
+                        if (Application["altMBFlag"].ToString() == "YES")
+                        {
+                            Response.Redirect("~/postOperationsPage.aspx");
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Enter Alt Masterbatch Fields.')", true);
+                        }
+                    }
+                    else
+                    {
+                        Response.Redirect("~/postOperationsPage.aspx");
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please Enter Alt Raw Material Fields.')", true);
+                }
+            }
+            else
+            {
+                Response.Redirect("~/postOperationsPage.aspx");
+            }
+        }
+
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/newPartsMaster.aspx");
         }
     }
 }

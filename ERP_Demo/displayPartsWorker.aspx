@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="displayParts.aspx.cs" Inherits="ERP_Demo.displayParts" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="displayPartsWorker.aspx.cs" Inherits="ERP_Demo.displayPartsWorker" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Table ID="displayPartsTable" runat="server" CssClass="Table1">
@@ -6,7 +6,6 @@
             <asp:TableCell ID="cellParts" ColumnSpan="3"><asp:Label ID="partsLabel" runat="server"><h3>Parts Details</h3></asp:Label></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow ID="rowPartsLink" runat="server">
-            <asp:TableCell ID="cellPartsLink" runat="server"><asp:Button ID="partsButton" runat="server" Text="ADD" Font-Size="Small" OnClick="partsButton_Click"></asp:Button></asp:TableCell>
             <asp:TableCell ID="cellPartsSearch" runat="server"><asp:Label ID="searchLabel" runat="server">&nbsp Search:- &nbsp</asp:Label></asp:TableCell>
             <asp:TableCell ID="cellPartsSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
@@ -15,7 +14,7 @@
      <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True" OnPageIndexChanging="partsGridView_PageIndexChanging"
                 OnRowCommand="parts_RowCommand" OnRowCancelingEdit="parts_RowCancelingEdit"
-                OnRowDeleting="parts_RowDeleting" alternatingrowstyle-backcolor="Linen" headerstyle-backcolor="SkyBlue"
+                alternatingrowstyle-backcolor="Linen" headerstyle-backcolor="SkyBlue"
                 CellPadding="4" CssClass="Table1" Font-Size="Medium" AllowPaging="True" PageSize="15">
                 <%-- Theme Properties --%>
                 <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" />
@@ -43,18 +42,7 @@
                            <asp:Button CssClass="nextPage" ID="viewDetailsButton" Text="Details" runat="server" CommandArgument='<%# Eval("id") %>' CommandName="viewDetails" Height="27"/>
                        </ItemTemplate>
                    </asp:TemplateField>
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Fetch" ToolTip="Fetch" Width="20px" Height="20px" CommandArgument='<%#Eval("part_no")+","+ Eval("part_name")%>' OnClientClick="return confirm('Do you want to Edit?');" />
-                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="Delete" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to Delete?');" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
                 </Columns>
     </asp:GridView>
-        <center>
-            <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
-            <br />
-            <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
-        </center>
 </asp:Content>
 

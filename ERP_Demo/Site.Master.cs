@@ -11,7 +11,6 @@ namespace ERP_Demo
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 if (Session["roleFullAccess"] != null || Session["roleTransactions"] != null || Session["roleReports"] != null || Session["roleSelectedAccess"] != null)
@@ -134,6 +133,11 @@ namespace ERP_Demo
                     {
                         if(Menu1.Items.Count > 0)
                         {
+                            Menu1.Items.Add(new MenuItem()
+                            {
+                                Text = "View Parts",
+                                NavigateUrl = "~/displayPartsWorker.aspx"
+                            });
                             Menu1.Items.Remove(Menu1.FindItem("Masters"));
                             Menu1.Items.Remove(Menu1.FindItem("Reports"));
                         }

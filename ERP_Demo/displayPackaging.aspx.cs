@@ -25,7 +25,7 @@ namespace ERP_Demo
             using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
             {
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_master", sqlCon);
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_master order by id OFFSET 1 ROWS", sqlCon);
                 sqlDa.Fill(dtbl);
             }
             if (dtbl.Rows.Count > 0)

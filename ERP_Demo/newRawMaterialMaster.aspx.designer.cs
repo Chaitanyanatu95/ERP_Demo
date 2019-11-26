@@ -31,6 +31,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox rmName;
         
         /// <summary>
+        /// rmNameReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rmNameReq;
+        
+        /// <summary>
         /// rmGrade control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox rmGrade;
+        
+        /// <summary>
+        /// rmGradeReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rmGradeReq;
         
         /// <summary>
         /// rmColor control.
@@ -49,6 +67,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox rmColor;
         
         /// <summary>
+        /// rmColorReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rmColorReq;
+        
+        /// <summary>
         /// rmMake control.
         /// </summary>
         /// <remarks>
@@ -56,5 +83,14 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox rmMake;
+        
+        /// <summary>
+        /// rmMakeReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rmMakeReq;
     }
 }

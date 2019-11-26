@@ -20,27 +20,6 @@ namespace ERP_Demo
             }
         }
 
-        protected void Page_LoadComplete(object sender, EventArgs e)
-        {
-            if (IsPostBack)
-            {
-                if ((Convert.ToInt32(Application["cycleTime"]) != 0) && (Convert.ToInt32(Application["noOfCavities"]) != 0) && (Convert.ToInt32(Application["shiftTime"]) != 0))
-                {
-                    calculateExpectedQuantity();
-                }
-
-                if (!String.IsNullOrEmpty(noShotsTextBox.Text) && !String.IsNullOrEmpty(rejectionPCSTextBox.Text))
-                {
-                    calculateActualQuantity();
-                }
-
-                if (!String.IsNullOrEmpty(downTimeTextBox.Text) && !String.IsNullOrEmpty(actQuantityTextBox.Text) && !String.IsNullOrEmpty(expQuantityTextBox.Text))
-                {
-                    calculateEfficiency();
-                }
-            }
-        }
-
         protected void LoadValuesInControlls()
         {
             if (Session["username"] is null)
@@ -81,13 +60,13 @@ namespace ERP_Demo
                         machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
                     }
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT down_time_code FROM down_time_master", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT down_time_type FROM down_time_master", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         downTimeCodeDropDownList.DataSource = reader;
                         downTimeCodeDropDownList.DataBind();
                         reader.Close();
-                        downTimeCodeDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
+                        downTimeCodeDropDownList.Items.Insert(0, new ListItem("Select Down Time Type", ""));
                     }
                 }
             }
@@ -151,6 +130,7 @@ namespace ERP_Demo
                     {
                         Application["shiftTime"] = reader["hours"].ToString();
                     }
+                    calculateExpectedQuantity();
                     reader.Close();
                 }
             }
@@ -158,25 +138,20 @@ namespace ERP_Demo
 
         protected void calculateExpectedQuantity()
         {
-            expQuantityTextBox.Text = Convert.ToString((3600 / Convert.ToInt32(Application["cycleTime"])) * (Convert.ToInt32(Application["noOfCavities"]) * Convert.ToInt32(Application["shiftTime"]) * 0.9));
-            //System.Diagnostics.Debug.WriteLine(expQuantityTextBox.Text, "Exp. Qty");
+            string cycleTime = Application["cycleTime"].ToString();
+            string noOfCavities = Application["noOfCavities"].ToString();
+            string shiftTime = Application["shiftTime"].ToString();
+            expQuantityTextBox.Text = Math.Ceiling((3600 / double.Parse(cycleTime)) * (double.Parse(noOfCavities) * double.Parse(shiftTime)) * 0.9).ToString();
         }
 
         protected void calculateActualQuantity()
         {
             actQuantityTextBox.Text = Convert.ToString(((int.Parse(noShotsTextBox.Text) * Convert.ToInt32(Application["noOfCavities"])) - int.Parse(rejectionPCSTextBox.Text)));
-            //System.Diagnostics.Debug.WriteLine(actQuantityTextBox.Text, "Act. Qty");
         }
 
         protected void calculateEfficiency()
         {
-            System.Diagnostics.Debug.WriteLine(actQuantityTextBox.Text, "Actual Qty");
-            System.Diagnostics.Debug.WriteLine(downTimeTextBox.Text, "DownTime");
-            System.Diagnostics.Debug.WriteLine(Convert.ToInt32(Application["cycleTime"]));
-            System.Diagnostics.Debug.WriteLine(Convert.ToInt32(Application["noOfCavities"]));
-            System.Diagnostics.Debug.WriteLine(expQuantityTextBox.Text, "Exp Qty");
-            efficiencyTextBox.Text = Convert.ToString(Math.Round(((float.Parse(actQuantityTextBox.Text) + ((float.Parse(downTimeTextBox.Text) * 3600) / Convert.ToDouble(Application["cycleTime"])) * Convert.ToDouble(Application["noOfCavities"])) / float.Parse(expQuantityTextBox.Text)) * 100, 2));
-            System.Diagnostics.Debug.WriteLine(efficiencyTextBox.Text, "Efficiency");
+            efficiencyTextBox.Text = Convert.ToString(Math.Round(((float.Parse(actQuantityTextBox.Text) + ((float.Parse(downTimeTextBox.Text) * (3600 / Convert.ToDouble(Application["cycleTime"])))*0.9) * Convert.ToDouble(Application["noOfCavities"])) / float.Parse(expQuantityTextBox.Text)) * 100, 2));
         }
 
         protected void SaveBtn_Click(object sender, EventArgs e)
@@ -191,10 +166,11 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value.ToString() + "')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "')", con);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";
+                    Response.Redirect("~/Default.aspx");
                 }
             }
             catch(Exception ex)
@@ -223,6 +199,42 @@ namespace ERP_Demo
             catch(Exception ne)
             {
               ne.Message.ToString();
+            }
+        }
+
+        protected void Cancel_Click(object sender, EventArgs e)
+        {
+            if (Application["editFlag"] is true)
+                Application["editFlag"] = null;
+            Response.Redirect("~/Default.aspx");
+        }
+
+        protected void downTimeCodeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (downTimeCodeDropDownList.SelectedItem.Text == "N/A")
+            {
+                downTimeTextBox.ReadOnly = true;
+                downTimeTextBox.Text = "0";
+                if (actQuantityTextBox.Text != "" && noShotsEndTextBox.Text != "" && expQuantityTextBox.Text != "")
+                    calculateEfficiency();
+            }
+            else
+            {
+                downTimeTextBox.ReadOnly = false;
+            }
+        }
+
+        protected void downTimeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(actQuantityTextBox.Text != "" && noShotsEndTextBox.Text != "" && expQuantityTextBox.Text!= "")
+                calculateEfficiency();
+        }
+
+        protected void rejectionPCSTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(noShotsEndTextBox.Text !="" && rejectionPCSTextBox.Text != "")
+            {
+                calculateActualQuantity();
             }
         }
     }

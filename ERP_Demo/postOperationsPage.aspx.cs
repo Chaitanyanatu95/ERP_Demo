@@ -29,7 +29,7 @@ namespace ERP_Demo
                 }
             }
         }
-        
+
         protected void LoadPostOperationValues()
         {
             /************** POSTOPERATION ****************/
@@ -50,6 +50,7 @@ namespace ERP_Demo
             else
             {
                 dtPostOperation.Rows.Add(dtPostOperation.NewRow());
+
                 BindPostGrid();
                 //postOperationDropDownList.Items.Insert(0, new ListItem("Select Post Opr", ""));
                 postOperationGrid.Rows[0].Cells.Clear();
@@ -57,6 +58,39 @@ namespace ERP_Demo
                 postOperationGrid.Rows[0].Cells[0].ColumnSpan = dtPostOperation.Columns.Count;
                 //postOperationGrid.Rows[0].Cells[0].Text = "No Data Found ..!";
                 postOperationGrid.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+            }
+        }
+
+        protected void OnDataBound(object sender, EventArgs e)
+        {
+            DropDownList ddltype = postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList") as DropDownList;
+            ddltype.DataSource = GetData("SELECT DISTINCT type FROM post_operation_master");
+            ddltype.DataTextField = "type";
+            ddltype.DataValueField = "type";
+            ddltype.DataBind();
+            ddltype.Items.Insert(0, new ListItem("Select Type", "0"));
+        }
+
+        private DataTable GetData(string query)
+        {
+            string strConnString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(strConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = query;
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        cmd.Connection = con;
+                        sda.SelectCommand = cmd;
+                        using (DataSet ds = new DataSet())
+                        {
+                            DataTable dt = new DataTable();
+                            sda.Fill(dt);
+                            return dt;
+                        }
+                    }
+                }
             }
         }
 
@@ -91,8 +125,8 @@ namespace ERP_Demo
             }
         }
 
-        
-    
+
+
         protected void LoadEditValues()
         {
             if (Application["postOperationDetailsReq"].ToString() == "NO")
@@ -135,10 +169,10 @@ namespace ERP_Demo
             if (Directory.Exists(temp))
             {
                 DirectoryInfo di = new DirectoryInfo(temp);
-                
-                FileInfo[] files = di.GetFiles(Application["partNo"]+"_*.*");
 
-                foreach ( FileInfo m in files)
+                FileInfo[] files = di.GetFiles(Application["partNo"] + "_*.*");
+
+                foreach (FileInfo m in files)
                 {
                     //System.Diagnostics.Debug.WriteLine(m.Name.ToString());
                     listUploadedFiles.Text += String.Format("<style> display:block; </style><br/> {0}", m.Name.ToString());
@@ -150,21 +184,21 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-           if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["custPartNo"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldMfgYear"].ToString() == "" || Application["moldLife"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
-           {
-               ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
-           }
-           else
-           {
+            if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["custPartNo"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldMfgYear"].ToString() == "" || Application["moldLife"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+            }
+            else
+            {
                 Application["postOperationDetailsReq"] = postOperationDropDownList.SelectedItem.Text;
                 Application["packagingDetailsReq"] = packagingDetailsDropDownList.SelectedItem.Text;
                 SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-               con.Open();
+                con.Open();
                 if (Application["editFlag"] is true)
                 {
-                    string query = "UPDATE parts_master SET part_name='"+Application["partName"]+"', customer_name='"+Application["custName"]+"', customer_part_no = '"+Application["custPartNo"]+"',product_category='"+Application["prodCategory"]+"',mold_name='"+Application["moldName"]+"',mold_mfg_year='"+Application["moldMfgYear"]+"',mold_life='"+Application["moldLife"]+"',no_of_cavities='"+Application["noOfCavities"]+"',unit_of_measurement = '"+Application["unit"]+"',part_weight = '"+Application["partWeight"]+"',shot_weight='"+Application["shotWeight"]+"',cycle_time='"+Application["cycleTime"]+"'," +
-                        "jig_fixture_req='"+Application["jigReq"]+ "',production_in_pcs = '"+Application["moldProductionCycle"] + "',part_photo='"+Application["partPhoto"]+"',mold_spec_sheet='"+Application["moldSpec"]+"',raw_material='"+Application["rawMaterial"] +"',rm_grade='"+Application["rmGrade"] +"',rm_make='"+Application["rmMake"]+"',rm_color='"+Application["rmColor"]+"',masterbatch='"+Application["masterbatch"] +"',alt_raw_material='"+Application["altRawMaterial"] +"',mb_name='"+Application["mbName"]+"',mb_grade='"+Application["mbGrade"]+"',mb_mfg='"+Application["mbMfg"]+"',mb_color='"+Application["mbColor"]+"',mb_color_code='"+Application["mbColorCode"]+"',alt_rm_name='"+Application["altRMName"] +"',alt_rm_grade='"+Application["altRmGrade"]+ "'" +
-                        ",alt_rm_make='"+Application["altRmMake"]+"',alt_rm_color='"+Application["altRmColor"]+"',alt_masterbatch='"+Application["altMasterbatch"] +"',alt_mb_name='"+Application["altMasterbatchName"] +"',alt_mb_grade='"+Application["altMasterbatchGrade"] +"',alt_mb_mfg='"+Application["altMasterbatchMfg"] +"',alt_mb_color='"+Application["altMasterbatchColor"] +"',alt_mb_color_code='"+Application["altMasterbatchColorCode"]+ "',post_operation_required ='" + postOperationDropDownList.SelectedItem.Text + "' ,packaging_details_required = '" + packagingDetailsDropDownList.SelectedItem.Text + "' WHERE part_no = '"+Application["partNo"]+"'";
+                    string query = "UPDATE parts_master SET part_name='" + Application["partName"] + "', customer_name='" + Application["custName"] + "', customer_part_no = '" + Application["custPartNo"] + "',product_category='" + Application["prodCategory"] + "',mold_name='" + Application["moldName"] + "',mold_mfg_year='" + Application["moldMfgYear"] + "',mold_life='" + Application["moldLife"] + "',no_of_cavities='" + Application["noOfCavities"] + "',unit_of_measurement = '" + Application["unit"] + "',part_weight = '" + Application["partWeight"] + "',shot_weight='" + Application["shotWeight"] + "',cycle_time='" + Application["cycleTime"] + "'," +
+                        "jig_fixture_req='" + Application["jigReq"] + "',production_in_pcs = '" + Application["moldProductionCycle"] + "',part_photo='" + Application["partPhoto"] + "',mold_spec_sheet='" + Application["moldSpec"] + "',raw_material='" + Application["rawMaterial"] + "',rm_grade='" + Application["rmGrade"] + "',rm_make='" + Application["rmMake"] + "',rm_color='" + Application["rmColor"] + "',masterbatch='" + Application["masterbatch"] + "',alt_raw_material='" + Application["altRawMaterial"] + "',mb_name='" + Application["mbName"] + "',mb_grade='" + Application["mbGrade"] + "',mb_mfg='" + Application["mbMfg"] + "',mb_color='" + Application["mbColor"] + "',mb_color_code='" + Application["mbColorCode"] + "',alt_rm_name='" + Application["altRMName"] + "',alt_rm_grade='" + Application["altRmGrade"] + "'" +
+                        ",alt_rm_make='" + Application["altRmMake"] + "',alt_rm_color='" + Application["altRmColor"] + "',alt_masterbatch='" + Application["altMasterbatch"] + "',alt_mb_name='" + Application["altMasterbatchName"] + "',alt_mb_grade='" + Application["altMasterbatchGrade"] + "',alt_mb_mfg='" + Application["altMasterbatchMfg"] + "',alt_mb_color='" + Application["altMasterbatchColor"] + "',alt_mb_color_code='" + Application["altMasterbatchColorCode"] + "',post_operation_required ='" + postOperationDropDownList.SelectedItem.Text + "' ,packaging_details_required = '" + packagingDetailsDropDownList.SelectedItem.Text + "' WHERE part_no = '" + Application["partNo"] + "'";
                     Application["query"] = query;
                 }
                 else
@@ -177,6 +211,9 @@ namespace ERP_Demo
                 SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
                 cmd.ExecuteNonQuery();
                 Application["editFlag"] = null;
+                Application["altRmFlag"] = null;
+                Application["altMbFlag"] = null;
+                Application["mbFlag"] = null;
                 Application["query"] = null;
                 Application["partNo"] = null;
                 con.Close();
@@ -186,8 +223,8 @@ namespace ERP_Demo
 
         protected void BindPostGrid()
         {
-           postOperationGrid.DataSource = (DataTable)Application["PostOperation"];
-           postOperationGrid.DataBind();
+            postOperationGrid.DataSource = (DataTable)Application["PostOperation"];
+            postOperationGrid.DataBind();
         }
 
         protected void BindPackagingDetailsGrid()
@@ -196,7 +233,7 @@ namespace ERP_Demo
             packagingDetailsGrid.DataBind();
         }
 
-        
+
 
         protected void postOperationGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -220,12 +257,11 @@ namespace ERP_Demo
                     {
 
                         sqlCon.Open();
-                        string query = "INSERT INTO post_operation_details (type,target_quantity,process_description,photo,part_no,part_name) VALUES (@type,@targetQuantity,@processDesc,'"+ Application["photoPath"] + "','" + partNo + "','" + partName + "')";
+                        string query = "INSERT INTO post_operation_details (type,target_quantity,process_description,photo,part_no,part_name) VALUES (@type,@targetQuantity,@processDesc,'" + Application["photoPath"] + "','" + partNo + "','" + partName + "')";
                         SqlCommand cmd = new SqlCommand(query, sqlCon);
                         cmd.Parameters.AddWithValue("@type", (postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList") as DropDownList).SelectedItem.Text.Trim());
                         cmd.Parameters.AddWithValue("@targetQuantity", (postOperationGrid.FooterRow.FindControl("txtTargetQuantityFooter") as TextBox).Text.Trim());
                         cmd.Parameters.AddWithValue("@processDesc", (postOperationGrid.FooterRow.FindControl("txtProcessDescriptionFooter") as TextBox).Text.Trim());
-                        //cmd.Parameters.AddWithValue("@photo", (postOperationGrid.FooterRow.FindControl("photoUploadFooter") as FileUpload).FileName.ToString().Trim());
                         cmd.ExecuteNonQuery();
                         sqlCon.Close();
                         if (Application["editFlag"] is true)
@@ -256,7 +292,7 @@ namespace ERP_Demo
 
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(postOperationGrid.DataKeys[e.RowIndex].Value.ToString()));
-                    
+
                     sqlCmd.ExecuteNonQuery();
                     if (Application["editFlag"] is true)
                         LoadEditValues();
@@ -265,7 +301,7 @@ namespace ERP_Demo
                     lblSuccessMessage.Text = "Selected Record Deleted";
                     lblErrorMessage.Text = "";
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -294,7 +330,7 @@ namespace ERP_Demo
                     using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
                     {
                         sqlCon.Open();
-                        string query = "INSERT INTO packaging_details_master (type,size,qty_per_package,photo,part_no,part_name) VALUES(@type,@size,@qtyPerPackage,'"+Application["photoPath"]+"','" + partNo + "','" + partName + "')";
+                        string query = "INSERT INTO packaging_details_master (type,size,qty_per_package,photo,part_no,part_name) VALUES(@type,@size,@qtyPerPackage,'" + Application["photoPath"] + "','" + partNo + "','" + partName + "')";
                         SqlCommand cmd = new SqlCommand(query, sqlCon);
                         cmd.Parameters.AddWithValue("@type", (packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList") as DropDownList).SelectedItem.Text.Trim());
                         cmd.Parameters.AddWithValue("@size", (packagingDetailsGrid.FooterRow.FindControl("txtPostSizeFooter") as TextBox).Text.Trim());
@@ -334,7 +370,7 @@ namespace ERP_Demo
                     using (SqlCommand cmd = new SqlCommand("SELECT size FROM packaging_details_master WHERE type= '" + ((DropDownList)row.FindControl("packagingDropDownList")).SelectedItem.Value + "' ", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
-                        while(reader.Read())
+                        while (reader.Read())
                         {
                             ((TextBox)row.FindControl("txtPostSizeFooter")).Text = reader["size"].ToString();
                         }
@@ -385,6 +421,11 @@ namespace ERP_Demo
         {
             if (Application["editFlag"] is true)
                 Application["editFlag"] = null;
+
+            Application["altRmFlag"] = null;
+            Application["altMbFlag"] = null;
+            Application["mbFlag"] = null;
+
             Response.Redirect("~/displayParts.aspx");
         }
 
@@ -399,7 +440,7 @@ namespace ERP_Demo
 
                 foreach (FileInfo m in files)
                 {
-                    File.Delete(Server.MapPath("~/UploadedFiles/Parts/"+m.ToString()+""));
+                    File.Delete(Server.MapPath("~/UploadedFiles/Parts/" + m.ToString() + ""));
                     listUploadedFiles.Text = "";
                 }
             }

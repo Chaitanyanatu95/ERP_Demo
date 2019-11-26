@@ -72,32 +72,25 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (vendorNameTextBox.Text == "" || vendorAddressOneTextBox.Text == "" || vendorAddressTwoTextBox.Text == "" || vendorContactNoTextBox.Text == "" || vendorEmailIdTextBox.Text == "" || vendorContactPersonTextBox.Text == "" || vendorGstDetailsTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                string query = "UPDATE vendor_master SET vendor_name='" + vendorNameTextBox.Text.ToString() + "',vendor_address_one ='" + vendorAddressOneTextBox.Text.ToString()+ "',vendor_address_two = '" + vendorAddressTwoTextBox.Text.ToString()+ "',vendor_contact = '" + vendorContactNoTextBox.Text.ToString()+ "',vendor_email = '" + vendorEmailIdTextBox.Text.ToString()+ "',vendor_contact_person='" + vendorContactPersonTextBox.Text.ToString()+ "',vendor_gst_details='" + vendorGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["vendorId"] +"'";
+                Application["vendorQuery"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    string query = "UPDATE vendor_master SET vendor_name='" + vendorNameTextBox.Text.ToString() + "',vendor_address_one ='" + vendorAddressOneTextBox.Text.ToString()+ "',vendor_address_two = '" + vendorAddressTwoTextBox.Text.ToString()+ "',vendor_contact = '" + vendorContactNoTextBox.Text.ToString()+ "',vendor_email = '" + vendorEmailIdTextBox.Text.ToString()+ "',vendor_contact_person='" + vendorContactPersonTextBox.Text.ToString()+ "',vendor_gst_details='" + vendorGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["vendorId"] +"'";
-                    Application["vendorQuery"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO vendor_master(vendor_id,vendor_name,vendor_address_one,vendor_address_two,vendor_contact,vendor_email,vendor_contact_person,vendor_gst_details)VALUES('" + vendorIdTextBox.Text + "','" + vendorNameTextBox.Text + "','" + vendorAddressOneTextBox.Text + "','" + vendorAddressTwoTextBox.Text + "','" + vendorContactNoTextBox.Text + "','" + vendorEmailIdTextBox.Text + "','" + vendorContactPersonTextBox.Text + "','" + vendorGstDetailsTextBox.Text + "')";
-                    Application["vendorQuery"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["vendorQuery"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                Application["vendorId"] = null;
-                Application["vendorQuery"] = null;
-                Application["editFlag"] = null;
-                con.Close();
-                Response.Redirect("~/displayVendor.aspx");
+                string query = "INSERT INTO vendor_master(vendor_id,vendor_name,vendor_address_one,vendor_address_two,vendor_contact,vendor_email,vendor_contact_person,vendor_gst_details)VALUES('" + vendorIdTextBox.Text + "','" + vendorNameTextBox.Text + "','" + vendorAddressOneTextBox.Text + "','" + vendorAddressTwoTextBox.Text + "','" + vendorContactNoTextBox.Text + "','" + vendorEmailIdTextBox.Text + "','" + vendorContactPersonTextBox.Text + "','" + vendorGstDetailsTextBox.Text + "')";
+                Application["vendorQuery"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["vendorQuery"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            Application["vendorId"] = null;
+            Application["vendorQuery"] = null;
+            Application["editFlag"] = null;
+            con.Close();
+            Response.Redirect("~/displayVendor.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

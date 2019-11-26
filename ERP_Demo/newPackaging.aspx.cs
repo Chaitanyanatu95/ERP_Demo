@@ -45,34 +45,28 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (packagingTypeTextBox.Text == "" || sizeTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
+                string query = "UPDATE packaging_master SET packaging_type='" + packagingTypeTextBox.Text.ToString() + "',size='"+ sizeTextBox.Text.ToString()+"' WHERE Id='" + Application["packagingId"] + "'";
+                Application["query"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                    string query = "UPDATE packaging_master SET packaging_type='" + packagingTypeTextBox.Text.ToString() + "',size='"+ sizeTextBox.Text.ToString()+"' WHERE Id='" + Application["packagingId"] + "'";
-                    Application["query"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO packaging_master(packaging_type,size)VALUES('" + packagingTypeTextBox.Text + "','"+ sizeTextBox.Text + "')";
-                    Application["query"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                //System.Threading.Thread.Sleep(1500);
-                Application["packagingId"] = null;
-                Application["query"] = null;
-                Application["editFlag"] = null;
-                con.Close();
-                Response.Redirect("~/displayPackaging.aspx");
+                string query = "INSERT INTO packaging_master(packaging_type,size)VALUES('" + packagingTypeTextBox.Text + "','"+ sizeTextBox.Text + "')";
+                Application["query"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            //System.Threading.Thread.Sleep(1500);
+            Application["packagingId"] = null;
+            Application["query"] = null;
+            Application["editFlag"] = null;
+            con.Close();
+            Response.Redirect("~/displayPackaging.aspx");
+            
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

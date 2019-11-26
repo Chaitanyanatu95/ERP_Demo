@@ -52,32 +52,25 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (customerNameTextBox.Text == "" || customerAddressOneTextBox.Text == "" || customerAddressTwoTextBox.Text == "" || customerContactNoTextBox.Text == "" || customerEmailIdTextBox.Text == "" || customerContactPersonTextBox.Text == "" || customerGstDetailsTextBox.Text == "")
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            con.Open();
+            if (Application["editFlag"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                string query = "UPDATE customer_master SET customer_name='" + customerNameTextBox.Text.ToString() + "',customer_address_one ='"+customerAddressOneTextBox.Text.ToString()+"',customer_address_two = '"+customerAddressTwoTextBox.Text.ToString()+"',customer_contact = '"+customerContactNoTextBox.Text.ToString()+"',customer_email = '"+customerEmailIdTextBox.Text.ToString()+"',customer_contact_person='"+customerContactPersonTextBox.Text.ToString()+"',customer_gst_details='"+customerGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["custId"]+"'";
+                Application["custQuery"] = query;
             }
             else
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                if (Application["editFlag"] is true)
-                {
-                    string query = "UPDATE customer_master SET customer_name='" + customerNameTextBox.Text.ToString() + "',customer_address_one ='"+customerAddressOneTextBox.Text.ToString()+"',customer_address_two = '"+customerAddressTwoTextBox.Text.ToString()+"',customer_contact = '"+customerContactNoTextBox.Text.ToString()+"',customer_email = '"+customerEmailIdTextBox.Text.ToString()+"',customer_contact_person='"+customerContactPersonTextBox.Text.ToString()+"',customer_gst_details='"+customerGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["custId"]+"'";
-                    Application["custQuery"] = query;
-                }
-                else
-                {
-                    string query = "INSERT INTO customer_master(customer_name,customer_address_one,customer_address_two,customer_contact,customer_email,customer_contact_person,customer_gst_details)VALUES('" + customerNameTextBox.Text + "','" + customerAddressOneTextBox.Text + "','" + customerAddressTwoTextBox.Text + "','" + customerContactNoTextBox.Text + "','" + customerEmailIdTextBox.Text + "','" + customerContactPersonTextBox.Text + "','" + customerGstDetailsTextBox.Text + "')";
-                    Application["custQuery"] = query;
-                }
-                SqlCommand cmd = new SqlCommand(Application["custQuery"].ToString(), con);
-                cmd.ExecuteNonQuery();
-                Application["custId"] = null;
-                Application["custQuery"] = null;
-                Application["editFlag"] = null;
-                con.Close();
-                Response.Redirect("~/displayCustomer.aspx");
+                string query = "INSERT INTO customer_master(customer_name,customer_address_one,customer_address_two,customer_contact,customer_email,customer_contact_person,customer_gst_details)VALUES('" + customerNameTextBox.Text + "','" + customerAddressOneTextBox.Text + "','" + customerAddressTwoTextBox.Text + "','" + customerContactNoTextBox.Text + "','" + customerEmailIdTextBox.Text + "','" + customerContactPersonTextBox.Text + "','" + customerGstDetailsTextBox.Text + "')";
+                Application["custQuery"] = query;
             }
+            SqlCommand cmd = new SqlCommand(Application["custQuery"].ToString(), con);
+            cmd.ExecuteNonQuery();
+            Application["custId"] = null;
+            Application["custQuery"] = null;
+            Application["editFlag"] = null;
+            con.Close();
+            Response.Redirect("~/displayCustomer.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

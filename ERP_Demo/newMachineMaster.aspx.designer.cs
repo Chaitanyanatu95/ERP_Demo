@@ -31,6 +31,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox machineNoTextBox;
         
         /// <summary>
+        /// machineNoReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator machineNoReq;
+        
+        /// <summary>
         /// machineNameTextBox control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox machineNameTextBox;
+        
+        /// <summary>
+        /// machineNameReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator machineNameReq;
         
         /// <summary>
         /// machineFileUpload control.
@@ -56,32 +74,5 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
-        
-        /// <summary>
-        /// rowAfterProcess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableFooterRow rowAfterProcess;
-        
-        /// <summary>
-        /// cellAfterProcess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellAfterProcess;
-        
-        /// <summary>
-        /// lblAfterProcess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAfterProcess;
     }
 }

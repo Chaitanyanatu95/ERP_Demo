@@ -8,9 +8,9 @@
             <asp:TableCell runat="server"  CssClass="margin">POST OPERATION TYPE</asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell runat="server"  CssClass="margin"><asp:TextBox ID="postOperationTextBox" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" HorizontalAlign="Center"  CssClass="margin"><asp:Button runat="server" CssClass="nextPage" Text="SAVE" OnClick="SaveBtn_Click" />
-            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" />
+            <asp:TableCell runat="server"  CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="postOperationTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="postOpnReq" CssClass="required" runat="server" ControlToValidate="postOperationTextBox" ErrorMessage="please enter post operation type"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" HorizontalAlign="Center"  CssClass="margin"><asp:Button runat="server" CssClass="nextPage" Text="SAVE" OnClick="SaveBtn_Click" OnClientClick="confirm('Do you want to save?');"/>
+            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
             </asp:TableCell></asp:TableRow>
     </asp:Table>
 </asp:Content>

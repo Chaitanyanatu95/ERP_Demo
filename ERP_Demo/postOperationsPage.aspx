@@ -68,8 +68,9 @@
                         <asp:Label Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type"></asp:DropDownList>
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [type] FROM [post_operation_master]"></asp:SqlDataSource>
+                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type"></asp:DropDownList><asp:RequiredFieldValidator ID="typeReq" CssClass="required" runat="server" ErrorMessage="please select type" ControlToValidate="postOperationTypeDropDownList"></asp:RequiredFieldValidator>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [type] FROM [post_operation_master]">
+                        </asp:SqlDataSource>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="TARGET QUANTITY / HR">
@@ -77,7 +78,7 @@
                         <asp:Label Text='<%# Eval("target_quantity") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="txtTargetQuantityFooter" runat="server"/>
+                        <asp:TextBox ID="txtTargetQuantityFooter" runat="server"/><asp:RequiredFieldValidator ID="targetQuantReq" CssClass="required" runat="server" ErrorMessage="please enter target quantity" ControlToValidate="txtTargetQuantityFooter"></asp:RequiredFieldValidator>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="PROCESS DESCRIPTION">
@@ -98,10 +99,10 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="Warning();" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?');" Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return confirm('Do you want to Add?');" Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -118,9 +119,9 @@
         <asp:TableRow runat="server" HorizontalAlign="Center">
             <asp:TableCell runat="server">
                 <asp:DropDownList ID="packagingDetailsDropDownList" runat="server" onchange="onPackagingDetailsSelected()">
-                                                <asp:ListItem Value="YES">YES</asp:ListItem>
-                                                <asp:ListItem Value="NO">NO</asp:ListItem>
-                                          </asp:DropDownList>
+                        <asp:ListItem Value="YES">YES</asp:ListItem>
+                        <asp:ListItem Value="NO">NO</asp:ListItem>
+                    </asp:DropDownList>
             </asp:TableCell>
              </asp:TableRow>
         </asp:Table>
@@ -131,7 +132,7 @@
                         <asp:Label Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="packagingDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="packaging_type" DataValueField="packaging_type" OnSelectedIndexChanged="packagingTypeChanged" AutoPostBack="true"/>
+                        <asp:DropDownList ID="packagingDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="packaging_type" DataValueField="packaging_type" OnSelectedIndexChanged="packagingTypeChanged" AutoPostBack="true"/><asp:RequiredFieldValidator ID="packagingTypeReq" CssClass="required" runat="server" ErrorMessage="please select packaging type" ControlToValidate="packagingDropDownList"></asp:RequiredFieldValidator>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [packaging_type] FROM [packaging_master]"></asp:SqlDataSource>
                     </FooterTemplate>
                 </asp:TemplateField>
@@ -148,7 +149,7 @@
                         <asp:Label Text='<%# Eval("qty_per_package") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="txtPostQuantityFooter" runat="server"/>
+                        <asp:TextBox ID="txtPostQuantityFooter" runat="server"/><asp:RequiredFieldValidator ID="postQuantityReq" CssClass="required" runat="server" ErrorMessage="please enter quantity" ControlToValidate="txtPostQuantityFooter"></asp:RequiredFieldValidator>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="PHOTO">
@@ -161,10 +162,10 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="Warning();" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?');" Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return confirm('Do you want to Add?');" Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -173,14 +174,14 @@
     <center>
         <asp:Label ID="labelMultipleFiles" runat="server" style="display:block;">EXTRA FILES</asp:Label>
         <asp:FileUpload runat="server" AllowMultiple="true" ID="UploadMultipleFiles" style="display:inline;"/>
-        <asp:Button ID="uplaoadedFile" runat="server" OnClick="uploadFile_Click" Text="SAVE FILES" style="display:inline;"/>
+        <asp:Button ID="uplaoadedFile" runat="server" OnClick="uploadFile_Click" Text="SAVE FILES" style="display:inline;" OnClientClick="return confirm('Do you want to save files?');" />
         <asp:Label ID="listUploadedFiles" runat="server" ></asp:Label>
         <asp:ImageButton ID="imgBtnExtra" runat="server" height="20" Width="20" style="display:inline;" OnClick="imgBtnExtra_Click"/>
         </center>
     <asp:table runat="server" CssClass="Table1" HorizontalAlign="Center" style="padding-top:30px;">
-        <asp:TableRow runat="server"><asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE PART" OnClick="SaveBtn_Click"  CssClass="nextPage"/></asp:TableCell>
-            <asp:TableCell ID="backCell" runat="server">&nbsp;&nbsp;&nbsp;<asp:Button Text="BACK" CssClass="nextPage" runat="server" OnClientClick="JavaScript:window.history.back(1);return false;" CausesValidation="false"/></asp:TableCell>
-            <asp:TableCell runat="server" >&nbsp;&nbsp;&nbsp;<asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click"  CssClass="nextPage" CausesValidation="false"/></asp:TableCell>
+        <asp:TableRow runat="server"><asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE PART" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="return confirm('Do you want to Save?');" /></asp:TableCell>
+            <asp:TableCell ID="backCell" runat="server">&nbsp;&nbsp;&nbsp;<asp:Button Text="BACK" CssClass="nextPage" runat="server" OnClientClick="javascript:window.history.go(-1);return false;" CausesValidation="false"/></asp:TableCell>
+            <asp:TableCell runat="server" >&nbsp;&nbsp;&nbsp;<asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click"  CssClass="nextPage" CausesValidation="false" OnClientClick="return confirm('Do you want to Cancel?');" /></asp:TableCell>
         </asp:TableRow> 
     </asp:table>
 </asp:Content>

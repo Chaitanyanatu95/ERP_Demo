@@ -31,6 +31,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox mbnameTextBox;
         
         /// <summary>
+        /// mbNameReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator mbNameReq;
+        
+        /// <summary>
         /// mbgradeTextBox control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox mbgradeTextBox;
+        
+        /// <summary>
+        /// mbGradeReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator mbGradeReq;
         
         /// <summary>
         /// mbmfgTextBox control.
@@ -49,6 +67,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox mbmfgTextBox;
         
         /// <summary>
+        /// mbMfgReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator mbMfgReq;
+        
+        /// <summary>
         /// mbcolorTextBox control.
         /// </summary>
         /// <remarks>
@@ -56,6 +83,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox mbcolorTextBox;
+        
+        /// <summary>
+        /// mbColorReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator mbColorReq;
         
         /// <summary>
         /// mbcolorcodeTextBox control.

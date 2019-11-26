@@ -27,8 +27,6 @@ namespace ERP_Demo
             }
             else
             {
-                productionTagLabel.Visible = false;
-                productionTagDropDownList.Visible = false;
                 operatorNameTextBox.Text = Session["username"].ToString();
                 SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                 using (con)
@@ -57,16 +55,9 @@ namespace ERP_Demo
 
         protected void partNameChanged(object sender, EventArgs e)
         {
-            if (partNameDropDownList.SelectedItem.Text == "Select Part Name")
-            {
-                productionTagLabel.Visible = false;
-                productionTagDropDownList.Visible = false;
-            }
-            else
-            {
-                productionTagLabel.Visible = true;
-                productionTagDropDownList.Visible = true;
-                LoadProductTagDetailsValues();
+            if (partNameDropDownList.SelectedItem.Text != "Select Part Name")
+            { 
+                LoadProductRejHisValues();
                 LoadShiftDetails();
             }
         }
@@ -170,33 +161,46 @@ namespace ERP_Demo
             }
         }
 
-        protected void WIPchanged(object sender,EventArgs e)
+        protected void FpaRejectionQtyTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
+                int totalQty = int.Parse(totalQtyTextBox.Text);
+                int okQty = int.Parse(actualQtyTextBox.Text);
+                int fpaRejectedQty = int.Parse(FpaRejectionQtyTextBox.Text);
+                int prodRejectionQty = 0;
+
+                foreach (GridViewRow row in prodRejHisGrid.Rows)
+                {
+                    Label Lblbasic = (Label)row.FindControl("rejectionQuantityLbl");
+                    prodRejectionQty += int.Parse(Lblbasic.Text);
+                    //System.Diagnostics.Debug.WriteLine(prodRejectionQty);
+                }
+                System.Diagnostics.Debug.WriteLine(prodRejectionQty);
+                if (totalQty != 0 && okQty != 0)
+                {
+                    wipQtyTextBox.Text = (totalQty - (okQty + (prodRejectionQty + fpaRejectedQty))).ToString();
+                }
+
                 if (wipQtyTextBox.Text != "")
                 {
-                    int totalQty = int.Parse(totalQtyTextBox.Text);
-                    int okQty = int.Parse(actualQtyTextBox.Text);
-                    int fpaRejectedQty = int.Parse(FpaRejectionQtyTextBox.Text);
-                    int prodRejectionQty = int.Parse(prodRejectionQtyTextBox.Text);
                     int targetQty = int.Parse(noOfPartsTextBox.Text);
                     int totalTime = int.Parse(timeTextBox.Text);
-
                     if (totalQty != 0 && okQty != 0 && targetQty != 0)
                     {
                         //System.Diagnostics.Debug.WriteLine(targetQty * totalTime * 0.9);
-                        efficiencyTextBox.Text = Math.Floor((((okQty + prodRejectionQty) - (fpaRejectedQty)) / (targetQty * totalTime * 0.9)*100)).ToString();
+                        efficiencyTextBox.Text = Math.Floor((((okQty + prodRejectionQty) - (fpaRejectedQty)) / (targetQty * totalTime * 0.9) * 100)).ToString();
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 lblSuccessMessage.Text = "";
                 lblErrorMessage.Text = ex.Message;
             }
         }
-        protected void prodTagDetailsGrid_RowCommand(object sender, GridViewCommandEventArgs e)
+
+        protected void prodRejHisGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
@@ -208,18 +212,16 @@ namespace ERP_Demo
                     using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
                     {
                         sqlCon.Open();
-                        string query = "INSERT INTO production_tag_details_master (emp_no,date,shift,qty,part_name) VALUES(@empNo,@date,@shift,@qty,'" + partName + "')";
+                        string query = "INSERT INTO production_rejection_history_master (rejection_code,rejection_quantity,part_name) VALUES(@rejectionCode,@rejectionQuantity,'" + partName + "')";
                         SqlCommand cmd = new SqlCommand(query, sqlCon);
-                        cmd.Parameters.AddWithValue("@empNo", (prodTagDetailsGrid.FooterRow.FindControl("txtEmpNoFooter") as TextBox).Text.Trim());
-                        cmd.Parameters.AddWithValue("@date", (prodTagDetailsGrid.FooterRow.FindControl("txtDateFooter") as TextBox).Text.Trim());
-                        cmd.Parameters.AddWithValue("@shift", (prodTagDetailsGrid.FooterRow.FindControl("txtShiftFooter") as TextBox).Text.Trim());
-                        cmd.Parameters.AddWithValue("@qty", (prodTagDetailsGrid.FooterRow.FindControl("txtQtyFooter") as TextBox).Text.ToString().Trim());
+                        cmd.Parameters.AddWithValue("@rejectionCode", (prodRejHisGrid.FooterRow.FindControl("rejectionCodeDropDownList") as DropDownList).SelectedItem.Text.Trim());
+                        cmd.Parameters.AddWithValue("@rejectionQuantity", (prodRejHisGrid.FooterRow.FindControl("txtRejQuantityFooter") as TextBox).Text.Trim());
                         cmd.ExecuteNonQuery();
                         sqlCon.Close();
                         if (Application["editFlag"] is true)
                             BindControlsOnPageLoad();
                         else
-                            LoadProductTagDetailsValues();
+                            LoadProductRejHisValues();
                         lblSuccessMessage.Text = "Record Added";
                         lblErrorMessage.Text = "";
                     }
@@ -232,21 +234,21 @@ namespace ERP_Demo
             }
         }
 
-        protected void prodTagDetailsGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void prodRejHisGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
             {
                 using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
                 {
                     sqlCon.Open();
-                    string query = "DELETE FROM production_tag_details_master WHERE id = @id";
+                    string query = "DELETE FROM production_rejection_history_master WHERE id = @id";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(prodTagDetailsGrid.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(prodRejHisGrid.DataKeys[e.RowIndex].Value.ToString()));
                     sqlCmd.ExecuteNonQuery();
                     if (Application["editFlag"] is true)
                         BindControlsOnPageLoad();
                     else
-                        LoadProductTagDetailsValues();
+                        LoadProductRejHisValues();
                     lblSuccessMessage.Text = "Selected Record Deleted";
                     lblErrorMessage.Text = "";
                 }
@@ -260,60 +262,41 @@ namespace ERP_Demo
 
         protected void BindProductionTagGrid()
         {
-            prodTagDetailsGrid.DataSource = (DataTable)Application["ProductionTagDetails"];
-            prodTagDetailsGrid.DataBind();
+            prodRejHisGrid.DataSource = (DataTable)Application["ProductionRejectionDetails"];
+            prodRejHisGrid.DataBind();
         }
 
-        protected void FpaRejectionQtyTextBox_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int totalQty = int.Parse(totalQtyTextBox.Text);
-                int okQty = int.Parse(actualQtyTextBox.Text);
-                int fpaRejectedQty = int.Parse(FpaRejectionQtyTextBox.Text);
-                int prodRejectionQty = int.Parse(prodRejectionQtyTextBox.Text);
+        
 
-                if (totalQty != 0 && okQty != 0)
-                {
-                    wipQtyTextBox.Text = (totalQty - (okQty + (prodRejectionQty + fpaRejectedQty))).ToString();
-                }
-            }
-            catch(Exception ex)
-            {
-                lblSuccessMessage.Text = "";
-                lblErrorMessage.Text = ex.Message;
-            }
-        }
-
-        protected void LoadProductTagDetailsValues()
+        protected void LoadProductRejHisValues()
         {
             /************* PRODUCTION TAG DETAILS *****************/
             if (partNameDropDownList.SelectedItem.Text != "Select Part Name")
             {
-                DataTable dtProductionTag = new DataTable();
-                dtProductionTag.Columns.AddRange(new DataColumn[4] { new DataColumn("EMP NO"), new DataColumn("DATE"), new DataColumn("SHIFT"), new DataColumn("QTY") });
-                Application["ProductionTagDetails"] = dtProductionTag;
+                DataTable dtProductionRejHis = new DataTable();
+                dtProductionRejHis.Columns.AddRange(new DataColumn[2] { new DataColumn("REJECTION CODE"), new DataColumn("REJECTION QUANTITY") });
+                Application["ProductionRejectionDetails"] = dtProductionRejHis;
                 BindProductionTagGrid();
 
                 using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM production_tag_details_master where part_name = '" + partNameDropDownList.SelectedItem.Text.ToString().Trim() + "'", sqlCon);
-                    sqlDa.Fill(dtProductionTag);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM production_rejection_history_master where part_name = '" + partNameDropDownList.SelectedItem.Text.ToString().Trim() + "'", sqlCon);
+                    sqlDa.Fill(dtProductionRejHis);
                 }
-                if (dtProductionTag.Rows.Count > 0)
+                if (dtProductionRejHis.Rows.Count > 0)
                 {
                     BindProductionTagGrid();
                 }
                 else
                 {
-                    dtProductionTag.Rows.Add(dtProductionTag.NewRow());
+                    dtProductionRejHis.Rows.Add(dtProductionRejHis.NewRow());
                     BindProductionTagGrid();
-                    prodTagDetailsGrid.Rows[0].Cells.Clear();
-                    prodTagDetailsGrid.Rows[0].Cells.Add(new TableCell());
-                    prodTagDetailsGrid.Rows[0].Cells[0].ColumnSpan = dtProductionTag.Columns.Count;
-                    prodTagDetailsGrid.Rows[0].Cells[0].Text = "No Data Found ..!";
-                    prodTagDetailsGrid.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                    prodRejHisGrid.Rows[0].Cells.Clear();
+                    prodRejHisGrid.Rows[0].Cells.Add(new TableCell());
+                    prodRejHisGrid.Rows[0].Cells[0].ColumnSpan = dtProductionRejHis.Columns.Count;
+                    prodRejHisGrid.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    prodRejHisGrid.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
         }
@@ -330,7 +313,7 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO fpa(worker_name,part_name,date,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,wip_qty,rej_code,prod_tag_details)VALUES('" + operatorNameTextBox.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + totalQtyTextBox.Text + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + wipQtyTextBox.Text + "','" + rejectionCodeList.SelectedItem.Text + "','" + productionTagDropDownList.SelectedItem.Text + "')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO fpa(worker_name,part_name,date,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,wip_qty,efficiency)VALUES('" + operatorNameTextBox.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + totalQtyTextBox.Text + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + wipQtyTextBox.Text + "','"+efficiencyTextBox.Text +"')", con);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";

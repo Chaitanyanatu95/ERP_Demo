@@ -11,12 +11,12 @@
             <asp:TableCell runat="server" CssClass="margin">MATERIAL MAKE</asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" >
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="rmName" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="rmGrade" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="rmColor" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="rmMake" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage"/>
-            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" />
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmName" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmNameReq" CssClass="required" runat="server" ControlToValidate="rmName" ErrorMessage="please enter raw material name"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmGrade" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmGradeReq" CssClass="required" runat="server" ControlToValidate="rmGrade" ErrorMessage="please enter raw material grade"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmColor" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmColorReq" CssClass="required" runat="server" ControlToValidate="rmColor" ErrorMessage="please enter raw material color"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmMake" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmMakeReq" CssClass="required" runat="server" ControlToValidate="rmMake" ErrorMessage="please enter raw material make"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="confirm('Do you want to save?');"/>
+            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>

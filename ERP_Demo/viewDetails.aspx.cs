@@ -89,5 +89,21 @@ namespace ERP_Demo
                 }
             }
         }
+
+        protected void back_Click(object sender, EventArgs e)
+        {
+            if(Session["roleTransactions"].ToString() == "YES")
+            {
+                Response.Redirect("~/displayPartsWorker.aspx");
+            }
+            else if(Session["roleReports"].ToString() == "YES")
+            {
+                Response.Redirect("~/displayPartsWorker.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/displayParts.aspx");
+            }
+        }
     }
 }

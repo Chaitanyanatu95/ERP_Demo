@@ -51,11 +51,12 @@
             <asp:TableCell runat="server" CssClass="margin" ColumnSpan="3">RIGHTS TO BE ALLOCATED</asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="empNameTextBox" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="empIdTextBox" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="userIdTextBox" runat="server"></asp:TextBox></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="userPasswordTextBox" runat="server"></asp:TextBox></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="empNameTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="empNameReq" CssClass="required" runat="server" ErrorMessage="please enter emp name" ControlToValidate="empNameTextBox"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="empIdTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="empIdReq" CssClass="required" runat="server" ErrorMessage="please enter emp id" ControlToValidate="empIdTextBox"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="userIdTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="userIdReq" CssClass="required" runat="server" ErrorMessage="please enter user id" ControlToValidate="userIdTextBox"></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="userPasswordTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="userPassReq" CssClass="required" runat="server" ErrorMessage="please user password" ControlToValidate="userPasswordTextBox"></asp:RequiredFieldValidator></asp:TableCell>
             <asp:TableCell runat="server">
+                <div class="required" style="padding-left:28em">*</div>
                 <asp:CheckBoxList ID="rightsToBeAllocatedCheckBoxList" runat="server" RepeatDirection="Horizontal" style="margin-left:40px; margin-top:17px;" AutoPostBack="true">
                     <asp:ListItem Value="Full Access"></asp:ListItem>
                     <asp:ListItem Value="Transactions"></asp:ListItem>
@@ -78,11 +79,10 @@
                     <asp:ListItem Text="Vendor" Value="Vendor"></asp:ListItem>
                     <asp:ListItem Text="Parts" Value="Parts"></asp:ListItem>
                 </asp:DropDownList>
-                <asp:CustomValidator ID="CustomValidator1" ErrorMessage="Please select at least one right!"
+                <asp:CustomValidator ID="CustomValidator1" ErrorMessage="Please select transaction rights!"
     ForeColor="Red" ClientValidationFunction="ValidateCheckBoxList" runat="server" style="margin-left:40px;" />
-
-            </asp:TableCell><asp:TableCell runat="server" ><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" /></asp:TableCell>
-            <asp:TableCell runat="server" ><asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false"/></asp:TableCell>
+            </asp:TableCell><asp:TableCell runat="server" ><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="confirm('Do you want to save?');"/></asp:TableCell>
+            <asp:TableCell runat="server" ><asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
 </asp:Content>
