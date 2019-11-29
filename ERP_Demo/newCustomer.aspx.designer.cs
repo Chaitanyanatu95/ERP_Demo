@@ -40,6 +40,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox customerNameTextBox;
         
         /// <summary>
+        /// custNameReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator custNameReq;
+        
+        /// <summary>
         /// customerAddressOneLabel control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerAddressOneTextBox;
+        
+        /// <summary>
+        /// customerAddressReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator customerAddressReq;
         
         /// <summary>
         /// customerAddressTwoLabel control.
@@ -94,6 +112,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox customerContactNoTextBox;
         
         /// <summary>
+        /// customerPhoneReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator customerPhoneReq;
+        
+        /// <summary>
         /// customerEmailLabel control.
         /// </summary>
         /// <remarks>
@@ -110,6 +137,24 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerEmailIdTextBox;
+        
+        /// <summary>
+        /// regexEmailValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
+        
+        /// <summary>
+        /// customerEmailIdReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator customerEmailIdReq;
         
         /// <summary>
         /// customerContactPersonLabel control.
@@ -130,6 +175,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox customerContactPersonTextBox;
         
         /// <summary>
+        /// customerContactPersonReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator customerContactPersonReq;
+        
+        /// <summary>
         /// customerGstNumberLabel control.
         /// </summary>
         /// <remarks>
@@ -146,6 +200,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerGstDetailsTextBox;
+        
+        /// <summary>
+        /// RequiredFieldValidator5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
         
         /// <summary>
         /// RegularExpressionValidator control.

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.Common;
+using System.Text.RegularExpressions;
 
 namespace ERP_Demo
 {
@@ -36,6 +39,7 @@ namespace ERP_Demo
                     {
                         machineNoTextBox.Text = reader["machine_no"].ToString();
                         machineNameTextBox.Text = reader["machine_name"].ToString();
+                        lblMachineSpec.Text = reader["machine_file_upload"].ToString();
                     }
                     reader.Close();
                 }
@@ -77,6 +81,35 @@ namespace ERP_Demo
             if (Application["editFlag"] is true)
                 Application["editFlag"] = null;
             Response.Redirect("~/displayMachine.aspx");
+        }
+
+        protected void btnMachineSpecs_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+
+            if (lblMachineSpec.Text != null)
+            {
+                if (Application["editFlag"] is true)
+                {
+                    var path = Server.MapPath(lblMachineSpec.Text);
+                    //System.Diagnostics.Debug.WriteLine(path);
+                    if (File.Exists(path))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("UPDATE machine_master set machine_file_upload = '' where id = '" + Application["machineId"] + "'", con))
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            File.Delete(Server.MapPath(lblMachineSpec.Text));
+                        }
+                        lblMachineSpec.Text = "";
+                        con.Close();
+                    }
+                    else
+                    {
+                        lblMachineSpec.Text = "";
+                    }
+                }
+            }
         }
     }
 }

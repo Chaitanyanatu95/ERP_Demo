@@ -157,6 +157,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.DropDownList mbNameDropDownList;
         
         /// <summary>
+        /// mbNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label mbNameLabel;
+        
+        /// <summary>
         /// mbGradeDropDownList control.
         /// </summary>
         /// <remarks>
@@ -164,6 +173,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList mbGradeDropDownList;
+        
+        /// <summary>
+        /// mbGradeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label mbGradeLabel;
         
         /// <summary>
         /// mbMfgTextBox control.
@@ -238,6 +256,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.DropDownList altRMDropDownList;
         
         /// <summary>
+        /// altRMLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label altRMLabel;
+        
+        /// <summary>
         /// altRawMaterialGradeDropDownList control.
         /// </summary>
         /// <remarks>
@@ -245,6 +272,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList altRawMaterialGradeDropDownList;
+        
+        /// <summary>
+        /// altRMGradeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label altRMGradeLabel;
         
         /// <summary>
         /// altRawMaterialMakeTextBox control.
@@ -310,6 +346,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.DropDownList altRMBNameDropDownList;
         
         /// <summary>
+        /// altRMBNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label altRMBNameLabel;
+        
+        /// <summary>
         /// altRMBGradeDropDownList control.
         /// </summary>
         /// <remarks>
@@ -317,6 +362,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList altRMBGradeDropDownList;
+        
+        /// <summary>
+        /// altRMBGradeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label altRMBGradeLabel;
         
         /// <summary>
         /// altRMBMfgTextBox control.

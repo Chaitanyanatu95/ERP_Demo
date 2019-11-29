@@ -102,14 +102,14 @@
             <asp:TableCell runat="server"  CssClass="margin">
                 <asp:Label ID="lblFile" runat="server" style="display:inline;"></asp:Label>
                 <asp:FileUpload ID="partPhotoFileUpload" runat="server" onchange="javascript: fileValue();"/>
-                <asp:ImageButton ID="btnFile" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnFile_Click" />
+                <asp:ImageButton ID="btnFile" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnFile_Click" OnClientClick="return confirm('Do you want to delete?');"/>
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ValidationExpression="([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png)$"
                 ControlToValidate="partPhotoFileUpload" runat="server" ForeColor="Red" ErrorMessage="Please select a valid excel or .jpg/.png extension file."
                 Display="Dynamic" SetFocusOnError="true" />
             </asp:TableCell><asp:TableCell runat="server"  CssClass="margin">
                 <asp:Label ID="lblMoldFile" runat="server" style="display:inline;"></asp:Label>
                 <asp:FileUpload ID="moldSpecFileUpload" runat="server" onchange="javascript: moldFileValue();"/>
-                <asp:ImageButton ID="btnMoldFile" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnMoldFile_Click"/>
+                <asp:ImageButton ID="btnMoldFile" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnMoldFile_Click" OnClientClick="return confirm('Do you want to delete?');"/>
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ValidationExpression="([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.pdf)$"
                 ControlToValidate="moldSpecFileUpload" runat="server" ForeColor="Red" ErrorMessage="Please select a valid excel or .xls/.xlsx/.pdf extension file."
                 Display="Dynamic" SetFocusOnError="true" />
