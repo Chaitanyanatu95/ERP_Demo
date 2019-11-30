@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -26,9 +28,9 @@ namespace ERP_Demo
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
             using (con)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["familyId"].ToString() + "')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["familyId"].ToString() + "')", true);
                 con.Open();
-                String sqlquery = "SELECT * FROM family_master where id = @id";
+                string sqlquery = "SELECT * FROM family_master where id = @id";
                 using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                 {
                     cmd.Parameters.AddWithValue("@id", (Application["familyId"]).ToString().Trim());
@@ -47,24 +49,57 @@ namespace ERP_Demo
         {
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
             con.Open();
+            string query = String.Empty;
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                string query = "UPDATE family_master SET Family='" + familyTextBox.Text.ToString() + "' WHERE id='" + Application["familyId"] + "'";
-                Application["query"] = query;
+                query = "UPDATE family_master SET Family='" + familyTextBox.Text.ToString() + "' WHERE id='" + Application["familyId"] + "'";
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO family_master(Family)VALUES('" + familyTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT Family FROM family_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if(familyTextBox.Text == reader["Family"].ToString())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                
+                if (Application["Duplicate"] is false)
+                {
+                    query = "INSERT INTO family_master(Family)VALUES('" + familyTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Family Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
             Application["familyId"] = null;
             Application["query"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayFamily.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayFamily.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

@@ -32,6 +32,45 @@
                 $("#<%=packagingDetailsGrid.ClientID %>").hide();
             }
         }
+
+        function validationOnPostOperation() {
+            var isPostOperation = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
+            if (isPostOperation == "YES") {
+                var postType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
+                var getPost = postType.options[postType.selectedIndex].text;
+
+                if (getPost == "Select Type") {
+                    document.getElementById("<%=postOperationGrid.FooterRow.FindControl("errorType").ClientID %>").innerHTML = "Please select type.".fontcolor("red");
+                    return false;
+                }
+            }
+        }
+        function validationOnPackagingOperation() {
+            var isPackaging = document.getElementById("<%=packagingDetailsDropDownList.ClientID %>");
+            if (isPackaging == "YES") {
+                var packType = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList").ClientID %>");
+                var getPack = packType.options[packType.selectedIndex].text;
+                if (getPack == "Select Packaging") {
+                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("errorPackType").ClientID %>").innerHTML = "Please select packaging.".fontcolor("red");
+                    return false;
+                }
+
+                var packSize = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostSizeFooter").ClientID %>");
+                var getSize = packSize.options[packSize.selectedIndex].text;
+                if (getSize == "") {
+                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostSizeFooter").ClientID%>").innerHTML = "Size is not mentioned.".fontcolor("red");
+                    return false;
+                }
+
+                 var packQuant = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostQuantityFooter").ClientID%>");
+                var getQuant = packQuant.options[packQuant.selectedIndex].text;
+                if (getQuant == "") {
+                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostQuantityFooter").ClientID%>").innerHTML = "Please enter quantity.".fontcolor("red");
+                    return false;
+                }
+
+            }
+        }
     </script>
     <div style="display:block;margin-left:auto;margin-right:auto;height:40px;width:80%;background-color:whitesmoke;padding-top:5px;">
         <div style="display:inline-block;text-align:center;border:1px solid black;background-color:transparent;width:20%;height:33px;padding-top:7px; color:black">
@@ -68,9 +107,10 @@
                         <asp:Label Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type"></asp:DropDownList><asp:RequiredFieldValidator ID="typeReq" CssClass="required" runat="server" ErrorMessage="please select type" ControlToValidate="postOperationTypeDropDownList"></asp:RequiredFieldValidator>
+                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type" onchange="validationOnPostOperation();"></asp:DropDownList>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [type] FROM [post_operation_master]">
                         </asp:SqlDataSource>
+                        <br /><asp:Label ID="errorType" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="TARGET QUANTITY / HR">
@@ -78,7 +118,8 @@
                         <asp:Label Text='<%# Eval("target_quantity") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="txtTargetQuantityFooter" runat="server"/><asp:RequiredFieldValidator ID="targetQuantReq" CssClass="required" runat="server" ErrorMessage="please enter target quantity" ControlToValidate="txtTargetQuantityFooter"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtTargetQuantityFooter" runat="server"/>
+                        <br /><asp:Label ID="errorTarget" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="PROCESS DESCRIPTION">
@@ -102,7 +143,7 @@
                         <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?');" Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return confirm('Do you want to Add?');" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationOnPostOperation();" Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -132,9 +173,10 @@
                         <asp:Label Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="packagingDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="packaging_type" DataValueField="packaging_type" OnSelectedIndexChanged="packagingTypeChanged" AutoPostBack="true"/><asp:RequiredFieldValidator ID="packagingTypeReq" CssClass="required" runat="server" ErrorMessage="please select packaging type" ControlToValidate="packagingDropDownList"></asp:RequiredFieldValidator>
+                        <asp:DropDownList ID="packagingDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="packaging_type" DataValueField="packaging_type" OnSelectedIndexChanged="packagingTypeChanged" onchange="validationOnPackagingFields();" AutoPostBack="true"/>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [packaging_type] FROM [packaging_master]"></asp:SqlDataSource>
-                    </FooterTemplate>
+                        <br /><asp:Label ID="errorPackType" runat="server"></asp:Label>
+                        </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="SIZE">
                     <ItemTemplate>
@@ -149,7 +191,7 @@
                         <asp:Label Text='<%# Eval("qty_per_package") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="txtPostQuantityFooter" runat="server"/><asp:RequiredFieldValidator ID="postQuantityReq" CssClass="required" runat="server" ErrorMessage="please enter quantity" ControlToValidate="txtPostQuantityFooter"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtPostQuantityFooter" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="PHOTO">
@@ -162,10 +204,10 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?');" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?'); " Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return confirm('Do you want to Add?');" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationOnPackagingOperation();" Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>

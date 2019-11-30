@@ -52,23 +52,53 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE raw_material_master SET material_name='" + rmName.Text.ToString() + "',material_grade='" + rmGrade.Text.ToString() + "',material_color='" + rmColor.Text.ToString() + "',material_make='" + rmMake.Text.ToString() + "' WHERE Id='" + Application["rawMaterialId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO raw_material_master(material_name,material_grade,material_color,material_make)VALUES('" + rmName.Text + "','" + rmGrade.Text + "','" + rmColor.Text + "','" + rmMake.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT material_name FROM raw_material_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (rmName.Text == reader["material_name"].ToString())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO raw_material_master(material_name,material_grade,material_color,material_make)VALUES('" + rmName.Text + "','" + rmGrade.Text + "','" + rmColor.Text + "','" + rmMake.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Raw Material Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
             Application["editFlag"] = null;
             Application["query"] = null;
             Application["rawMaterialId"] = null;
             con.Close();
-            Response.Redirect("~/displayRawMaterial.aspx");
-                    
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayRawMaterial.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

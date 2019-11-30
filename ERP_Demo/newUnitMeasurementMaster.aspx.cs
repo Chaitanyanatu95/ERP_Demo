@@ -49,23 +49,52 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE unit_of_measurement_master SET unit_of_measurement='" + unitofmeasurementTextBox.Text.ToString() + "',abbreviation='" + abbreviationTextBox.Text.ToString() + "' WHERE Id='" + Application["unitOfMeasurementId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO unit_of_measurement_master(unit_of_measurement,abbreviation)VALUES('" + unitofmeasurementTextBox.Text + "','" + abbreviationTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT unit_of_measurement FROM unit_of_measurement_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (unitofmeasurementTextBox.Text == reader["unit_of_measurement"].ToString())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO unit_of_measurement_master(unit_of_measurement,abbreviation)VALUES('" + unitofmeasurementTextBox.Text + "','" + abbreviationTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Unit Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
-            Application["query"] = null;
             Application["unitOfMeasurementId"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayUnitOfMeasurement.aspx");
-            
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayUnitOfMeasurement.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

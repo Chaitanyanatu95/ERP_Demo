@@ -67,35 +67,6 @@ namespace ERP_Demo
             PopulateGridview();
         }
 
-        /*protected void workerGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            try
-            {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
-                {
-                    sqlCon.Open();
-                    string query = "UPDATE worker_master SET worker_name=@worker_name,worker_id=@worker_id,user_id=@user_id,user_password=@user_password,rights=@rights WHERE id = @id";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@worker_name", (workerGridView.Rows[e.RowIndex].FindControl("txtWName") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@worker_id", (workerGridView.Rows[e.RowIndex].FindControl("txtWId") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@user_id", (workerGridView.Rows[e.RowIndex].FindControl("txtUId") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@user_password", (workerGridView.Rows[e.RowIndex].FindControl("txtUPassword") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@rights", (workerGridView.Rows[e.RowIndex].FindControl("txtRights") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(workerGridView.DataKeys[e.RowIndex].Value.ToString()));
-                    sqlCmd.ExecuteNonQuery();
-                    workerGridView.EditIndex = -1;
-                    PopulateGridview();
-                    lblSuccessMessage.Text = "Selected Record Updated";
-                    lblErrorMessage.Text = "";
-                }
-            }
-            catch (Exception ex)
-            {
-                lblSuccessMessage.Text = "";
-                lblErrorMessage.Text = ex.Message;
-            }
-        }*/
-
         protected void workerGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try

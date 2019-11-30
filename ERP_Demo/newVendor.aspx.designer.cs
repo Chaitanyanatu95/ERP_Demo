@@ -148,6 +148,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox vendorEmailIdTextBox;
         
         /// <summary>
+        /// regexEmailValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
+        
+        /// <summary>
         /// vendorEmailReq control.
         /// </summary>
         /// <remarks>
@@ -200,6 +209,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorGstDetailsTextBox;
+        
+        /// <summary>
+        /// vendorGstReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorGstReq;
         
         /// <summary>
         /// RegularExpressionValidator control.

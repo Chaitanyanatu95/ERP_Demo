@@ -38,6 +38,41 @@ namespace ERP_Demo
                         empIdTextBox.Text = reader["worker_id"].ToString();
                         userIdTextBox.Text = reader["user_id"].ToString();
                         userPasswordTextBox.Text = reader["user_password"].ToString();
+                        foreach (ListItem item in rightsToBeAllocatedCheckBoxList.Items)
+                        {
+                            if (reader["Full_Access"].ToString() == "YES")
+                            {
+                               if(item.Value == "Full Access")
+                                {
+                                    item.Selected = true;
+                                }
+                            }
+                            else if(reader["Transactions"].ToString() == "YES")
+                            {
+                                if(item.Value == "Transactions")
+                                {
+                                    item.Selected = true;
+                                }
+                            }
+                            else if(reader["Reports"].ToString() == "YES")
+                            {
+                                if(item.Value == "Reports")
+                                {
+                                    item.Selected = true;
+                                }
+                            }
+                            else if(reader["Selected_Access"].ToString() == "YES")
+                            {
+                                if(item.Value == "Selected Access")
+                                {
+                                    item.Selected = true;
+                                }
+                            }
+                            else
+                            {
+                                item.Selected = false;
+                            }
+                        }
                     }
                     reader.Close();
                 }

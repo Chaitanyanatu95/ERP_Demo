@@ -52,22 +52,53 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE masterbatch_master SET mb_name='" + mbnameTextBox.Text.ToString() + "',mb_grade='" + mbgradeTextBox.Text.ToString() + "',mb_mfg='" + mbmfgTextBox.Text.ToString() + "',mb_color='" + mbcolorTextBox.Text.ToString() + "',mb_color_code='" + mbcolorcodeTextBox.Text.ToString() + "' WHERE Id='" + Application["masterbatchId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO masterbatch_master(mb_name,mb_grade,mb_mfg,mb_color,mb_color_code)VALUES('" + mbnameTextBox.Text + "','" + mbgradeTextBox.Text + "','" + mbmfgTextBox.Text + "','" + mbcolorTextBox.Text + "','" + mbcolorcodeTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT mb_name FROM masterbatch_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (mbnameTextBox.Text == reader["mb_name"].ToString())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO masterbatch_master(mb_name,mb_grade,mb_mfg,mb_color,mb_color_code)VALUES('" + mbnameTextBox.Text + "','" + mbgradeTextBox.Text + "','" + mbmfgTextBox.Text + "','" + mbcolorTextBox.Text + "','" + mbcolorcodeTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Masterbatch Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
+            
             Application["masterbatchId"] = null;
-            Application["query"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayMasterBatch.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayMasterBatch.aspx");
+            }
             
         }
 
