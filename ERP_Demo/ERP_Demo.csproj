@@ -174,7 +174,6 @@
     <Content Include="rawMaterialPage.aspx" />
     <Content Include="postOperationsPage.aspx" />
     <Content Include="newPostOperationMaster.aspx" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Login.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -504,6 +503,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadedFiles\Machine\" />
     <Folder Include="UploadedFiles\Packaging\" />
     <Folder Include="UploadedFiles\Parts\" />

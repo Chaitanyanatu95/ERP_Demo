@@ -37,7 +37,7 @@ namespace ERP_Demo
             {
                 // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["partNoEdit"].ToString() + "')", true);
                 con.Open();
-                String sqlquery = "SELECT * FROM parts_master";
+                String sqlquery = "SELECT part_name FROM parts_master";
                 using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                 {
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -55,7 +55,7 @@ namespace ERP_Demo
 
             if (Application["Duplicate"] is true)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Part name already exists!')", false);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Part name already exists!')", true);
             }
             else
             {

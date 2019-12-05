@@ -37,13 +37,9 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandArgument='<%# Eval("id") %>' CommandName="Edit" ToolTip="Edit" Width="20px" Height="20px"/>
-                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="Delete" Width="20px" Height="20px"/>
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="EDIT" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="20px" Height="20px" OnClientClick="return confirm('Do you want to edit?');"/>
+                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="DELETE" ToolTip="DELETE" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to delete?');"/>
                         </ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/save.png" runat="server" CommandName="Update" ToolTip="Update" Width="20px" Height="20px"/>
-                            <asp:ImageButton ImageUrl="~/Images/cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancel" Width="20px" Height="20px"/>
-                        </EditItemTemplate>
                     </asp:TemplateField>
                 </Columns>
     </asp:GridView>

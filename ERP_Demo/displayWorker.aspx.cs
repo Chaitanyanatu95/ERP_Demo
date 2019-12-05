@@ -30,7 +30,7 @@ namespace ERP_Demo
                     " STUFF((SELECT ', ' + WR.rights FROM worker_rights WR WHERE WR.worker_id = WM.worker_id " +
                     "FOR XML PATH('')), 1, 1, '') [rights] FROM worker_master WM GROUP BY WM.id, WM.worker_id," +
                     " WM.worker_name, WM.user_id, WM.user_password ORDER BY 1;";*/
-                string stuffQuery = "SELECT * FROM worker_master;";
+                string stuffQuery = "SELECT * FROM worker_master order by id OFFSET 1 ROWS;";
 
                 SqlDataAdapter sqlDa = new SqlDataAdapter(stuffQuery, sqlCon);
                 sqlDa.Fill(dtbl);
