@@ -60,6 +60,7 @@
                     }
                 }
 
+                
                 //altrawmaterial
                 var isAltRawMaterialSelected = $('#<%=altRawMaterialDropDownList.ClientID %> option:selected').text();
                 if (isAltRawMaterialSelected == "YES") {
@@ -94,6 +95,12 @@
                             return false;
                         }
                     }
+                }
+            }
+
+            function validationRawMaterial(){
+                if (Page_ClientValidate()) {
+                        return confirm('You are about to save this request.\n\nProceed?');
                 }
             }
 
@@ -273,10 +280,10 @@
         <asp:Table runat="server" HorizontalAlign="Center" CssClass="partTable1" Height="15%"> 
             <asp:TableRow runat="server">
                 <asp:TableCell runat="server">
-                    <asp:Button OnClick="NextPage_Click1" runat="server" CssClass="nextPage" Text="NEXT" OnClientClick="return validationOnFields();"></asp:Button>
+                    <asp:Button OnClick="NextPage_Click1" runat="server" CssClass="nextPage" Text="NEXT" OnClientClick="var b = validationOnFields(); if(b) validationRawMaterial(); return b;"></asp:Button>
                 </asp:TableCell>
                 <asp:TableCell runat="server" >&nbsp;&nbsp;&nbsp;
-                    <asp:Button Text="BACK" CssClass="nextPage" runat="server" OnClick="Unnamed_Click" CausesValidation="false"/>
+                    <asp:Button ID="backClick" Text="BACK" CssClass="nextPage" runat="server" OnClientClick="javascript:window.history.go(-1);return false;" CausesValidation="false"/>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>

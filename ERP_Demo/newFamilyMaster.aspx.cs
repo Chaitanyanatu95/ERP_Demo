@@ -67,7 +67,7 @@ namespace ERP_Demo
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if(familyTextBox.Text == reader["Family"].ToString())
+                        if(familyTextBox.Text.ToLower() == reader["Family"].ToString().ToLower())
                         {
                             Application["Duplicate"] = true;
                             break;

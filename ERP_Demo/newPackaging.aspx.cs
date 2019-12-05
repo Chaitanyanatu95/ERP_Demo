@@ -49,23 +49,54 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE packaging_master SET packaging_type='" + packagingTypeTextBox.Text.ToString() + "',size='"+ sizeTextBox.Text.ToString()+"' WHERE Id='" + Application["packagingId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO packaging_master(packaging_type,size)VALUES('" + packagingTypeTextBox.Text + "','"+ sizeTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT packaging_type FROM packaging_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (packagingTypeTextBox.Text.ToLower() == reader["packaging_type"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO packaging_master(packaging_type,size)VALUES('" + packagingTypeTextBox.Text + "','" + sizeTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Packaging Type Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
+            
             //System.Threading.Thread.Sleep(1500);
             Application["packagingId"] = null;
-            Application["query"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayPackaging.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayPackaging.aspx");
+            }
             
         }
 

@@ -60,14 +60,14 @@ namespace ERP_Demo
             }
             else
             {
-                string sqlquery = "SELECT material_name FROM raw_material_master";
+                string sqlquery = "SELECT material_grade FROM raw_material_master";
                 //ArrayList al = new ArrayList();
                 using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
                 {
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (rmName.Text == reader["material_name"].ToString())
+                        if (rmName.Text.ToLower() == reader["material_grade"].ToString().ToLower())
                         {
                             Application["Duplicate"] = true;
                             break;

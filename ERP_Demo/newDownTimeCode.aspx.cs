@@ -50,23 +50,54 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE down_time_master SET down_time_code='" + downTimeCodeTextBox.Text.ToString() + "',down_time_type = '" + downTimeTypeTextBox.Text + "' WHERE Id='" + Application["downTimeCodeId"]+"'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO down_time_master(down_time_code,down_time_type)VALUES('" + downTimeCodeTextBox.Text + "','" + downTimeTypeTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT down_time_code FROM down_time_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (downTimeCodeTextBox.Text.ToLower() == reader["down_time_code"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO down_time_master(down_time_code,down_time_type)VALUES('" + downTimeCodeTextBox.Text + "','" + downTimeTypeTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Down Time Code Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
+            
             //System.Threading.Thread.Sleep(1500);
             Application["downTimeCodeId"] = null;
-            Application["query"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayDownTimeCode.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayDownTimeCode.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

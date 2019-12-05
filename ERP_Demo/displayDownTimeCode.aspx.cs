@@ -16,6 +16,7 @@ namespace ERP_Demo
             if (!IsPostBack)
             {
                 PopulateGridview();
+                Application["editFlag"] = false;
             }
         }
         void PopulateGridview()

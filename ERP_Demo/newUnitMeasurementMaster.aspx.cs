@@ -64,7 +64,7 @@ namespace ERP_Demo
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (unitofmeasurementTextBox.Text == reader["unit_of_measurement"].ToString())
+                        if (unitofmeasurementTextBox.Text.ToLower() == reader["unit_of_measurement"].ToString().ToLower())
                         {
                             Application["Duplicate"] = true;
                             break;

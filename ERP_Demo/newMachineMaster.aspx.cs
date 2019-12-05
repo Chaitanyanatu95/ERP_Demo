@@ -57,23 +57,52 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE machine_master SET machine_no='" + machineNoTextBox.Text.ToString() + "',machine_name='" + machineNameTextBox.Text.ToString() + "',machine_file_upload='" + machineFileUpload.FileName + "' WHERE Id='" + Application["machineId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO machine_master(machine_no,machine_name,machine_file_upload)VALUES('" + machineNoTextBox.Text + "','" + machineNameTextBox.Text + "','" + machineFileUpload.FileName + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT machine_no FROM machine_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (machineNoTextBox.Text.ToLower() == reader["machine_no"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO machine_master(machine_no,machine_name,machine_file_upload)VALUES('" + machineNoTextBox.Text + "','" + machineNameTextBox.Text + "','" + machineFileUpload.FileName + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Machine No Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
             Application["machineId"] = null;
-            Application["query"] = null;
             Application["editFlag"] = null;
-            //Application["FileUploaded"] = null;
             con.Close();
-            Response.Redirect("~/displayMachine.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayMachine.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

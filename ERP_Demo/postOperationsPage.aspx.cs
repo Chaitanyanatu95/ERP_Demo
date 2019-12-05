@@ -36,12 +36,50 @@ namespace ERP_Demo
             DataTable dtPostOperation = new DataTable();
             dtPostOperation.Columns.AddRange(new DataColumn[4] { new DataColumn("TYPE"), new DataColumn("TARGET QUANTITY"), new DataColumn("REMARKS"), new DataColumn("PHOTO") });
             Application["PostOperation"] = dtPostOperation;
+            Application["tempPartNo"] = string.Empty;
             BindPostGrid();
             using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
             {
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
-                sqlDa.Fill(dtPostOperation);
+                string query = "SELECT part_no FROM parts_master where part_no= '" + Application["partNo"].ToString() + "'";
+                SqlCommand cmd = new SqlCommand(query, sqlCon);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Application["tempPartNo"] = reader["part_no"];
+                }
+                reader.Close();
+                if (Application["tempPartNo"].ToString() != "")
+                {
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                    Application["tempPartNo"] = null;
+                    sqlDa.Fill(dtPostOperation);
+                }
+                else
+                {
+                    //SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                    string postSelectQuery = "SELECT part_no FROM post_operation_details where part_no= '" + Application["partNo"].ToString() + "'";
+                    SqlCommand selCmd = new SqlCommand(postSelectQuery, sqlCon);
+                    Application["postSelectData"] = string.Empty;
+                    SqlDataReader selReader = selCmd.ExecuteReader();
+                    while (selReader.Read())
+                    {
+                        if (selReader["part_no"].ToString() != "")
+                        {
+                            Application["postSelectData"] = selReader["part_no"].ToString();
+                        }
+                    }
+                    selReader.Close();
+                    if (Application["postSelectData"].ToString() != "" && Application["rowCommand"] is false)
+                    {
+                        string postQuery = "DELETE FROM post_operation_details where part_no= '" + Application["partNo"].ToString() + "'";
+                        SqlCommand cmmd = new SqlCommand(postQuery, sqlCon);
+                        cmmd.ExecuteNonQuery();
+                        Application["postSelectData"] = null;
+                    }
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                    sqlDa.Fill(dtPostOperation);
+                }
             }
             if (dtPostOperation.Rows.Count > 0)
             {
@@ -52,45 +90,11 @@ namespace ERP_Demo
                 dtPostOperation.Rows.Add(dtPostOperation.NewRow());
 
                 BindPostGrid();
-                //postOperationDropDownList.Items.Insert(0, new ListItem("Select Post Opr", ""));
                 postOperationGrid.Rows[0].Cells.Clear();
                 postOperationGrid.Rows[0].Cells.Add(new TableCell());
                 postOperationGrid.Rows[0].Cells[0].ColumnSpan = dtPostOperation.Columns.Count;
                 //postOperationGrid.Rows[0].Cells[0].Text = "No Data Found ..!";
                 postOperationGrid.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-        }
-
-        protected void OnDataBound(object sender, EventArgs e)
-        {
-            DropDownList ddltype = postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList") as DropDownList;
-            ddltype.DataSource = GetData("SELECT DISTINCT type FROM post_operation_master");
-            ddltype.DataTextField = "type";
-            ddltype.DataValueField = "type";
-            ddltype.DataBind();
-            ddltype.Items.Insert(0, new ListItem("Select Type", "0"));
-        }
-
-        private DataTable GetData(string query)
-        {
-            string strConnString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(strConnString))
-            {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.CommandText = query;
-                    using (SqlDataAdapter sda = new SqlDataAdapter())
-                    {
-                        cmd.Connection = con;
-                        sda.SelectCommand = cmd;
-                        using (DataSet ds = new DataSet())
-                        {
-                            DataTable dt = new DataTable();
-                            sda.Fill(dt);
-                            return dt;
-                        }
-                    }
-                }
             }
         }
 
@@ -100,13 +104,50 @@ namespace ERP_Demo
             DataTable dtPackaging = new DataTable();
             dtPackaging.Columns.AddRange(new DataColumn[4] { new DataColumn("PACKAGING TYPE"), new DataColumn("SIZE"), new DataColumn("QTY PER PACKAGE"), new DataColumn("PHOTO") });
             Application["PackagingDetails"] = dtPackaging;
+            Application["tempPartNo"] = string.Empty;
             BindPackagingDetailsGrid();
 
             using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
             {
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_details_master where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
-                sqlDa.Fill(dtPackaging);
+                string query = "SELECT part_no FROM parts_master where part_no= '" + Application["partNo"].ToString() + "'";
+                SqlCommand cmd = new SqlCommand(query, sqlCon);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Application["tempPartNo"] = reader["part_no"];
+                }
+                reader.Close();
+                if (Application["tempPartNo"].ToString() != "")
+                {
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_details_master where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                    sqlDa.Fill(dtPackaging);
+                }
+                else
+                {
+                    //SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                    string packSelectQuery = "SELECT part_no FROM packaging_details_master where part_no= '" + Application["partNo"].ToString() + "'";
+                    SqlCommand selCmd = new SqlCommand(packSelectQuery, sqlCon);
+                    Application["packSelectData"] = string.Empty;
+                    SqlDataReader selReader = selCmd.ExecuteReader();
+                    while (selReader.Read())
+                    {
+                        if (selReader["part_no"].ToString() != "")
+                        {
+                            Application["packSelectData"] = selReader["part_no"].ToString();
+                        }
+                    }
+                    selReader.Close();
+                    if (Application["packSelectData"].ToString() != "" && Application["rowCommand"] is false)
+                    {
+                        string postQuery = "DELETE FROM packaging_details_master where part_no= '" + Application["partNo"].ToString() + "'";
+                        SqlCommand cmmd = new SqlCommand(postQuery, sqlCon);
+                        cmmd.ExecuteNonQuery();
+                        Application["packSelectData"] = null;
+                    }
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_details_master where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                    sqlDa.Fill(dtPackaging);
+                }
             }
             if (dtPackaging.Rows.Count > 0)
             {
@@ -131,37 +172,49 @@ namespace ERP_Demo
         {
             if (Application["postOperationDetailsReq"].ToString() == "NO")
             {
-                postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("YES"));
-
-                postOperationDropDownList.SelectedItem.Text = Application["postOperationDetailsReq"].ToString();
-
-                postOperationDropDownList.Items.Insert(1, new ListItem("YES"));
-
-                //Application["postOperationDetailsReq"] = null;
-
-                LoadPostOperationValues();
+                if (postOperationDropDownList.SelectedItem.Text == "YES")
+                {
+                    postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("SELECT"));
+                    postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("YES"));
+                    postOperationDropDownList.Items.Insert(0, new ListItem("YES"));
+                    LoadPostOperationValues();
+                }
+                else
+                {
+                    postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("SELECT"));
+                    postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("YES"));
+                    postOperationDropDownList.SelectedItem.Text = Application["postOperationDetailsReq"].ToString();
+                    postOperationDropDownList.Items.Insert(1, new ListItem("YES"));
+                    LoadPostOperationValues();
+                }
             }
             else
             {
-                //postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("YES"));
+                postOperationDropDownList.Items.Remove(postOperationDropDownList.Items.FindByValue("SELECT"));
                 LoadPostOperationValues();
             }
 
             if (Application["packagingDetailsReq"].ToString() == "NO")
             {
-                packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("YES"));
-
-                packagingDetailsDropDownList.SelectedItem.Text = Application["packagingDetailsReq"].ToString();
-
-                packagingDetailsDropDownList.Items.Insert(1, new ListItem("YES"));
-
-                //Application["packagingDetailsReq"] = null;
-
-                LoadPackagingDetailsValues();
+                if (packagingDetailsDropDownList.SelectedItem.Text == "YES")
+                {
+                    packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("SELECT"));
+                    packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("YES"));
+                    packagingDetailsDropDownList.Items.Insert(0, new ListItem("YES"));
+                    LoadPackagingDetailsValues();
+                }
+                else
+                {
+                    packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("SELECT"));
+                    packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("YES"));
+                    packagingDetailsDropDownList.SelectedItem.Text = Application["packagingDetailsReq"].ToString();
+                    packagingDetailsDropDownList.Items.Insert(1, new ListItem("YES"));
+                    LoadPackagingDetailsValues();
+                }
             }
             else
             {
-                //packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("YES"));
+                packagingDetailsDropDownList.Items.Remove(packagingDetailsDropDownList.Items.FindByValue("SELECT"));
                 LoadPackagingDetailsValues();
             }
 
@@ -184,27 +237,41 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["custPartNo"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldMfgYear"].ToString() == "" || Application["moldLife"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
+            if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldLife"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data!')", true);
             }
             else
             {
                 Application["postOperationDetailsReq"] = postOperationDropDownList.SelectedItem.Text;
                 Application["packagingDetailsReq"] = packagingDetailsDropDownList.SelectedItem.Text;
+                
                 SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                 con.Open();
+
+                if (Application["postOperationDetailsReq"].ToString() == "NO")
+                {
+                    string query = "DELETE FROM post_operation_details where part_no = '" + Application["partNo"] + "'";
+                    SqlCommand cmmd = new SqlCommand(query.ToString(), con);
+                    cmmd.ExecuteNonQuery();
+                }
+                if (Application["packagingDetailsReq"].ToString() == "NO")
+                {
+                    string query = "DELETE FROM packaging_details_master where part_no = '" + Application["partNo"] + "'";
+                    SqlCommand cmmd = new SqlCommand(query.ToString(), con);
+                    cmmd.ExecuteNonQuery();
+                }
                 if (Application["editFlag"] is true)
                 {
                     string query = "UPDATE parts_master SET part_name='" + Application["partName"] + "', customer_name='" + Application["custName"] + "', customer_part_no = '" + Application["custPartNo"] + "',product_category='" + Application["prodCategory"] + "',mold_name='" + Application["moldName"] + "',mold_mfg_year='" + Application["moldMfgYear"] + "',mold_life='" + Application["moldLife"] + "',no_of_cavities='" + Application["noOfCavities"] + "',unit_of_measurement = '" + Application["unit"] + "',part_weight = '" + Application["partWeight"] + "',shot_weight='" + Application["shotWeight"] + "',cycle_time='" + Application["cycleTime"] + "'," +
-                        "jig_fixture_req='" + Application["jigReq"] + "',production_in_pcs = '" + Application["moldProductionCycle"] + "',part_photo='" + Application["partPhoto"] + "',mold_spec_sheet='" + Application["moldSpec"] + "',raw_material='" + Application["rawMaterial"] + "',rm_grade='" + Application["rmGrade"] + "',rm_make='" + Application["rmMake"] + "',rm_color='" + Application["rmColor"] + "',masterbatch='" + Application["masterbatch"] + "',alt_raw_material='" + Application["altRawMaterial"] + "',mb_name='" + Application["mbName"] + "',mb_grade='" + Application["mbGrade"] + "',mb_mfg='" + Application["mbMfg"] + "',mb_color='" + Application["mbColor"] + "',mb_color_code='" + Application["mbColorCode"] + "',alt_rm_name='" + Application["altRMName"] + "',alt_rm_grade='" + Application["altRmGrade"] + "'" +
+                        "jig_fixture_req='" + Application["jigReq"] + "',production_in_pcs = '" + Application["moldProductionCycle"] + "',sample_part_no = '" + Application["samplePartNo"] + "',part_photo='" + Application["partPhoto"] + "',mold_spec_sheet='" + Application["moldSpec"] + "',raw_material='" + Application["rawMaterial"] + "',rm_grade='" + Application["rmGrade"] + "',rm_make='" + Application["rmMake"] + "',rm_color='" + Application["rmColor"] + "',masterbatch='" + Application["masterbatch"] + "',alt_raw_material='" + Application["altRawMaterial"] + "',mb_name='" + Application["mbName"] + "',mb_grade='" + Application["mbGrade"] + "',mb_mfg='" + Application["mbMfg"] + "',mb_color='" + Application["mbColor"] + "',mb_color_code='" + Application["mbColorCode"] + "',alt_rm_name='" + Application["altRMName"] + "',alt_rm_grade='" + Application["altRmGrade"] + "'" +
                         ",alt_rm_make='" + Application["altRmMake"] + "',alt_rm_color='" + Application["altRmColor"] + "',alt_masterbatch='" + Application["altMasterbatch"] + "',alt_mb_name='" + Application["altMasterbatchName"] + "',alt_mb_grade='" + Application["altMasterbatchGrade"] + "',alt_mb_mfg='" + Application["altMasterbatchMfg"] + "',alt_mb_color='" + Application["altMasterbatchColor"] + "',alt_mb_color_code='" + Application["altMasterbatchColorCode"] + "',post_operation_required ='" + postOperationDropDownList.SelectedItem.Text + "' ,packaging_details_required = '" + packagingDetailsDropDownList.SelectedItem.Text + "' WHERE part_no = '" + Application["partNo"] + "'";
                     Application["query"] = query;
                 }
                 else
                 {
-                    string query = "INSERT INTO parts_master(part_no,part_name,customer_name,customer_part_no,product_category,mold_name,mold_mfg_year,mold_life,no_of_cavities,unit_of_measurement,part_weight,shot_weight,cycle_time,jig_fixture_req,production_in_pcs,part_photo,mold_spec_sheet,raw_material,rm_grade,rm_make,rm_color,masterbatch,alt_raw_material,mb_name,mb_grade,mb_mfg,mb_color,mb_color_code,alt_rm_name,alt_rm_grade," +
-                                                "alt_rm_make,alt_rm_color,alt_masterbatch,alt_mb_name,alt_mb_grade,alt_mb_mfg,alt_mb_color,alt_mb_color_code,post_operation_required,packaging_details_required)VALUES('" + Application["partNo"] + "','" + Application["partName"] + "','" + Application["custName"] + "','" + Application["custPartNo"] + "','" + Application["prodCategory"] + "','" + Application["moldName"] + "','" + Application["moldMfgYear"] + "','" + Application["moldLife"] + "','" + Application["noOfCavities"] + "','" + Application["unit"] + "','" + Application["partWeight"] + "','" + Application["shotWeight"] + "','" + Application["cycleTime"] + "','" + Application["jigReq"] + "','" + Application["moldProductionCycle"] + "','" + Application["partPhoto"] + "','" + Application["moldSpec"] + "','" + Application["rawMaterial"] + "','" + Application["rmGrade"] + "','" + Application["rmMake"] + "'" +
+                    string query = "INSERT INTO parts_master(part_no,part_name,customer_name,customer_part_no,product_category,mold_name,mold_mfg_year,mold_life,no_of_cavities,unit_of_measurement,part_weight,shot_weight,cycle_time,jig_fixture_req,production_in_pcs,sample_part_no,part_photo,mold_spec_sheet,raw_material,rm_grade,rm_make,rm_color,masterbatch,alt_raw_material,mb_name,mb_grade,mb_mfg,mb_color,mb_color_code,alt_rm_name,alt_rm_grade," +
+                                                "alt_rm_make,alt_rm_color,alt_masterbatch,alt_mb_name,alt_mb_grade,alt_mb_mfg,alt_mb_color,alt_mb_color_code,post_operation_required,packaging_details_required)VALUES('" + Application["partNo"] + "','" + Application["partName"] + "','" + Application["custName"] + "','" + Application["custPartNo"] + "','" + Application["prodCategory"] + "','" + Application["moldName"] + "','" + Application["moldMfgYear"] + "','" + Application["moldLife"] + "','" + Application["noOfCavities"] + "','" + Application["unit"] + "','" + Application["partWeight"] + "','" + Application["shotWeight"] + "','" + Application["cycleTime"] + "','" + Application["jigReq"] + "','" + Application["moldProductionCycle"] + "','" + Application["samplePartNo"] + "','" + Application["partPhoto"] + "','" + Application["moldSpec"] + "','" + Application["rawMaterial"] + "','" + Application["rmGrade"] + "','" + Application["rmMake"] + "'" +
                                                 ",'" + Application["rmColor"] + "','" + Application["masterbatch"] + "','" + Application["altRawMaterial"] + "','" + Application["mbName"] + "','" + Application["mbGrade"] + "','" + Application["mbMfg"] + "','" + Application["mbColor"] + "','" + Application["mbColorCode"] + "','" + Application["altRMName"] + "','" + Application["altRmGrade"] + "','" + Application["altRmMake"] + "','" + Application["altRmColor"] + "','" + Application["altMasterbatch"] + "','" + Application["altMasterbatchName"] + "','" + Application["altMasterbatchGrade"] + "','" + Application["altMasterbatchMfg"] + "','" + Application["altMasterbatchColor"] + "','" + Application["altMasterbatchColorCode"] + "','" + postOperationDropDownList.SelectedItem.Text + "','" + packagingDetailsDropDownList.SelectedItem.Text + "')";
                     Application["query"] = query;
                 }
@@ -216,8 +283,10 @@ namespace ERP_Demo
                 Application["mbFlag"] = null;
                 Application["query"] = null;
                 Application["partNo"] = null;
+                Application["rowCommand"] = false;
                 con.Close();
                 Response.Redirect("~/displayParts.aspx");
+                
             }
         }
 
@@ -255,7 +324,6 @@ namespace ERP_Demo
                     //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "'"+Application["PostOperation"].ToString()+"'", true);
                     using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
                     {
-
                         sqlCon.Open();
                         string query = "INSERT INTO post_operation_details (type,target_quantity,process_description,photo,part_no,part_name) VALUES (@type,@targetQuantity,@processDesc,'" + Application["photoPath"] + "','" + partNo + "','" + partName + "')";
                         SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -264,10 +332,17 @@ namespace ERP_Demo
                         cmd.Parameters.AddWithValue("@processDesc", (postOperationGrid.FooterRow.FindControl("txtProcessDescriptionFooter") as TextBox).Text.Trim());
                         cmd.ExecuteNonQuery();
                         sqlCon.Close();
+
                         if (Application["editFlag"] is true)
+                        {
                             LoadEditValues();
+                        }
                         else
+                        {
+                            Application["rowCommand"] = true;
                             LoadPostOperationValues();
+                        }
+
                         lblSuccessMessage.Text = "Record Added";
                         lblErrorMessage.Text = "";
                         Application["photoPath"] = null;
@@ -335,16 +410,27 @@ namespace ERP_Demo
                         cmd.Parameters.AddWithValue("@type", (packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList") as DropDownList).SelectedItem.Text.Trim());
                         cmd.Parameters.AddWithValue("@size", (packagingDetailsGrid.FooterRow.FindControl("txtPostSizeFooter") as TextBox).Text.Trim());
                         cmd.Parameters.AddWithValue("@qtyPerPackage", (packagingDetailsGrid.FooterRow.FindControl("txtPostQuantityFooter") as TextBox).Text.Trim());
-                        //cmd.Parameters.AddWithValue("@photo", (packagingDetailsGrid.FooterRow.FindControl("postPhotoUploadFooter") as FileUpload).FileName.ToString().Trim());
+                        cmd.Parameters.AddWithValue("@photo", (packagingDetailsGrid.FooterRow.FindControl("postPhotoUploadFooter") as FileUpload).FileName.ToString().Trim());
                         cmd.ExecuteNonQuery();
                         sqlCon.Close();
+
                         if (Application["editFlag"] is true)
+                        {
                             LoadEditValues();
+                        }
                         else
+                        {
+                            Application["rowCommand"] = true;
                             LoadPackagingDetailsValues();
+                        }
+
                         lblSuccessMessage.Text = "Record Added";
                         lblErrorMessage.Text = "";
                     }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "You have selected N/A.", true);
                 }
             }
             catch (Exception ex)
@@ -357,6 +443,15 @@ namespace ERP_Demo
         protected void packagingTypeChanged(object sender, EventArgs e)
         {
             GridViewRow row = packagingDetailsGrid.FooterRow;
+            
+            if(((DropDownList)row.FindControl("packagingDropDownList")).SelectedItem.Text == "N/A")
+            {
+                ((ImageButton)row.FindControl("packImgBtn")).Visible = false;
+            }
+            else
+            {
+                ((ImageButton)row.FindControl("packImgBtn")).Visible = true;
+            }
             if (((DropDownList)row.FindControl("packagingDropDownList")).SelectedItem.Text == "Select Packaging Type")
             {
                 ((TextBox)row.FindControl("txtPostSizeFooter")).Text = "";
@@ -367,7 +462,7 @@ namespace ERP_Demo
                 using (con)
                 {
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT size FROM packaging_details_master WHERE type= '" + ((DropDownList)row.FindControl("packagingDropDownList")).SelectedItem.Value + "' ", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT size FROM packaging_master WHERE packaging_type= '" + ((DropDownList)row.FindControl("packagingDropDownList")).SelectedItem.Text + "' ", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
@@ -419,12 +514,63 @@ namespace ERP_Demo
         }
         protected void Cancel_Click(object sender, EventArgs e)
         {
+            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            {
+                sqlCon.Open();
+                Application["postQuery"] = string.Empty;
+
+                string postSelectQuery = "SELECT part_no FROM post_operation_details where part_no= '" + Application["partNo"].ToString() + "'";
+                SqlCommand selCmd = new SqlCommand(postSelectQuery, sqlCon);
+                SqlDataReader selReader = selCmd.ExecuteReader();
+                while (selReader.Read())
+                {
+                    if (selReader["part_no"].ToString() != "" && Application["editFlag"] is false )
+                    {
+                        string postQuery = "DELETE FROM post_operation_details where part_no= '" + Application["partNo"].ToString() + "'";
+                        Application["postQuery"] = postQuery;
+                    }
+                }
+                selReader.Close();
+                if (Application["postQuery"].ToString() != "")
+                {
+                    SqlCommand cmmd = new SqlCommand(Application["postQuery"].ToString(), sqlCon);
+                    cmmd.ExecuteNonQuery();
+                }
+                sqlCon.Close();
+            }
+
+            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            {
+                sqlCon.Open();
+                Application["packQuery"] = string.Empty;
+
+                string packSelectQuery = "SELECT part_no FROM packaging_details_master where part_no= '" + Application["partNo"].ToString() + "'";
+                SqlCommand selCmd = new SqlCommand(packSelectQuery, sqlCon);
+                SqlDataReader selReader = selCmd.ExecuteReader();
+                while (selReader.Read())
+                {
+                    if (selReader["part_no"].ToString() != "" && Application["editFlag"] is false)
+                    {
+                        string packQuery = "DELETE FROM packaging_details_master where part_no= '" + Application["partNo"].ToString() + "'";
+                        Application["packQuery"] = packQuery;
+                    }
+                }
+                selReader.Close();
+                if (Application["packQuery"].ToString() != "")
+                {
+                    SqlCommand cmmd = new SqlCommand(Application["packQuery"].ToString(), sqlCon);
+                    cmmd.ExecuteNonQuery();
+                }
+                sqlCon.Close();
+            }
+
             if (Application["editFlag"] is true)
                 Application["editFlag"] = null;
 
             Application["altRmFlag"] = null;
             Application["altMbFlag"] = null;
             Application["mbFlag"] = null;
+            Application["rowCommand"] = false;
 
             Response.Redirect("~/displayParts.aspx");
         }

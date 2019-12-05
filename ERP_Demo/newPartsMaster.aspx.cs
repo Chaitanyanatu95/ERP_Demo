@@ -31,42 +31,77 @@ namespace ERP_Demo
 
         protected void NextPage_Click(object sender, EventArgs e)
         {
-            if (partPhotoFileUpload.HasFile)
+            Application["Duplicate"] = false;
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+            using (con)
             {
-                string fileName = Path.GetFileName(partPhotoFileUpload.PostedFile.FileName);
-
-                string filePath = "~/UploadedFiles/Parts/" + fileName;
-
-                partPhotoFileUpload.PostedFile.SaveAs(Server.MapPath(filePath));
-                Application["partPhoto"] = filePath.ToString();
+                // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["partNoEdit"].ToString() + "')", true);
+                con.Open();
+                String sqlquery = "SELECT * FROM parts_master";
+                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (partNameTextBox.Text.ToLower() == reader["part_name"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                        }
+                    }
+                    reader.Close();
+                }
+                con.Close();
             }
 
-            if (moldSpecFileUpload.HasFile)
+            if (Application["Duplicate"] is true)
             {
-                string fileName = Path.GetFileName(moldSpecFileUpload.PostedFile.FileName);
-
-                string filePath = "~/UploadedFiles/Machine/" + fileName;
-
-                moldSpecFileUpload.PostedFile.SaveAs(Server.MapPath(filePath));
-                Application["moldSpec"] = filePath.ToString();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Part name already exists!')", false);
             }
+            else
+            {
+                if (partPhotoFileUpload.HasFile)
+                {
+                    string fileName = Path.GetFileName(partPhotoFileUpload.PostedFile.FileName);
 
-            Application["partNo"] = partNoTextBox.Text;
-            Application["partName"] = partNameTextBox.Text;
-            Application["custName"] = customerNameDropDownList.SelectedItem.Text;
-            Application["custPartNo"] = custPartNoTextBox.Text;
-            Application["prodCategory"] = familyDropDownList.SelectedItem.Text;
-            Application["moldName"] = moldNameTextBox.Text;
-            Application["moldMfgYear"] = moldYearTextBox.Text;
-            Application["moldLife"] = moldLifeTextBox.Text;
-            Application["noOfCavities"] = noOfCavitiesTextBox.Text;
-            Application["unit"] = unitMeasurementDropDownList.SelectedItem.Text;
-            Application["partWeight"] = partWeightTextBox.Text;
-            Application["shotWeight"] = shotWeightTextBox.Text;
-            Application["cycleTime"] = cycleTimeTextBox.Text;
-            Application["jigReq"] = jigReqDropDownList.SelectedItem.Text;
-            Application["moldProductionCycle"] = moldProductionCycleTextBox.Text;
-            Response.Redirect("~/rawMaterialPage.aspx");
+                    string filePath = "~/UploadedFiles/Parts/" + fileName;
+
+                    partPhotoFileUpload.PostedFile.SaveAs(Server.MapPath(filePath));
+                    Application["partPhoto"] = filePath.ToString();
+                }
+
+                if (moldSpecFileUpload.HasFile)
+                {
+                    string fileName = Path.GetFileName(moldSpecFileUpload.PostedFile.FileName);
+
+                    string filePath = "~/UploadedFiles/Machine/" + fileName;
+
+                    moldSpecFileUpload.PostedFile.SaveAs(Server.MapPath(filePath));
+                    Application["moldSpec"] = filePath.ToString();
+                }
+
+                Application["partNo"] = partNoTextBox.Text;
+                Application["partName"] = partNameTextBox.Text;
+                Application["custName"] = customerNameDropDownList.SelectedItem.Text;
+                Application["custPartNo"] = custPartNoTextBox.Text;
+                Application["prodCategory"] = familyDropDownList.SelectedItem.Text;
+                Application["moldName"] = moldNameTextBox.Text;
+                Application["moldMfgYear"] = moldYearTextBox.Text;
+                Application["moldLife"] = moldLifeTextBox.Text;
+                Application["noOfCavities"] = noOfCavitiesTextBox.Text;
+                Application["unit"] = unitMeasurementDropDownList.SelectedItem.Text;
+                Application["partWeight"] = partWeightTextBox.Text;
+                Application["shotWeight"] = shotWeightTextBox.Text;
+                Application["cycleTime"] = cycleTimeTextBox.Text;
+                Application["jigReq"] = jigReqDropDownList.SelectedItem.Text;
+                Application["moldProductionCycle"] = moldProductionCycleTextBox.Text;
+                Application["samplePartNo"] = samplePartNo.Text;
+                Application["tempPartName"] = "";
+                if (Application["Duplicate"] is false)
+                {
+                    Application["Duplicate"] = null;
+                    Response.Redirect("~/rawMaterialPage.aspx");
+                }
+            }
         }
 
         protected void LoadEditValuesInController()
@@ -236,6 +271,9 @@ namespace ERP_Demo
                     reader.Close();
                     customerNameDropDownList.Items.Insert(0, new ListItem("Select Customer Name", ""));
                 }
+
+                jigReqDropDownList.Items.Insert(0, new ListItem("SELECT"));
+
             }
         }
 
@@ -279,13 +317,15 @@ namespace ERP_Demo
                             cmd.ExecuteNonQuery();
                             File.Delete(Server.MapPath(lblFile.Text));
                         }
+                        errorFile.Text = "";
                         lblFile.Text = "";
                         con.Close();
                     }
-                    else
-                    {
-                        lblFile.Text = "";
-                    }
+                }
+                else
+                {
+                    errorFile.Text = "";
+                    lblFile.Text = "";
                 }
             }
             
@@ -309,11 +349,13 @@ namespace ERP_Demo
                             cmd.ExecuteNonQuery();
                             File.Delete(Server.MapPath(lblMoldFile.Text));
                         }
+                        errorMoldFile.Text = "";
                         lblMoldFile.Text = "";
                         con.Close();
                     }
                     else
                     {
+                        errorMoldFile.Text = "";
                         lblMoldFile.Text = "";
                     }
                 }

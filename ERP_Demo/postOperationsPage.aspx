@@ -6,6 +6,18 @@
             onPostOperationSelected();
             onPackagingDetailsSelected();                
         }
+        function validationOnDropDown() {
+            var postOpnDropDown = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
+            var packagingDropDown = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
+            if (postOpnDropDown == "SELECT") {
+                alert("Please select dropdown for post operation");
+                return false;
+            }
+            if (packagingDropDown == "SELECT") {
+                alert("Please select dropdown for packaging");
+                return false;
+            }
+        }
         function extraBtnImg() {
             var extraBtnImg = document.getElementById('<%= listUploadedFiles.ClientID %>').innerText;
             if (!extraBtnImg) {
@@ -36,39 +48,152 @@
         function validationOnPostOperation() {
             var isPostOperation = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
             if (isPostOperation == "YES") {
+                var targetQuantity = document.getElementById('<%=((TextBox)postOperationGrid.FooterRow.FindControl("txtTargetQuantityFooter")).ClientID %>');
                 var postType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
                 var getPost = postType.options[postType.selectedIndex].text;
 
-                if (getPost == "Select Type") {
+                if (getPost == "Select Type")
+                {
+                    document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postImgBtn").ClientID %>").style.display = "block";
                     document.getElementById("<%=postOperationGrid.FooterRow.FindControl("errorType").ClientID %>").innerHTML = "Please select type.".fontcolor("red");
                     return false;
                 }
+                else if (getPost != "Select Type" && targetQuantity.value == "")
+                {
+                    document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postImgBtn").ClientID %>").style.display = "block";
+                    document.getElementById("<%=postOperationGrid.FooterRow.FindControl("errorTarget").ClientID %>").innerHTML = "Please enter target quantity.".fontcolor("red");
+                    return false;
+                }
+                else if (getPost == "N/A")
+                {
+                    targetQuantity.value = "";
+                    return true;
+                }
+                else if (getPost == "N/A" && targetQuantity.value == "")
+                {
+                    document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postImgBtn").ClientID %>").style.display = "none";
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
             }
         }
+
+        function finalValidation() {
+            if (isPostOperation == "YES")
+            {
+                var targetQuantity = document.getElementById('<%=((TextBox)postOperationGrid.FooterRow.FindControl("txtTargetQuantityFooter")).ClientID %>');
+                var postType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
+                var getPost = postType.options[postType.selectedIndex].text;
+                if (getPost == "N/A")
+                {
+                    return true;
+                }
+                else
+                {
+                    alert("Add post operation data");
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         function validationOnPackagingOperation() {
-            var isPackaging = document.getElementById("<%=packagingDetailsDropDownList.ClientID %>");
+            var isPackaging = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
             if (isPackaging == "YES") {
                 var packType = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList").ClientID %>");
                 var getPack = packType.options[packType.selectedIndex].text;
+
                 if (getPack == "Select Packaging") {
                     document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("errorPackType").ClientID %>").innerHTML = "Please select packaging.".fontcolor("red");
                     return false;
                 }
-
-                var packSize = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostSizeFooter").ClientID %>");
-                var getSize = packSize.options[packSize.selectedIndex].text;
-                if (getSize == "") {
-                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostSizeFooter").ClientID%>").innerHTML = "Size is not mentioned.".fontcolor("red");
+                else if (getPack == "N/A")
+                {
+                    return true;
+                }
+                else
+                {
+                    alert("Please Add the post operation value");
                     return false;
                 }
+            }
+            else {
+                return true;
+            }
+        }
 
-                 var packQuant = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostQuantityFooter").ClientID%>");
-                var getQuant = packQuant.options[packQuant.selectedIndex].text;
-                if (getQuant == "") {
-                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("txtPostQuantityFooter").ClientID%>").innerHTML = "Please enter quantity.".fontcolor("red");
-                    return false;
+        function fileValidation() {
+            var fileInput = document.getElementById('<%= postOperationGrid.FooterRow.FindControl("photoUploadFooter").ClientID %>');
+            var fileInput2 = document.getElementById('<%= packagingDetailsGrid.FooterRow.FindControl("postPhotoUploadFooter").ClientID %>');
+
+            if (fileInput.value != null || fileInput2.value != null)
+            {
+                var filePath = fileInput.value;
+                var filePath2 = fileInput2.value;
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                if (filePath)
+                {
+                    if (!allowedExtensions.exec(filePath))
+                    {
+                        document.getElementById('<%= postOperationGrid.FooterRow.FindControl("errorFile").ClientID %>').innerHTML = 'Please upload file having extensions .jpeg/.jpg/.png/.gif only.'.fontcolor('Red');
+                        fileInput.value = '';
+                        return false;
+                    }
                 }
+                else if (filePath2)
+                {
+                    if (!allowedExtensions.exec(filePath2))
+                    {
+                        document.getElementById('<%= packagingDetailsGrid.FooterRow.FindControl("errorFile2").ClientID %>').innerHTML = 'Please upload file having extensions .jpeg/.jpg/.png/.gif only.'.fontcolor('Red');
+                        fileInput2.value = '';
+                        return false;
+                    }
+                }
+                else
+                {
+                    //Image preview
+                    if (fileInput.files && fileInput.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById('<%=  postOperationGrid.FooterRow.FindControl("errorFile").ClientID %>').innerHTML = "";
+                            document.getElementById('imagePreview').innerHTML = '<img src="' + e.target.result + '" height="40" width="40"/>';
+                        };
+                        reader.readAsDataURL(fileInput.files[0]);
+                    }
+                    else if (fileInput2.files && fileInput2.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById('<%=  packagingDetailsGrid.FooterRow.FindControl("errorFile2").ClientID %>').innerHTML = "";
+                            document.getElementById('imagePreview2').innerHTML = '<img src="' + e.target.result + '" height="40" width="40"/>';
+                        };
+                        reader.readAsDataURL(fileInput2.files[0]);
+                    }
+                }
+            }
+        }
 
+        function validationOnThisPage() {
+
+            var b = finalValidation();
+            validationOnDropDown();
+            if (b) {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     </script>
@@ -88,11 +213,12 @@
     <br />
     <asp:Table runat="server" HorizontalAlign="Center" CssClass="Table1" style="margin-top:50px;">
     <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
-            <asp:TableCell runat="server">POST OPERATION (REQ)</asp:TableCell>
+            <asp:TableCell runat="server">POST OPERATION (REQ) <div class="required" style="display:inline">*</div></asp:TableCell>
         </asp:TableRow>
 
         <asp:TableRow runat="server" HorizontalAlign="Center">
             <asp:TableCell runat="server"><asp:DropDownList ID="postOperationDropDownList" runat="server" onchange="onPostOperationSelected()">
+                                                <asp:ListItem Value="SELECT">SELECT</asp:ListItem>
                                                 <asp:ListItem Value="YES">YES</asp:ListItem>
                                                 <asp:ListItem Value="NO">NO</asp:ListItem>
                                           </asp:DropDownList>
@@ -100,42 +226,44 @@
             </asp:TableRow>
     </asp:table>
     <asp:GridView ID="postOperationGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="postOperationGrid_RowCommand" ShowFooter="true"
-        OnRowDeleting="postOperationGrid_RowDeleting" CssClass="tableClass" DataKeyNames="id" alternatingrowstyle-backcolor="Linen" headerstyle-backcolor="SkyBlue">
+        OnRowDeleting="postOperationGrid_RowDeleting" CssClass="tableClass" DataKeyNames="id" headerstyle-backcolor="SkyBlue" HorizontalAlign="Center">
            <Columns>
-                <asp:TemplateField HeaderText="TYPE">
+                <asp:TemplateField HeaderText="TYPE" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label Text='<%# Eval("type") %>' runat="server" />
+                        <asp:Label ID="postOpnTypeLabel" Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type" onchange="validationOnPostOperation();"></asp:DropDownList>
+                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type" onchange="validationOnPostOperation()"></asp:DropDownList>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [type] FROM [post_operation_master]">
                         </asp:SqlDataSource>
                         <br /><asp:Label ID="errorType" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="TARGET QUANTITY / HR">
+                <asp:TemplateField HeaderText="TARGET QUANTITY / HR" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label Text='<%# Eval("target_quantity") %>' runat="server" />
+                        <asp:Label ID="targetQuantityLabel" Text='<%# Eval("target_quantity") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
                         <asp:TextBox ID="txtTargetQuantityFooter" runat="server"/>
                         <br /><asp:Label ID="errorTarget" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="PROCESS DESCRIPTION">
+                <asp:TemplateField HeaderText="PROCESS DESCRIPTION" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label Text='<%# Eval("process_description") %>' runat="server" />
+                        <asp:Label ID="processDescLabel" Text='<%# Eval("process_description") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
                         <asp:TextBox ID="txtProcessDescriptionFooter" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="PHOTO">
+                <asp:TemplateField HeaderText="PHOTO <br/> Supported Formats: .jpeg, .png, .gif" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label Text='<%# Eval("photo") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                       <asp:FileUpload ID="photoUploadFooter" runat="server"/>
+                       <asp:FileUpload ID="photoUploadFooter" runat="server" onchange="return fileValidation();"/>
+                        <asp:Label ID="errorFile" runat="server"></asp:Label>
+                        <div id="imagePreview" style="margin-left:auto; margin-right:auto"></div>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
@@ -143,7 +271,7 @@
                         <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?');" Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationOnPostOperation();" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ID="postImgBtn" ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationOnPostOperation()" Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -155,38 +283,39 @@
         </center>
     <asp:Table runat="server" CssClass="Table1">
             <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
-                <asp:TableCell runat="server">PACKAGING DETAILS (REQ)</asp:TableCell>
+                <asp:TableCell runat="server">PACKAGING DETAILS (REQ) <div class="required" style="display:inline">*</div></asp:TableCell>
                 </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center">
             <asp:TableCell runat="server">
                 <asp:DropDownList ID="packagingDetailsDropDownList" runat="server" onchange="onPackagingDetailsSelected()">
+                        <asp:ListItem Value="SELECT">SELECT</asp:ListItem>    
                         <asp:ListItem Value="YES">YES</asp:ListItem>
                         <asp:ListItem Value="NO">NO</asp:ListItem>
                     </asp:DropDownList>
             </asp:TableCell>
              </asp:TableRow>
         </asp:Table>
-    <asp:GridView ID="packagingDetailsGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="packagingDetailsGrid_RowCommand" OnRowDeleting="packagingDetailsGrid_RowDeleting" CssClass="tableClass" ShowFooter="true" DataKeyNames="id" alternatingrowstyle-backcolor="Linen" headerstyle-backcolor="SkyBlue">
+    <asp:GridView ID="packagingDetailsGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="packagingDetailsGrid_RowCommand" OnRowDeleting="packagingDetailsGrid_RowDeleting" CssClass="tableClass" ShowFooter="true" DataKeyNames="id" headerstyle-backcolor="SkyBlue" HorizontalAlign="Center">
             <Columns>
-                <asp:TemplateField HeaderText="PACKAGING TYPE">
+                <asp:TemplateField HeaderText="PACKAGING TYPE" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label Text='<%# Eval("type") %>' runat="server" />
+                        <asp:Label ID="packTypeLabel" Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="packagingDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="packaging_type" DataValueField="packaging_type" OnSelectedIndexChanged="packagingTypeChanged" onchange="validationOnPackagingFields();" AutoPostBack="true"/>
+                        <asp:DropDownList ID="packagingDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="packaging_type" DataValueField="packaging_type" OnSelectedIndexChanged="packagingTypeChanged" AutoPostBack="true"/>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [packaging_type] FROM [packaging_master]"></asp:SqlDataSource>
                         <br /><asp:Label ID="errorPackType" runat="server"></asp:Label>
                         </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="SIZE">
+                <asp:TemplateField HeaderText="SIZE" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label Text='<%# Eval("size") %>' runat="server" />
+                        <asp:Label ID="packSizeLabel" Text='<%# Eval("size") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
                         <asp:TextBox ID="txtPostSizeFooter" DataTextField="size" DataValueField="size" runat="server" ReadOnly="true"/>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="QTY PER PACKAGE (NOS)">
+                <asp:TemplateField HeaderText="QTY PER PACKAGE (NOS)" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label Text='<%# Eval("qty_per_package") %>' runat="server" />
                     </ItemTemplate>
@@ -194,12 +323,14 @@
                         <asp:TextBox ID="txtPostQuantityFooter" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="PHOTO">
+                <asp:TemplateField HeaderText="PHOTO <br/> Supported Formats: .jpeg, .png, .gif" HeaderStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label Text='<%# Eval("photo") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
                        <asp:FileUpload ID="postPhotoUploadFooter" runat="server"/>
+                        <asp:Label ID="errorFile2" runat="server"></asp:Label>
+                        <div id="imagePreview2" style="margin-left:auto; margin-right:auto"></div>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
@@ -207,7 +338,7 @@
                         <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?'); " Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationOnPackagingOperation();" Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ID="packImgBtn" ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationOnPackagingOperation();" Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -221,7 +352,7 @@
         <asp:ImageButton ID="imgBtnExtra" runat="server" height="20" Width="20" style="display:inline;" OnClick="imgBtnExtra_Click"/>
         </center>
     <asp:table runat="server" CssClass="Table1" HorizontalAlign="Center" style="padding-top:30px;">
-        <asp:TableRow runat="server"><asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE PART" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="return confirm('Do you want to Save?');" /></asp:TableCell>
+        <asp:TableRow runat="server"><asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE PART" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="return validationOnThisPage();" /></asp:TableCell>
             <asp:TableCell ID="backCell" runat="server">&nbsp;&nbsp;&nbsp;<asp:Button Text="BACK" CssClass="nextPage" runat="server" OnClientClick="javascript:window.history.go(-1);return false;" CausesValidation="false"/></asp:TableCell>
             <asp:TableCell runat="server" >&nbsp;&nbsp;&nbsp;<asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click"  CssClass="nextPage" CausesValidation="false" OnClientClick="return confirm('Do you want to Cancel?');" /></asp:TableCell>
         </asp:TableRow> 

@@ -67,7 +67,7 @@ namespace ERP_Demo
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (mbnameTextBox.Text == reader["mb_name"].ToString())
+                        if (mbnameTextBox.Text.ToLower() == reader["mb_name"].ToString().ToLower())
                         {
                             Application["Duplicate"] = true;
                             break;
@@ -99,7 +99,6 @@ namespace ERP_Demo
                 Application["Duplicate"] = null;
                 Response.Redirect("~/displayMasterBatch.aspx");
             }
-            
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

@@ -130,6 +130,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.TextBox moldYearTextBox;
         
         /// <summary>
+        /// moldYearReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator moldYearReq;
+        
+        /// <summary>
         /// moldLifeTextBox control.
         /// </summary>
         /// <remarks>
@@ -137,15 +146,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox moldLifeTextBox;
-        
-        /// <summary>
-        /// moldLifeReq control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator moldLifeReq;
         
         /// <summary>
         /// noOfCavitiesTextBox control.
@@ -247,6 +247,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.DropDownList jigReqDropDownList;
         
         /// <summary>
+        /// jigFixLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label jigFixLabel;
+        
+        /// <summary>
         /// moldProductionCycleTextBox control.
         /// </summary>
         /// <remarks>
@@ -254,6 +263,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox moldProductionCycleTextBox;
+        
+        /// <summary>
+        /// samplePartNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox samplePartNo;
         
         /// <summary>
         /// nextPage control.
@@ -283,6 +301,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.FileUpload partPhotoFileUpload;
         
         /// <summary>
+        /// errorFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorFile;
+        
+        /// <summary>
         /// btnFile control.
         /// </summary>
         /// <remarks>
@@ -290,15 +317,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnFile;
-        
-        /// <summary>
-        /// RegularExpressionValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
         
         /// <summary>
         /// lblMoldFile control.
@@ -319,6 +337,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.FileUpload moldSpecFileUpload;
         
         /// <summary>
+        /// errorMoldFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorMoldFile;
+        
+        /// <summary>
         /// btnMoldFile control.
         /// </summary>
         /// <remarks>
@@ -326,41 +353,5 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnMoldFile;
-        
-        /// <summary>
-        /// RegularExpressionValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
-        
-        /// <summary>
-        /// rowAfterProcess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableFooterRow rowAfterProcess;
-        
-        /// <summary>
-        /// cellAfterProcess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellAfterProcess;
-        
-        /// <summary>
-        /// lblAfterProcess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAfterProcess;
     }
 }

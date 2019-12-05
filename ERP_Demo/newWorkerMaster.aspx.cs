@@ -87,6 +87,7 @@ namespace ERP_Demo
 
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 string updateData = "UPDATE worker_master SET Full_Access='NO', Transactions='NO', Reports='NO', Selected_Access='NO', Access = '' WHERE id='" + Application["workerId"] + "'";
                 SqlCommand comdUpdate = new SqlCommand(updateData, con);
                 comdUpdate.ExecuteNonQuery();
@@ -170,16 +171,44 @@ namespace ERP_Demo
                 if (reports.ToString() != "YES") { reports = "NO"; }
                 if (selectedAccess.ToString() != "YES") { selectedAccess = "NO"; Access = ""; }
 
-                string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Full_Access,Transactions,Reports,Selected_Access,Access)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + fullAccess.ToString() + "','" + transactions.ToString() + "','" + reports.ToString() + "','" + selectedAccess.ToString() + "','" + Access.ToString() + "')";
-                Application["query"] = query;
-                SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-                cmd.ExecuteNonQuery();
+                string sqlquery = "SELECT worker_id FROM worker_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (empIdTextBox.Text.ToLower() == reader["worker_id"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Full_Access,Transactions,Reports,Selected_Access,Access)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + fullAccess.ToString() + "','" + transactions.ToString() + "','" + reports.ToString() + "','" + selectedAccess.ToString() + "','" + Access.ToString() + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Worker ID Already Exists.')", true);
+                }
             }
             Application["editFlag"] = null;
-            Application["query"] = null;
             Application["workerId"] = null;
             con.Close();
-            Response.Redirect("~/displayWorker.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayWorker.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

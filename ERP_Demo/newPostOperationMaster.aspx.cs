@@ -48,23 +48,53 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE post_operation_master SET type='" + postOperationTextBox.Text.ToString() + "' WHERE id='" + Application["postOperationId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO post_operation_master(type)VALUES('" + postOperationTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT type FROM post_operation_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (postOperationTextBox.Text.ToLower() == reader["type"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO post_operation_master(type)VALUES('" + postOperationTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Post Operation Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
             Application["postOperationId"] = null;
             Application["query"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayPostOperation.aspx");
-            
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayPostOperation.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

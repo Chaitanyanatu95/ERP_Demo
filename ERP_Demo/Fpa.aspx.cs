@@ -16,6 +16,7 @@ namespace ERP_Demo
             if (!IsPostBack)
             {
                 BindControlsOnPageLoad();
+                Application["editFlag"] = false;
             }
         }
 
@@ -27,26 +28,27 @@ namespace ERP_Demo
             }
             else
             {
-                operatorNameTextBox.Text = Session["username"].ToString();
+                //operatorNameTextBox.Text = Session["username"].ToString();
                 SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                 using (con)
                 {
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM production", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT worker_name FROM worker_master", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        operatorNameDropDownList.DataSource = reader;
+                        operatorNameDropDownList.DataBind();
+                        reader.Close();
+                        operatorNameDropDownList.Items.Insert(0, new ListItem("Select Worker Name", ""));
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM parts_master", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         partNameDropDownList.DataSource = reader;
                         partNameDropDownList.DataBind();
                         reader.Close();
                         partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
-                    }
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT type FROM post_operation_details", con))
-                    {
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        operationTypeList.DataSource = reader;
-                        operationTypeList.DataBind();
-                        reader.Close();
-                        operationTypeList.Items.Insert(0, new ListItem("Select Operation", ""));
                     }
                     con.Close();
                 }
@@ -56,9 +58,47 @@ namespace ERP_Demo
         protected void partNameChanged(object sender, EventArgs e)
         {
             if (partNameDropDownList.SelectedItem.Text != "Select Part Name")
-            { 
+            {
                 LoadProductRejHisValues();
-                LoadShiftDetails();
+                Application["tempPartName"] = string.Empty;
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM production WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Application["tempPartName"] = reader["part_name"].ToString();
+                    }
+                    reader.Close();
+                    if(Application["tempPartName"].ToString() != "")
+                    {
+                        totalQtyTextBox.ReadOnly = true;
+                        workerNameDropDownList.Items.Clear();
+                        operationTypeList.Items.Clear();
+                        dateDropDownList.Items.Clear();
+                        totalQtyTextBox.Text = "";
+                        LoadShiftDetails();
+                    }
+                    else
+                    {
+                        shiftDetailsDropDownList.Items.Clear();
+                        workerNameDropDownList.Items.Clear();
+                        operationTypeList.Items.Clear();
+                        dateDropDownList.Items.Clear();
+                        totalQtyTextBox.Text = "";
+                        totalQtyTextBox.ReadOnly = false;
+                    }
+                }
+            }
+            else
+            {
+                shiftDetailsDropDownList.Items.Clear();
+                workerNameDropDownList.Items.Clear();
+                operationTypeList.Items.Clear();
+                dateDropDownList.Items.Clear();
+                totalQtyTextBox.Text = "";
+                totalQtyTextBox.ReadOnly = true;
             }
         }
 
@@ -82,31 +122,45 @@ namespace ERP_Demo
 
         protected void shiftChanged(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            using (SqlCommand cmd = new SqlCommand("SELECT worker_name FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
+            if (shiftDetailsDropDownList.SelectedItem.Text != "Select Shift")
             {
-                SqlDataReader reader = cmd.ExecuteReader();
-                workerNameDropDownList.DataSource = reader;
-                workerNameDropDownList.DataBind();
-                reader.Close();
-                workerNameDropDownList.Items.Insert(0, new ListItem("Select Worker", ""));
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT worker_name FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    workerNameDropDownList.DataSource = reader;
+                    workerNameDropDownList.DataBind();
+                    reader.Close();
+                    workerNameDropDownList.Items.Insert(0, new ListItem("Select Worker", ""));
+                }
+                con.Close();
             }
-            con.Close();
+            else
+            {
+                workerNameDropDownList.Items.Clear();
+            }
         }
         protected void workerChanged(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            using (SqlCommand cmd = new SqlCommand("SELECT date_dpr FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND worker_name ='" + workerNameDropDownList.SelectedItem.Text + "'", con))
+            if (workerNameDropDownList.SelectedItem.Text != "Select Worker")
             {
-                SqlDataReader reader = cmd.ExecuteReader();
-                dateDropDownList.DataSource = reader;
-                dateDropDownList.DataBind();
-                reader.Close();
-                dateDropDownList.Items.Insert(0, new ListItem("Select Date", ""));
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT date_dpr FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND worker_name ='" + workerNameDropDownList.SelectedItem.Text + "'", con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    dateDropDownList.DataSource = reader;
+                    dateDropDownList.DataBind();
+                    reader.Close();
+                    dateDropDownList.Items.Insert(0, new ListItem("Select Date", ""));
+                }
+                con.Close();
             }
-            con.Close();
+            else
+            {
+                workerNameDropDownList.Items.Clear();
+            }
         }
 
         protected void dateChanged(object sender, EventArgs e)
@@ -126,7 +180,19 @@ namespace ERP_Demo
                         }
                         reader.Close();
                     }
+                    using (SqlCommand cmmd = new SqlCommand("SELECT DISTINCT type FROM post_operation_details", con))
+                    {
+                        SqlDataReader Rreader = cmmd.ExecuteReader();
+                        operationTypeList.DataSource = Rreader;
+                        operationTypeList.DataBind();
+                        Rreader.Close();
+                        operationTypeList.Items.Insert(0, new ListItem("Select Operation", ""));
+                    }
                     con.Close();
+                }
+                else
+                {
+                    dateDropDownList.Items.Clear();
                 }
             }
             catch(Exception ex)
@@ -140,19 +206,26 @@ namespace ERP_Demo
         {
             try
             {
-                SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True");
-                sqlCon.Open();
-                using (SqlCommand sqlnewCmd = new SqlCommand("SELECT target_quantity FROM post_operation_details WHERE type='" + operationTypeList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "'", sqlCon))
+                if (totalQtyTextBox.Text != null)
                 {
-                    SqlDataReader reader = sqlnewCmd.ExecuteReader();
-                    while(reader.Read())
+                    SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True");
+                    sqlCon.Open();
+                    using (SqlCommand sqlnewCmd = new SqlCommand("SELECT target_quantity FROM post_operation_details WHERE type='" + operationTypeList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "'", sqlCon))
                     {
-                        noOfPartsTextBox.Text = reader["target_quantity"].ToString();
+                        SqlDataReader reader = sqlnewCmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            noOfPartsTextBox.Text = reader["target_quantity"].ToString();
+                        }
+                        //System.Diagnostics.Debug.WriteLine(noOfPartsTextBox.Text.ToString());
+                        reader.Close();
                     }
-                    //System.Diagnostics.Debug.WriteLine(noOfPartsTextBox.Text.ToString());
-                    reader.Close();
+                    sqlCon.Close();
                 }
-                sqlCon.Close();
+                else
+                {
+                    operationTypeList.Items.Clear();
+                }
             }
             catch (Exception ex)
             {
@@ -305,7 +378,7 @@ namespace ERP_Demo
         {
             try
             {
-                if (wipQtyTextBox.Text == "" || partNameDropDownList.SelectedItem.Text == "" || operatorNameTextBox.Text == "")
+                if (wipQtyTextBox.Text == "" || partNameDropDownList.SelectedItem.Text == "")
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data..!')", true);
                 }
@@ -313,7 +386,7 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO fpa(worker_name,part_name,date,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,wip_qty,efficiency)VALUES('" + operatorNameTextBox.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + totalQtyTextBox.Text + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + wipQtyTextBox.Text + "','"+efficiencyTextBox.Text +"')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO fpa(worker_name,part_name,date,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,wip_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + totalQtyTextBox.Text + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + wipQtyTextBox.Text + "','"+efficiencyTextBox.Text +"')", con);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";

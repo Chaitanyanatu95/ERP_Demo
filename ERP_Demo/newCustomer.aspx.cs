@@ -56,21 +56,51 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 string query = "UPDATE customer_master SET customer_name='" + customerNameTextBox.Text.ToString() + "',customer_address_one ='"+customerAddressOneTextBox.Text.ToString()+"',customer_address_two = '"+customerAddressTwoTextBox.Text.ToString()+"',customer_contact = '"+customerContactNoTextBox.Text.ToString()+"',customer_email = '"+customerEmailIdTextBox.Text.ToString()+"',customer_contact_person='"+customerContactPersonTextBox.Text.ToString()+"',customer_gst_details='"+customerGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["custId"]+"'";
-                Application["custQuery"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO customer_master(customer_name,customer_address_one,customer_address_two,customer_contact,customer_email,customer_contact_person,customer_gst_details)VALUES('" + customerNameTextBox.Text + "','" + customerAddressOneTextBox.Text + "','" + customerAddressTwoTextBox.Text + "','" + customerContactNoTextBox.Text + "','" + customerEmailIdTextBox.Text + "','" + customerContactPersonTextBox.Text + "','" + customerGstDetailsTextBox.Text + "')";
-                Application["custQuery"] = query;
+                string sqlquery = "SELECT customer_gst_details FROM customer_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (customerGstDetailsTextBox.Text.ToLower() == reader["customer_gst_details"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO customer_master(customer_name,customer_address_one,customer_address_two,customer_contact,customer_email,customer_contact_person,customer_gst_details)VALUES('" + customerNameTextBox.Text + "','" + customerAddressOneTextBox.Text + "','" + customerAddressTwoTextBox.Text + "','" + customerContactNoTextBox.Text + "','" + customerEmailIdTextBox.Text + "','" + customerContactPersonTextBox.Text + "','" + customerGstDetailsTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Customer with GST No Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["custQuery"].ToString(), con);
-            cmd.ExecuteNonQuery();
             Application["custId"] = null;
-            Application["custQuery"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayCustomer.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayCustomer.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

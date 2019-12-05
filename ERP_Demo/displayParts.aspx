@@ -45,8 +45,8 @@
                    </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Fetch" ToolTip="Fetch" Width="20px" Height="20px" CommandArgument='<%#Eval("part_no")+","+ Eval("part_name")%>' OnClientClick="return confirm('Do you want to Edit?');" />
-                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="Delete" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to Delete?');" />
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="fetch" ToolTip="EDIT PART" Width="20px" Height="20px" CommandArgument='<%#Eval("part_no")+","+ Eval("part_name")%>' OnClientClick="return confirm('Do you want to Edit?');" />
+                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="DELETE" ToolTip="DELETE" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to Delete?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

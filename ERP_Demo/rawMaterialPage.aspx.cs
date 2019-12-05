@@ -595,6 +595,7 @@ namespace ERP_Demo
         protected void Unnamed_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/newPartsMaster.aspx");
+            //backClick.Attributes.Add("onClick", "javascript:history.back(); return false;");
         }
     }
 }

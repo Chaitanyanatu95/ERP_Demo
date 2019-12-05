@@ -50,23 +50,54 @@ namespace ERP_Demo
             con.Open();
             if (Application["editFlag"] is true)
             {
+                Application["Duplicate"] = false;
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
                 string query = "UPDATE rejection_master SET rejection_type='" + rejectionTypeTextBox.Text.ToString() + "',code='"+ codeTextBox.Text.ToString()+ "',description='" + descTextBox.Text.ToString() + "' WHERE Id='" + Application["rejectionId"] + "'";
-                Application["query"] = query;
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
             else
             {
-                string query = "INSERT INTO rejection_master(rejection_type,code,description)VALUES('" + rejectionTypeTextBox.Text + "','"+ codeTextBox.Text + "','" + descTextBox.Text + "')";
-                Application["query"] = query;
+                string sqlquery = "SELECT rejection_type FROM rejection_master";
+                //ArrayList al = new ArrayList();
+                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                {
+                    SqlDataReader reader = cmmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (rejectionTypeTextBox.Text.ToLower() == reader["rejection_type"].ToString().ToLower())
+                        {
+                            Application["Duplicate"] = true;
+                            break;
+                        }
+                        else
+                        {
+                            Application["Duplicate"] = false;
+                        }
+                    }
+                    reader.Close();
+                }
+                if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO rejection_master(rejection_type,code,description)VALUES('" + rejectionTypeTextBox.Text + "','" + codeTextBox.Text + "','" + descTextBox.Text + "')";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Rejection Type Already Exists.')", true);
+                }
             }
-            SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
-            cmd.ExecuteNonQuery();
+            
             //System.Threading.Thread.Sleep(1500);
             Application["rejectionId"] = null;
-            Application["query"] = null;
             Application["editFlag"] = null;
             con.Close();
-            Response.Redirect("~/displayRejection.aspx");
+            if (Application["Duplicate"] is false)
+            {
+                Application["Duplicate"] = null;
+                Response.Redirect("~/displayRejection.aspx");
+            }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

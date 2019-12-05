@@ -16,6 +16,7 @@ namespace ERP_Demo
             if (!IsPostBack)
             {
                 PopulateGridview();
+                Application["editFlag"] = false;
             }
         }
 
@@ -56,7 +57,7 @@ namespace ERP_Demo
 
         protected void parts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Fetch")
+            if (e.CommandName == "fetch")
             {
                 string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
                 Application["partNoEdit"] = commandArgs[0];
