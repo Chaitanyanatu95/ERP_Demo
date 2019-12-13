@@ -6,18 +6,8 @@
             onPostOperationSelected();
             onPackagingDetailsSelected();                
         }
-        function validationOnDropDown() {
-            var postOpnDropDown = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
-            var packagingDropDown = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
-            if (postOpnDropDown == "SELECT") {
-                alert("Please select dropdown for post operation");
-                return false;
-            }
-            if (packagingDropDown == "SELECT") {
-                alert("Please select dropdown for packaging");
-                return false;
-            }
-        }
+
+       
         function extraBtnImg() {
             var extraBtnImg = document.getElementById('<%= listUploadedFiles.ClientID %>').innerText;
             if (!extraBtnImg) {
@@ -52,53 +42,27 @@
                 var postType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
                 var getPost = postType.options[postType.selectedIndex].text;
 
-                if (getPost == "Select Type")
-                {
+                if (getPost == "Select Type") {
                     document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postImgBtn").ClientID %>").style.display = "block";
                     document.getElementById("<%=postOperationGrid.FooterRow.FindControl("errorType").ClientID %>").innerHTML = "Please select type.".fontcolor("red");
+                    targetQuantity.readOnly = false;
                     return false;
                 }
-                else if (getPost != "Select Type" && targetQuantity.value == "")
-                {
+                else if (getPost != "Select Type" && targetQuantity.value == "") {
                     document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postImgBtn").ClientID %>").style.display = "block";
                     document.getElementById("<%=postOperationGrid.FooterRow.FindControl("errorTarget").ClientID %>").innerHTML = "Please enter target quantity.".fontcolor("red");
+                    targetQuantity.readOnly = false;
                     return false;
                 }
-                else if (getPost == "N/A")
-                {
-                    targetQuantity.value = "";
-                    return true;
-                }
-                else if (getPost == "N/A" && targetQuantity.value == "")
-                {
+                else if (getPost == "N/A") {
                     document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postImgBtn").ClientID %>").style.display = "none";
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        function finalValidation() {
-            if (isPostOperation == "YES")
-            {
-                var targetQuantity = document.getElementById('<%=((TextBox)postOperationGrid.FooterRow.FindControl("txtTargetQuantityFooter")).ClientID %>');
-                var postType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
-                var getPost = postType.options[postType.selectedIndex].text;
-                if (getPost == "N/A")
-                {
+                else if (getPost != "Select Type" && targetQuantity.value != "") {
                     return true;
                 }
-                else
-                {
-                    alert("Add post operation data");
-                    return false;
+                else {
+                    return true;
                 }
             }
             else
@@ -119,12 +83,16 @@
                 }
                 else if (getPack == "N/A")
                 {
+                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("packImgBtn").ClientID %>").style.display = "none";
+                    return true;
+                }
+                else if (getPost != "Select Packaging" && targetQuantity.value != "")
+                {
                     return true;
                 }
                 else
                 {
-                    alert("Please Add the post operation value");
-                    return false;
+                    return true;
                 }
             }
             else {
@@ -184,18 +152,79 @@
             }
         }
 
-        function validationOnThisPage() {
-
-            var b = finalValidation();
-            validationOnDropDown();
-            if (b) {
+        function finalPostValidation() {
+            var isPostOperation = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
+            if (isPostOperation == "YES")
+            {
+                var postType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
+                var getPost = postType.options[postType.selectedIndex].text;
+                if (getPost == "N/A")
+                {
+                    return true;
+                }
+                else
+                {
+                    alert("Please fill post operation data");
+                    return false;
+                }
+            }
+            else
+            {
                 return true;
+            }
+        }
+
+        function finalPackValidation() {
+            var isPackagingDetails = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
+            if (isPackagingDetails == "YES")
+            {
+                var packType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
+                var getPack = packType.options[packType.selectedIndex].text;
+                if (getPack == "N/A")
+                {
+                    return true;
+                }
+                else
+                {
+                    alert("Please fill packaging details data");
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+         }
+
+         function validationOnDropDown() {
+            var postOpnDropDown = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
+            var packagingDropDown = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
+             if (postOpnDropDown == "SELECT") {
+                 alert("Please select dropdown for post operation");
+                 return false;
+             }
+             else if (packagingDropDown == "SELECT") {
+                 alert("Please select dropdown for packaging");
+                 return false;
+             }
+             else {
+                 return true;
+             }
+         }
+
+         function validationOnThisPage()
+         {
+            var a = finalPostValidation();
+            var b = finalPackValidation();
+            var c = validationOnDropDown();
+            if (a && b && c) {
+                return confirm('Do you want to save?');
             }
             else
             {
                 return false;
             }
-        }
+         }
     </script>
     <div style="display:block;margin-left:auto;margin-right:auto;height:40px;width:80%;background-color:whitesmoke;padding-top:5px;">
         <div style="display:inline-block;text-align:center;border:1px solid black;background-color:transparent;width:20%;height:33px;padding-top:7px; color:black">
@@ -233,7 +262,7 @@
                         <asp:Label ID="postOpnTypeLabel" Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type" onchange="validationOnPostOperation()"></asp:DropDownList>
+                        <asp:DropDownList ID="postOperationTypeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="type" DataValueField="type" onchange="validationOnPostOperation()" OnSelectedIndexChanged="postOperationTypeDropDownList_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [type] FROM [post_operation_master]">
                         </asp:SqlDataSource>
                         <br /><asp:Label ID="errorType" runat="server"></asp:Label>

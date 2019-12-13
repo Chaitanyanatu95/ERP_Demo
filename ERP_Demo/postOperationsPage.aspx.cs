@@ -591,5 +591,23 @@ namespace ERP_Demo
                 }
             }
         }
+
+        protected void postOperationTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = postOperationGrid.FooterRow;
+
+            if (((DropDownList)row.FindControl("postOperationTypeDropDownList")).SelectedItem.Text == "N/A")
+            {
+                ((ImageButton)row.FindControl("postImgBtn")).Visible = false;
+                ((TextBox)row.FindControl("txtTargetQuantityFooter")).Text = "0";
+                ((TextBox)row.FindControl("txtTargetQuantityFooter")).ReadOnly = true;
+            }
+            else
+            {
+                ((ImageButton)row.FindControl("postImgBtn")).Visible = true;
+                ((TextBox)row.FindControl("txtTargetQuantityFooter")).ReadOnly = false;
+                ((TextBox)row.FindControl("txtTargetQuantityFooter")).Text = "";
+            }
+        }
     }
 }

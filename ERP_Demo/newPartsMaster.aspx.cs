@@ -53,12 +53,13 @@ namespace ERP_Demo
                 con.Close();
             }
 
-            if (Application["Duplicate"] is true)
+            if (Application["Duplicate"] is true && Application["editFlag"] is false)
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Part name already exists!')", true);
             }
             else
             {
+                Application["Duplicate"] = false;
                 if (partPhotoFileUpload.HasFile)
                 {
                     string fileName = Path.GetFileName(partPhotoFileUpload.PostedFile.FileName);
@@ -106,6 +107,7 @@ namespace ERP_Demo
 
         protected void LoadEditValuesInController()
         {
+            Application["Duplicate"] = false;
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
             using (con)
             {

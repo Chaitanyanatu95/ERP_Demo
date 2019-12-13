@@ -42,6 +42,23 @@
             }
 
             function validationOnFields() {
+
+                //rawmaterial
+                var rawMaterialName = document.getElementById("<%=rawMaterialDropDownList.ClientID%>");
+                var getRMName = rawMaterialName.options[rawMaterialName.selectedIndex].text;
+
+                var rawMaterialGrade = document.getElementById("<%=rmGradeDropDownList.ClientID%>");
+                var getRMGrade = rawMaterialGrade.options[rawMaterialGrade.selectedIndex].text;
+
+                if (getRMName == "Select Raw Material") {
+                    document.getElementById("<%=rmNameLabel.ClientID%>").innerHTML = "Please select raw material.".fontcolor("red");
+                    return false;
+                }
+                else if (getRMGrade == "Select Raw Material Grade") {
+                    document.getElementById("<%=rmGradeLabel.ClientID%>").innerHTML = "Please select raw material.".fontcolor("red");
+                    return false;
+                }
+
                 //masterbatch
                 var isMasterBatchSelected = $('#<%=masterbatchDropDownList.ClientID %> option:selected').text();
                 if (isMasterBatchSelected == "YES") {
@@ -59,8 +76,10 @@
                         return false;
                     }
                 }
+                else {
+                    return true;
+                }
 
-                
                 //altrawmaterial
                 var isAltRawMaterialSelected = $('#<%=altRawMaterialDropDownList.ClientID %> option:selected').text();
                 if (isAltRawMaterialSelected == "YES") {
@@ -96,11 +115,21 @@
                         }
                     }
                 }
+                else {
+                    return true;
+                }
             }
 
-            function validationRawMaterial(){
-                if (Page_ClientValidate()) {
-                        return confirm('You are about to save this request.\n\nProceed?');
+            function validationOnThisPage()
+            {
+                var a = validationOnFields();
+                if (a) {
+                    return confirm('Do you want to save?');
+                }
+                else
+                {
+                    alert("SOmething MIssing");
+                    return false;
                 }
             }
 
@@ -136,10 +165,12 @@
                 <asp:TableCell runat="server" CssClass="margin">
                     <asp:DropDownList ID="rawMaterialDropDownList" DataTextField="material_name" DataValueField="material_name" runat="server" onselectedindexchanged="rawMaterialNameChanged" AutoPostBack="true"></asp:DropDownList><br />
                     <asp:RequiredFieldValidator runat="server" id="rawMaterialNameReq" controltovalidate="rawMaterialDropDownList" errormessage="Please select raw material!" CssClass="required" />
+                    <asp:Label ID="rmNameLabel" runat="server"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">
                     <asp:DropDownList ID="rmGradeDropDownList" DataTextField="material_grade" DataValueField="material_grade" runat="server" onselectedindexchanged="rawMaterialGradeChanged" AutoPostBack="true"></asp:DropDownList><br />
                     <asp:RequiredFieldValidator runat="server" id="rawMaterialGradeReq" controltovalidate="rmGradeDropDownList" errormessage="Please select raw material grade!" CssClass="required" />
+                    <asp:Label ID="rmGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">
                     <asp:TextBox ID="rmMakeTextBox" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true" ></asp:TextBox>
@@ -280,7 +311,7 @@
         <asp:Table runat="server" HorizontalAlign="Center" CssClass="partTable1" Height="15%"> 
             <asp:TableRow runat="server">
                 <asp:TableCell runat="server">
-                    <asp:Button OnClick="NextPage_Click1" runat="server" CssClass="nextPage" Text="NEXT" OnClientClick="var b = validationOnFields(); if(b) validationRawMaterial(); return b;"></asp:Button>
+                    <asp:Button OnClick="NextPage_Click1" runat="server" CssClass="nextPage" Text="NEXT" OnClientClick="return validationOnThisPage();"></asp:Button>
                 </asp:TableCell>
                 <asp:TableCell runat="server" >&nbsp;&nbsp;&nbsp;
                     <asp:Button ID="backClick" Text="BACK" CssClass="nextPage" runat="server" OnClientClick="javascript:window.history.go(-1);return false;" CausesValidation="false"/>

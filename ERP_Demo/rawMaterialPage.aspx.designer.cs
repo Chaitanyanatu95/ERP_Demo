@@ -40,6 +40,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rawMaterialNameReq;
         
         /// <summary>
+        /// rmNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label rmNameLabel;
+        
+        /// <summary>
         /// rmGradeDropDownList control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rawMaterialGradeReq;
+        
+        /// <summary>
+        /// rmGradeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label rmGradeLabel;
         
         /// <summary>
         /// rmMakeTextBox control.

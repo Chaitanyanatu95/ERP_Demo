@@ -2,6 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <html>
 <head>
+    <script type="text/javascript">
+        window.onload = function () {
+            
+        }
+        
+        </script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript" src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -67,6 +73,7 @@
                     <FooterTemplate>
                         <asp:DropDownList ID="rejectionCodeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="code" DataValueField="code"></asp:DropDownList>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [code] FROM [rejection_master]"></asp:SqlDataSource>
+                        <asp:Label ID="checkRejectionLbl" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="REJECTION QUANTITY">
@@ -75,6 +82,7 @@
                     </ItemTemplate>
                     <FooterTemplate>
                         <asp:TextBox ID="txtRejQuantityFooter" runat="server"/>
+                        <asp:Label ID="checkRejQuantLbl" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
@@ -82,7 +90,7 @@
                         <asp:ImageButton ImageUrl="~\Images\delete.png" CommandName="Delete" OnClientClick="return confirm('Do you want to Delete?');"  Height="20px" Width="20px" runat="server"/>
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return confirm('Do you want to Add?');"  Height="20px" Width="20px" runat="server"/>
+                        <asp:ImageButton ImageUrl="~\Images\addnew.png" CommandName="Add" OnClientClick="return validationProdRej()"  Height="20px" Width="20px" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -103,7 +111,7 @@
          <br />
         
                <center> 
-            <asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="confirm('Do you want to save?');"/>
+            <asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="return validationFinalProdRej()"/>
                     &nbsp;&nbsp;&nbsp; <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClientClick="return confirm('Do you want to cancel?');" OnClick="Cancel_Click" CausesValidation="false" />
                </center>
             </div>
