@@ -10,7 +10,7 @@
 namespace ERP_Demo {
     
     
-    public partial class Dpr {
+    public partial class DPR {
         
         /// <summary>
         /// Table1 control.

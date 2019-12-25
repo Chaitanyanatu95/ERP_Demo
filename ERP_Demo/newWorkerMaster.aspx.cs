@@ -87,7 +87,34 @@ namespace ERP_Demo
 
             if (Application["editFlag"] is true)
             {
-                Application["Duplicate"] = false;
+                string sqlqueryE = "SELECT worker_id,user_id FROM worker_master EXCEPT SELECT worker_id,user_id FROM worker_master where id = '" + Application["workerId"].ToString() + "'";
+                Application["queryD"] = sqlqueryE;
+            }
+            else
+            {
+                string sqlqueryN = "SELECT worker_id,user_id FROM worker_master";
+                Application["queryD"] = sqlqueryN;
+            }
+
+            using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
+            {
+                SqlDataReader reader = cmmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (empIdTextBox.Text.ToLower().Trim() == reader["worker_id"].ToString().ToLower().Trim() || userIdTextBox.Text.ToLower().Trim() == reader["user_id"].ToString().ToLower().Trim())
+                    {
+                        Application["Duplicate"] = true;
+                        break;
+                    }
+                    else
+                    {
+                        Application["Duplicate"] = false;
+                    }
+                }
+                reader.Close();
+            }
+            if(Application["Duplicate"] is false && Application["editFlag"] is true)
+            {
                 string updateData = "UPDATE worker_master SET Full_Access='NO', Transactions='NO', Reports='NO', Selected_Access='NO', Access = '' WHERE id='" + Application["workerId"] + "'";
                 SqlCommand comdUpdate = new SqlCommand(updateData, con);
                 comdUpdate.ExecuteNonQuery();
@@ -119,19 +146,18 @@ namespace ERP_Demo
 
                         if (li.Text.Trim() == "Selected Access")
                         {
-                            string query4 = "UPDATE worker_master SET Selected_Access = 'YES', Access = '"+ selectedAccessDropDownList.SelectedValue.ToString() + "' WHERE id = '" + Application["workerId"] + "'";
+                            string query4 = "UPDATE worker_master SET Selected_Access = 'YES', Access = '" + selectedAccessDropDownList.SelectedValue.ToString() + "' WHERE id = '" + Application["workerId"] + "'";
                             SqlCommand comd4 = new SqlCommand(query4.ToString(), con);
                             comd4.ExecuteNonQuery();
                         }
                     }
                 }
 
-                //UPDATE WORKER MASTER 
                 string query = "UPDATE worker_master SET worker_name='" + empNameTextBox.Text.ToString() + "',worker_id ='" + empIdTextBox.Text.ToString() + "',user_id = '" + userIdTextBox.Text.ToString() + "',user_password = '" + userPasswordTextBox.Text.ToString() + "' WHERE id='" + Application["workerId"] + "'";
                 SqlCommand comd = new SqlCommand(query.ToString(), con);
                 comd.ExecuteNonQuery();
             }
-            else
+            else if (Application["Duplicate"] is false)
             {
                 //INSERT INTO WORKER MASTER
                 string fullAccess = string.Empty;
@@ -171,42 +197,21 @@ namespace ERP_Demo
                 if (reports.ToString() != "YES") { reports = "NO"; }
                 if (selectedAccess.ToString() != "YES") { selectedAccess = "NO"; Access = ""; }
 
-                string sqlquery = "SELECT worker_id FROM worker_master";
-                //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
-                {
-                    SqlDataReader reader = cmmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        if (empIdTextBox.Text.ToLower() == reader["worker_id"].ToString().ToLower())
-                        {
-                            Application["Duplicate"] = true;
-                            break;
-                        }
-                        else
-                        {
-                            Application["Duplicate"] = false;
-                        }
-                    }
-                    reader.Close();
-                }
-                if (Application["Duplicate"] is false)
-                {
-                    string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Full_Access,Transactions,Reports,Selected_Access,Access)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + fullAccess.ToString() + "','" + transactions.ToString() + "','" + reports.ToString() + "','" + selectedAccess.ToString() + "','" + Access.ToString() + "')";
-                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Worker ID Already Exists.')", true);
-                }
+                string query = "INSERT INTO worker_master(worker_name,worker_id,user_id,user_password,Full_Access,Transactions,Reports,Selected_Access,Access)VALUES('" + empNameTextBox.Text + "','" + empIdTextBox.Text + "','" + userIdTextBox.Text + "','" + userPasswordTextBox.Text + "','" + fullAccess.ToString() + "','" + transactions.ToString() + "','" + reports.ToString() + "','" + selectedAccess.ToString() + "','" + Access.ToString() + "')";
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
             }
-            Application["editFlag"] = null;
-            Application["workerId"] = null;
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Employee ID or User ID already exists.')", true);
+            }
             con.Close();
             if (Application["Duplicate"] is false)
             {
                 Application["Duplicate"] = null;
+                Application["editFlag"] = null;
+                Application["workerId"] = null;
+                Application["queryD"] = null;
                 Response.Redirect("~/displayWorker.aspx");
             }
         }

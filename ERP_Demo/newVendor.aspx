@@ -1,5 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="newVendor.aspx.cs" Inherits="ERP_Demo.newVendor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript">
+        function validatePage() {
+            if (Page_ClientValidate()) {
+                return confirm('Do you want to save?');
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
     <asp:Table ID="Table1" runat="server" CssClass="tableClass" Height="40%" Width="30%">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
             <asp:TableCell runat="server" ColumnSpan="3"><h3>VENDOR MASTER</h3></asp:TableCell>
@@ -29,8 +39,8 @@
         <br />
         <asp:RegularExpressionValidator ID="RegularExpressionValidator" runat="server"  
                     ControlToValidate="vendorGstDetailsTextBox" ErrorMessage="GST Number should be 15 in length..!"  
-                    ValidationExpression="^[0-9,A-Z]{15}$" CssClass="required"></asp:RegularExpressionValidator></asp:TableCell></asp:TableRow>
-           <asp:TableRow ID="saveRowLabel" runat="server"> <asp:TableCell ID="saveCellLabel" runat="server"><asp:Button ID="saveButtonLabel" runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="custButtonCss" OnClientClick="confirm('Do you want to save?');"/> 
+                    ValidationExpression="^[0-9,A-Z,a-z]{15}$" CssClass="required"></asp:RegularExpressionValidator></asp:TableCell></asp:TableRow>
+           <asp:TableRow ID="saveRowLabel" runat="server"> <asp:TableCell ID="saveCellLabel" runat="server"><asp:Button ID="saveButtonLabel" runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="custButtonCss" OnClientClick="return validatePage()"/> 
             <asp:Button ID="cancelLabel" Text="CANCEL" runat="server" OnClick="Cancel_Click" CausesValidation="false" CssClass="nextPage" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
         </asp:TableRow>
     </asp:Table>

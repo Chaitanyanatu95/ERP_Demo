@@ -48,26 +48,27 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            if (Application["editFlag"] is true)
+            try
             {
-                Application["Duplicate"] = false;
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                string query = "UPDATE masterbatch_master SET mb_name='" + mbnameTextBox.Text.ToString() + "',mb_grade='" + mbgradeTextBox.Text.ToString() + "',mb_mfg='" + mbmfgTextBox.Text.ToString() + "',mb_color='" + mbcolorTextBox.Text.ToString() + "',mb_color_code='" + mbcolorcodeTextBox.Text.ToString() + "' WHERE Id='" + Application["masterbatchId"] + "'";
-                SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                string sqlquery = "SELECT mb_name FROM masterbatch_master";
-                //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+                if (Application["editFlag"] is true)
+                {
+                    string sqlqueryE = "SELECT mb_name FROM masterbatch_master EXCEPT SELECT mb_name FROM masterbatch_master where id = '" + Application["masterbatchId"].ToString() + "'";
+                    Application["queryD"] = sqlqueryE;
+                }
+                else
+                {
+                    string sqlqueryN = "SELECT mb_name FROM masterbatch_master";
+                    Application["queryD"] = sqlqueryN;
+                }
+
+                using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
                 {
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (mbnameTextBox.Text.ToLower() == reader["mb_name"].ToString().ToLower())
+                        if (mbnameTextBox.Text.ToLower().Trim() == reader["mb_name"].ToString().ToLower().Trim())
                         {
                             Application["Duplicate"] = true;
                             break;
@@ -79,7 +80,13 @@ namespace ERP_Demo
                     }
                     reader.Close();
                 }
-                if (Application["Duplicate"] is false)
+                if (Application["Duplicate"] is false && Application["editFlag"] is true)
+                {
+                    string query = "UPDATE masterbatch_master SET mb_name='" + mbnameTextBox.Text.ToString() + "',mb_grade='" + mbgradeTextBox.Text.ToString() + "',mb_mfg='" + mbmfgTextBox.Text.ToString() + "',mb_color='" + mbcolorTextBox.Text.ToString() + "',mb_color_code='" + mbcolorcodeTextBox.Text.ToString() + "' WHERE Id='" + Application["masterbatchId"] + "'";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else if (Application["Duplicate"] is false)
                 {
                     string query = "INSERT INTO masterbatch_master(mb_name,mb_grade,mb_mfg,mb_color,mb_color_code)VALUES('" + mbnameTextBox.Text + "','" + mbgradeTextBox.Text + "','" + mbmfgTextBox.Text + "','" + mbcolorTextBox.Text + "','" + mbcolorcodeTextBox.Text + "')";
                     SqlCommand cmd = new SqlCommand(query.ToString(), con);
@@ -89,15 +96,18 @@ namespace ERP_Demo
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Masterbatch Already Exists.')", true);
                 }
+                con.Close();
+                if (Application["Duplicate"] is false)
+                {
+                    Application["Duplicate"] = null;
+                    Application["masterbatchId"] = null;
+                    Application["editFlag"] = null;
+                    Response.Redirect("~/displayMasterBatch.aspx");
+                }
             }
-            
-            Application["masterbatchId"] = null;
-            Application["editFlag"] = null;
-            con.Close();
-            if (Application["Duplicate"] is false)
+            catch(Exception ex)
             {
-                Application["Duplicate"] = null;
-                Response.Redirect("~/displayMasterBatch.aspx");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
             }
         }
 

@@ -37,13 +37,22 @@ namespace ERP_Demo
             {
                 // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["partNoEdit"].ToString() + "')", true);
                 con.Open();
-                String sqlquery = "SELECT part_name FROM parts_master";
-                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                if (Application["editFlag"] is true)
+                {
+                    string sqlqueryE = "SELECT part_name FROM parts_master EXCEPT SELECT part_name FROM parts_master where part_no = '"+partNoTextBox.Text.ToString()+"'";
+                    Application["queryD"] = sqlqueryE;
+                }
+                else
+                {
+                    string sqlqueryN = "SELECT part_name FROM parts_master";
+                    Application["queryD"] = sqlqueryN;
+                }
+                using (SqlCommand cmd = new SqlCommand(Application["queryD"].ToString(), con))
                 {
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (partNameTextBox.Text.ToLower() == reader["part_name"].ToString().ToLower())
+                        if (partNameTextBox.Text.ToLower().Trim() == reader["part_name"].ToString().ToLower())
                         {
                             Application["Duplicate"] = true;
                         }
@@ -53,7 +62,7 @@ namespace ERP_Demo
                 con.Close();
             }
 
-            if (Application["Duplicate"] is true && Application["editFlag"] is false)
+            if (Application["Duplicate"] is true)
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Part name already exists!')", true);
             }
@@ -97,6 +106,7 @@ namespace ERP_Demo
                 Application["moldProductionCycle"] = moldProductionCycleTextBox.Text;
                 Application["samplePartNo"] = samplePartNo.Text;
                 Application["tempPartName"] = "";
+                Application["queryD"] = "";
                 if (Application["Duplicate"] is false)
                 {
                     Application["Duplicate"] = null;
@@ -288,10 +298,12 @@ namespace ERP_Demo
             bool isCycleNum = double.TryParse(cycleTime, out cycleNum);
             bool isCavitiesNum = double.TryParse(noOfCavities, out cavitiesNum);
 
-            if (isCycleNum && isCavitiesNum && cycleNum != 0 && cavitiesNum != 0)
+            if (isCycleNum && isCavitiesNum && cycleNum != 0 && cavitiesNum != 0 && cycleTime != null && noOfCavities != null)
                 moldProductionCycleTextBox.Text = Math.Ceiling((3600 / double.Parse(cycleTime)) * double.Parse(noOfCavities) * 0.9).ToString();
+            else if (cycleTime == "0" || noOfCavities == "0")
+                moldProductionCycleTextBox.Text = "0";
             else
-                moldProductionCycleTextBox.Text = "Invalid cavities/cycle time!";
+                moldProductionCycleTextBox.Text = ""; //cycleTimeTextBox.Text = ""; noOfCavitiesTextBox.Text = "";
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
@@ -362,6 +374,12 @@ namespace ERP_Demo
                     }
                 }
             }
+        }
+
+        protected void noOfCavitiesTextBox_TextChanged(object sender, EventArgs e)
+        {
+            cycleTimeTextBox.Text = "";
+            moldProductionCycleTextBox.Text = "";
         }
     }
 }

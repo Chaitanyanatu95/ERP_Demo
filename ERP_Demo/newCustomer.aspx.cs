@@ -40,7 +40,7 @@ namespace ERP_Demo
                         customerAddressOneTextBox.Text = reader["customer_address_one"].ToString();
                         customerAddressTwoTextBox.Text = reader["customer_address_two"].ToString();
                         customerContactNoTextBox.Text = reader["customer_contact"].ToString();
-                        customerEmailIdTextBox.Text = reader["customer_email"].ToString();
+                        customerEmailIdTextBox.Text = reader["customer_email"].ToString().ToLower();
                         customerContactPersonTextBox.Text = reader["customer_contact_person"].ToString();
                         customerGstDetailsTextBox.Text = reader["customer_gst_details"].ToString();
                     }
@@ -52,25 +52,28 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            if (Application["editFlag"] is true)
+            try
             {
-                Application["Duplicate"] = false;
-                string query = "UPDATE customer_master SET customer_name='" + customerNameTextBox.Text.ToString() + "',customer_address_one ='"+customerAddressOneTextBox.Text.ToString()+"',customer_address_two = '"+customerAddressTwoTextBox.Text.ToString()+"',customer_contact = '"+customerContactNoTextBox.Text.ToString()+"',customer_email = '"+customerEmailIdTextBox.Text.ToString()+"',customer_contact_person='"+customerContactPersonTextBox.Text.ToString()+"',customer_gst_details='"+customerGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["custId"]+"'";
-                SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                string sqlquery = "SELECT customer_gst_details FROM customer_master";
-                //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+                if (Application["editFlag"] is true)
+                {
+                    string sqlqueryE = "SELECT customer_gst_details FROM customer_master EXCEPT SELECT customer_gst_details FROM customer_master where id = '" + Application["custId"].ToString() + "'";
+                    Application["queryD"] = sqlqueryE;
+                }
+                else
+                {
+                    string sqlqueryN = "SELECT customer_gst_details FROM customer_master";
+                    Application["queryD"] = sqlqueryN;
+
+                }
+
+                using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
                 {
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (customerGstDetailsTextBox.Text.ToLower() == reader["customer_gst_details"].ToString().ToLower())
+                        if (customerGstDetailsTextBox.Text.ToLower().Trim() == reader["customer_gst_details"].ToString().ToLower().Trim())
                         {
                             Application["Duplicate"] = true;
                             break;
@@ -82,9 +85,15 @@ namespace ERP_Demo
                     }
                     reader.Close();
                 }
-                if (Application["Duplicate"] is false)
+                if (Application["Duplicate"] is false && Application["editFlag"] is true)
                 {
-                    string query = "INSERT INTO customer_master(customer_name,customer_address_one,customer_address_two,customer_contact,customer_email,customer_contact_person,customer_gst_details)VALUES('" + customerNameTextBox.Text + "','" + customerAddressOneTextBox.Text + "','" + customerAddressTwoTextBox.Text + "','" + customerContactNoTextBox.Text + "','" + customerEmailIdTextBox.Text + "','" + customerContactPersonTextBox.Text + "','" + customerGstDetailsTextBox.Text + "')";
+                    string query = "UPDATE customer_master SET customer_name='" + customerNameTextBox.Text.ToString() + "',customer_address_one ='" + customerAddressOneTextBox.Text.ToString() + "',customer_address_two = '" + customerAddressTwoTextBox.Text.ToString() + "',customer_contact = '" + customerContactNoTextBox.Text.ToString() + "',customer_email = '" + customerEmailIdTextBox.Text.ToString() + "',customer_contact_person='" + customerContactPersonTextBox.Text.ToString() + "',customer_gst_details='" + customerGstDetailsTextBox.Text.ToString() + "' WHERE id='" + Application["custId"] + "'";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else if (Application["Duplicate"] is false)
+                {
+                    string query = "INSERT INTO customer_master(customer_name,customer_address_one,customer_address_two,customer_contact,customer_email,customer_contact_person,customer_gst_details)VALUES('" + customerNameTextBox.Text + "','" + customerAddressOneTextBox.Text + "','" + customerAddressTwoTextBox.Text + "','" + customerContactNoTextBox.Text + "','" + customerEmailIdTextBox.Text.ToLower() + "','" + customerContactPersonTextBox.Text + "','" + customerGstDetailsTextBox.Text + "')";
                     SqlCommand cmd = new SqlCommand(query.ToString(), con);
                     cmd.ExecuteNonQuery();
                 }
@@ -92,14 +101,19 @@ namespace ERP_Demo
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Customer with GST No Already Exists.')", true);
                 }
+                con.Close();
+                if (Application["Duplicate"] is false)
+                {
+                    Application["custId"] = null;
+                    Application["queryD"] = null;
+                    Application["editFlag"] = null;
+                    Application["Duplicate"] = null;
+                    Response.Redirect("~/displayCustomer.aspx");
+                }
             }
-            Application["custId"] = null;
-            Application["editFlag"] = null;
-            con.Close();
-            if (Application["Duplicate"] is false)
+            catch(Exception ex)
             {
-                Application["Duplicate"] = null;
-                Response.Redirect("~/displayCustomer.aspx");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
             }
         }
 

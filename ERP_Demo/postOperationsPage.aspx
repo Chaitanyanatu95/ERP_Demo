@@ -6,7 +6,6 @@
             onPostOperationSelected();
             onPackagingDetailsSelected();                
         }
-
        
         function extraBtnImg() {
             var extraBtnImg = document.getElementById('<%= listUploadedFiles.ClientID %>').innerText;
@@ -178,7 +177,7 @@
             var isPackagingDetails = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
             if (isPackagingDetails == "YES")
             {
-                var packType = document.getElementById("<%=postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList").ClientID %>");
+                var packType = document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList").ClientID %>");
                 var getPack = packType.options[packType.selectedIndex].text;
                 if (getPack == "N/A")
                 {

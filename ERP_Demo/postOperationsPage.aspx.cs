@@ -166,8 +166,6 @@ namespace ERP_Demo
             }
         }
 
-
-
         protected void LoadEditValues()
         {
             if (Application["postOperationDetailsReq"].ToString() == "NO")
@@ -237,7 +235,7 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldLife"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
+            if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldMfgYear"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data!')", true);
             }
@@ -283,7 +281,7 @@ namespace ERP_Demo
                 Application["mbFlag"] = null;
                 Application["query"] = null;
                 Application["partNo"] = null;
-                Application["rowCommand"] = false;
+                Application["rowCommand"] = null;
                 con.Close();
                 Response.Redirect("~/displayParts.aspx");
                 

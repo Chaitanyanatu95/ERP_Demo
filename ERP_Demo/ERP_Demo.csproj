@@ -119,6 +119,8 @@
     <Content Include="displayRejection.aspx" />
     <Content Include="displayPackaging.aspx" />
     <Content Include="displayPostOperation.aspx" />
+    <Content Include="DPRList.aspx" />
+    <Content Include="FPAList.aspx" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
     <Content Include="Images\addnew.png" />
@@ -139,7 +141,9 @@
     <Content Include="displayDownTimeCode.aspx" />
     <Content Include="newRawMaterialMaster.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="DPR-Operator.aspx" />
+    <Content Include="DPR.aspx">
+      <BrowseToURL>~/DPR.aspx</BrowseToURL>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -152,7 +156,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\Menu1.css" />
-    <Content Include="Fpa.aspx" />
+    <Content Include="FPA.aspx" />
     <Content Include="newMasterBatch.aspx" />
     <Content Include="newCustomer.aspx" />
     <Content Include="newUnitMeasurementMaster.aspx" />
@@ -174,8 +178,14 @@
     <Content Include="rawMaterialPage.aspx" />
     <Content Include="postOperationsPage.aspx" />
     <Content Include="newPostOperationMaster.aspx" />
+    <None Include="Properties\PublishProfiles\pbplastics - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\pbplastics - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\pbplasticserp - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\pbplasticserp - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\pbplasticserp - Web Deploy2.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Login.aspx" />
+    <Content Include="reports.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -251,6 +261,20 @@
     <Compile Include="displayPostOperation.aspx.designer.cs">
       <DependentUpon>displayPostOperation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DPRList.aspx.cs">
+      <DependentUpon>DPRList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DPRList.aspx.designer.cs">
+      <DependentUpon>DPRList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FPAList.aspx.cs">
+      <DependentUpon>FPAList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FPAList.aspx.designer.cs">
+      <DependentUpon>FPAList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="newVendor.aspx.cs">
       <DependentUpon>newVendor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -300,12 +324,12 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DPR-Operator.aspx.cs">
-      <DependentUpon>DPR-Operator.aspx</DependentUpon>
+    <Compile Include="DPR.aspx.cs">
+      <DependentUpon>DPR.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DPR-Operator.aspx.designer.cs">
-      <DependentUpon>DPR-Operator.aspx</DependentUpon>
+    <Compile Include="DPR.aspx.designer.cs">
+      <DependentUpon>DPR.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -318,6 +342,13 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reports.aspx.cs">
+      <DependentUpon>reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reports.aspx.designer.cs">
+      <DependentUpon>reports.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -346,12 +377,12 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Fpa.aspx.cs">
-      <DependentUpon>Fpa.aspx</DependentUpon>
+    <Compile Include="FPA.aspx.cs">
+      <DependentUpon>FPA.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Fpa.aspx.designer.cs">
-      <DependentUpon>Fpa.aspx</DependentUpon>
+    <Compile Include="FPA.aspx.designer.cs">
+      <DependentUpon>FPA.aspx</DependentUpon>
     </Compile>
     <Compile Include="newMasterBatch.aspx.cs">
       <DependentUpon>newMasterBatch.aspx</DependentUpon>
@@ -503,7 +534,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadedFiles\Machine\" />
     <Folder Include="UploadedFiles\Packaging\" />
     <Folder Include="UploadedFiles\Parts\" />
@@ -515,9 +545,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

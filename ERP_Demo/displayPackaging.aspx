@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Table ID="displayPackagingTable" runat="server" Height="100" CssClass="Table1">
         <asp:TableRow ID="rowPackagingDisplay" runat="server" TableSection="TableHeader" HorizontalAlign="Center">
-            <asp:TableCell ID="cellPackaging" ColumnSpan="3"><asp:Label ID="packagingLabel" runat="server"><h3>Packaging Details</h3></asp:Label></asp:TableCell>
+            <asp:TableCell ID="cellPackaging" ColumnSpan="3"><asp:Label ID="packagingLabel" runat="server"><h3><u>PACKAGING DETAILS</u></h3></asp:Label></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow ID="rowPackagingLink" runat="server">
-            <asp:TableCell ID="cellPackagingLink" runat="server"><asp:Button ID="packagingButton" runat="server" Text="ADD" Font-Size="Small" OnClick="packagingButton_Click"></asp:Button></asp:TableCell>
+            <asp:TableCell ID="cellPackagingLink" runat="server"><asp:Button ID="packagingButton" runat="server" Text="ADD NEW" Font-Size="Small" OnClick="packagingButton_Click"></asp:Button></asp:TableCell>
             <asp:TableCell ID="cellPackagingSearch" runat="server" CssClass="heading"><asp:Label ID="searchLabel" runat="server">&nbsp; Search:- &nbsp</asp:Label></asp:TableCell>
             <asp:TableCell ID="cellPackagingSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
@@ -14,31 +14,31 @@
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="packagingGridView_RowEditing" OnRowCancelingEdit="packagingGridView_RowCancelingEdit"
                 OnRowCommand="packagingGridView_RowCommand" OnRowDeleting="packagingGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="0px" CellPadding="4" CssClass="Table1" Width="30%" Font-Size="Medium">
+                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CssClass="Table1" Width="30%">
                 <%-- Theme Properties --%>
-                <HeaderStyle BackColor="#DFDDDD" Font-Bold="True" ForeColor="black" Font-Size="Medium" />
+                <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-                <RowStyle ForeColor="black" />
-                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="Black" />
-                <SortedAscendingCellStyle BackColor="#F1F1F1" />
-                <SortedAscendingHeaderStyle BackColor="#007DBB" />
-                <SortedDescendingCellStyle BackColor="#CAC9C9" />
-                <SortedDescendingHeaderStyle BackColor="#00547E" />        
+                <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>
+                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
-                    <asp:TemplateField HeaderText="Packaging Type">
+                    <asp:TemplateField HeaderText="PACKAGING TYPE">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("packaging_type") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Size">
+                    <asp:TemplateField HeaderText="SIZE">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("size") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField>
+                    <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">
                         <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="EDIT" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="20px" Height="20px" OnClientClick="return confirm('Do you want to edit?');"/>
-                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="DELETE" ToolTip="DELETE" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to delete?');"/>
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="20px" Height="20px" OnClientClick="return confirm('Do you want to edit?');"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText ="DELETE" HeaderStyle-Width="75px">
+                        <ItemTemplate>
+                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="DELETE" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to delete?');"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

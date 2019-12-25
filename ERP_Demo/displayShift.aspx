@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Table ID="displayShiftTable" runat="server" Height="100" CssClass="Table1">
         <asp:TableRow ID="rowShiftDisplay" runat="server" TableSection="TableHeader" HorizontalAlign="Center">
-            <asp:TableCell ID="ShiftCell" ColumnSpan="3"><asp:Label ID="ShiftLabel" runat="server"><h3>Shift</h3></asp:Label></asp:TableCell>
+            <asp:TableCell ID="ShiftCell" ColumnSpan="3"><asp:Label ID="ShiftLabel" runat="server"><h3><u>SHIFT DETAILS</u></h3></asp:Label></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow ID="rowShiftLink" runat="server">
-            <asp:TableCell ID="cellShiftLink" runat="server"><asp:Button ID="shiftButton" runat="server" Text="ADD" Font-Size="Small" OnClick="shiftButton_Click"></asp:Button></asp:TableCell>
+            <asp:TableCell ID="cellShiftLink" runat="server"><asp:Button ID="shiftButton" runat="server" Text="ADD NEW" Font-Size="Small" OnClick="shiftButton_Click"></asp:Button></asp:TableCell>
             <asp:TableCell ID="cellShiftSearch" runat="server" CssClass="heading"><asp:Label ID="searchLabel" runat="server">&nbsp; Search:- &nbsp</asp:Label></asp:TableCell>
             <asp:TableCell ID="cellShiftSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
@@ -14,18 +14,14 @@
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="shiftGridView_RowEditing" OnRowCancelingEdit="shiftGridView_RowCancelingEdit"
                 OnRowCommand="shiftGridView_RowCommand" OnRowDeleting="shiftGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="0px" CellPadding="4" CssClass="Table1" Width="40%" Font-Size="Medium">
+                BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="30%">
                 <%-- Theme Properties --%>
-                <HeaderStyle BackColor="#DFDDDD" Font-Bold="True" ForeColor="black" Font-Size="Medium" />
+                <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-                <RowStyle ForeColor="black" />
-                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="Black" />
-                <SortedAscendingCellStyle BackColor="#F1F1F1" />
-                <SortedAscendingHeaderStyle BackColor="#007DBB" />
-                <SortedDescendingCellStyle BackColor="#CAC9C9" />
-                <SortedDescendingHeaderStyle BackColor="#00547E" />        
+                <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>    
+                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
-                    <asp:TemplateField HeaderText="Shift Time">
+                    <asp:TemplateField HeaderText="SHIFT TIME">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("shift_time") %>' runat="server" />
                         </ItemTemplate>
@@ -33,7 +29,7 @@
                             <asp:TextBox ID="txtShiftTime" Text='<%# Eval("shift_time") %>' runat="server" />
                         </EditItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Shift Hours">
+                        <asp:TemplateField HeaderText="SHIFT HOURS">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("hours") %>' runat="server" />
                         </ItemTemplate>
@@ -41,9 +37,13 @@
                             <asp:TextBox ID="txtShiftHours" Text='<%# Eval("hours") %>' runat="server" />
                         </EditItemTemplate>
                         </asp:TemplateField>
-                    <asp:TemplateField>
+                    <asp:TemplateField HeaderText="EDIT" HeaderStyle-Width="50px">
                         <ItemTemplate>
                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="20px" Height="20px" OnClientClick="return confirm('Do you want to edit?');"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="DELETE" HeaderStyle-Width="75px">
+                        <ItemTemplate>
                             <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="DELETE" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to delete?');"/>
                         </ItemTemplate>
                     </asp:TemplateField>

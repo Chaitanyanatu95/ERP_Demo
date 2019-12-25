@@ -37,7 +37,16 @@
             }
         }
         args.IsValid = isValid;
-    }
+        }
+
+        function validatePage() {
+            if (Page_ClientValidate()) {
+                return confirm('Do you want to save?');
+            }
+            else {
+                return false;
+            }
+        }
 </script>
         <asp:Table ID="Table1" runat="server" Height="25%" Width="90%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
@@ -81,7 +90,7 @@
                 </asp:DropDownList>
                 <asp:CustomValidator ID="CustomValidator1" ErrorMessage="Please select transaction rights!"
     ForeColor="Red" ClientValidationFunction="ValidateCheckBoxList" runat="server" style="margin-left:40px;" />
-            </asp:TableCell><asp:TableCell runat="server" ><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="confirm('Do you want to save?');"/></asp:TableCell>
+            </asp:TableCell><asp:TableCell runat="server" ><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="return validatePage()"/></asp:TableCell>
             <asp:TableCell runat="server" ><asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
         </asp:TableRow>
     </asp:Table>

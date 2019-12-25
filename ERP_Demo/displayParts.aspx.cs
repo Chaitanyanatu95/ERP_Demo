@@ -57,7 +57,7 @@ namespace ERP_Demo
 
         protected void parts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "fetch")
+            if (e.CommandName == "Edit")
             {
                 string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
                 Application["partNoEdit"] = commandArgs[0];
@@ -66,7 +66,7 @@ namespace ERP_Demo
                 Application["editFlag"] = editFlag;
                 Response.Redirect("~/newPartsMaster.aspx/");
             }
-            if(e.CommandName == "viewDetails")
+            if (e.CommandName == "viewDetails")
             {
                 Application["viewDetailsId"] = e.CommandArgument.ToString();
                 Response.Redirect("viewDetails.aspx");

@@ -49,55 +49,63 @@ namespace ERP_Demo
         {
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
             con.Open();
-            string query = String.Empty;
+            
             if (Application["editFlag"] is true)
             {
-                Application["Duplicate"] = false;
+                string sqlqueryE = "SELECT Family FROM family_master EXCEPT SELECT Family FROM family_master where id = '" + Application["familyId"].ToString() + "'";
+                Application["queryD"] = sqlqueryE;
+            }
+            else
+            {
+                string sqlqueryN = "SELECT Family FROM family_master";
+                Application["queryD"] = sqlqueryN;
+
+            }
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                query = "UPDATE family_master SET Family='" + familyTextBox.Text.ToString() + "' WHERE id='" + Application["familyId"] + "'";
+
+            using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
+            {
+                SqlDataReader reader = cmmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if(familyTextBox.Text.ToLower().Trim() == reader["Family"].ToString().ToLower().Trim())
+                    {
+                        Application["Duplicate"] = true;
+                        break;
+                    }
+                    else
+                    {
+                        Application["Duplicate"] = false;
+                    }
+                }
+                reader.Close();
+            }
+            
+            if (Application["Duplicate"] is false && Application["editFlag"] is true)
+            {
+                string query = "UPDATE family_master SET Family='" + familyTextBox.Text.ToString() + "' WHERE id='" + Application["familyId"] + "'";
+                SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                cmd.ExecuteNonQuery();
+                
+            }
+            else if(Application["Duplicate"] is false)
+            {
+                string query = "INSERT INTO family_master(Family)VALUES('" + familyTextBox.Text.ToString() + "')";
                 SqlCommand cmd = new SqlCommand(query.ToString(), con);
                 cmd.ExecuteNonQuery();
             }
             else
             {
-                string sqlquery = "SELECT Family FROM family_master";
-                //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
-                {
-                    SqlDataReader reader = cmmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        if(familyTextBox.Text.ToLower() == reader["Family"].ToString().ToLower())
-                        {
-                            Application["Duplicate"] = true;
-                            break;
-                        }
-                        else
-                        {
-                            Application["Duplicate"] = false;
-                        }
-                    }
-                    reader.Close();
-                }
-                
-                if (Application["Duplicate"] is false)
-                {
-                    query = "INSERT INTO family_master(Family)VALUES('" + familyTextBox.Text + "')";
-                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Family Already Exists.')", true);
-                }
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product category already exists.')", true);
+
             }
-            Application["familyId"] = null;
-            Application["query"] = null;
-            Application["editFlag"] = null;
             con.Close();
             if (Application["Duplicate"] is false)
             {
                 Application["Duplicate"] = null;
+                Application["familyId"] = null;
+                Application["queryD"] = null;
+                Application["editFlag"] = null;
                 Response.Redirect("~/displayFamily.aspx");
             }
         }

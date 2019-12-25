@@ -83,25 +83,26 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            if (Application["editFlag"] is true)
+            try
             {
-                Application["Duplicate"] = false;
-                string query = "UPDATE vendor_master SET vendor_name='" + vendorNameTextBox.Text.ToString() + "',vendor_address_one ='" + vendorAddressOneTextBox.Text.ToString()+ "',vendor_address_two = '" + vendorAddressTwoTextBox.Text.ToString()+ "',vendor_contact = '" + vendorContactNoTextBox.Text.ToString()+ "',vendor_email = '" + vendorEmailIdTextBox.Text.ToString()+ "',vendor_contact_person='" + vendorContactPersonTextBox.Text.ToString()+ "',vendor_gst_details='" + vendorGstDetailsTextBox.Text.ToString()+"' WHERE id='"+Application["vendorId"] +"'";
-                SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                string sqlquery = "SELECT vendor_gst_details FROM vendor_master";
-                //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+                if (Application["editFlag"] is true)
+                {
+                    string sqlqueryE = "SELECT vendor_gst_details FROM vendor_master EXCEPT SELECT vendor_gst_details FROM vendor_master where id = '" + Application["vendorId"].ToString() + "'";
+                    Application["queryD"] = sqlqueryE;
+                }
+                else
+                {
+                    string sqlqueryN = "SELECT vendor_gst_details FROM vendor_master";
+                    Application["queryD"] = sqlqueryN;
+                }
+                using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
                 {
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (vendorGstDetailsTextBox.Text.ToLower() == reader["vendor_gst_details"].ToString().ToLower())
+                        if (vendorGstDetailsTextBox.Text.ToLower().Trim() == reader["vendor_gst_details"].ToString().ToLower().Trim())
                         {
                             Application["Duplicate"] = true;
                             break;
@@ -113,7 +114,13 @@ namespace ERP_Demo
                     }
                     reader.Close();
                 }
-                if (Application["Duplicate"] is false)
+                if(Application["Duplicate"] is false && Application["editFlag"] is true)
+                {
+                    string query = "UPDATE vendor_master SET vendor_name='" + vendorNameTextBox.Text.ToString() + "',vendor_address_one ='" + vendorAddressOneTextBox.Text.ToString() + "',vendor_address_two = '" + vendorAddressTwoTextBox.Text.ToString() + "',vendor_contact = '" + vendorContactNoTextBox.Text.ToString() + "',vendor_email = '" + vendorEmailIdTextBox.Text.ToString() + "',vendor_contact_person='" + vendorContactPersonTextBox.Text.ToString() + "',vendor_gst_details='" + vendorGstDetailsTextBox.Text.ToString() + "' WHERE id='" + Application["vendorId"] + "'";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else if (Application["Duplicate"] is false)
                 {
                     string query = "INSERT INTO vendor_master(vendor_id,vendor_name,vendor_address_one,vendor_address_two,vendor_contact,vendor_email,vendor_contact_person,vendor_gst_details)VALUES('" + vendorIdTextBox.Text + "','" + vendorNameTextBox.Text + "','" + vendorAddressOneTextBox.Text + "','" + vendorAddressTwoTextBox.Text + "','" + vendorContactNoTextBox.Text + "','" + vendorEmailIdTextBox.Text + "','" + vendorContactPersonTextBox.Text + "','" + vendorGstDetailsTextBox.Text + "')";
                     SqlCommand cmd = new SqlCommand(query.ToString(), con);
@@ -122,17 +129,20 @@ namespace ERP_Demo
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Vendor with GST No Already Exists.')", true);
-
+                }
+                con.Close();
+                if (Application["Duplicate"] is false)
+                {
+                    Application["Duplicate"] = null;
+                    Application["vendorId"] = null;
+                    Application["editFlag"] = null;
+                    Application["queryD"] = null;
+                    Response.Redirect("~/displayVendor.aspx");
                 }
             }
-            
-            Application["vendorId"] = null;
-            Application["editFlag"] = null;
-            con.Close();
-            if (Application["Duplicate"] is false)
+            catch(Exception ex)
             {
-                Application["Duplicate"] = null;
-                Response.Redirect("~/displayVendor.aspx");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
             }
         }
 

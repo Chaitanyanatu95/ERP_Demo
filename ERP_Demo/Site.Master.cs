@@ -15,7 +15,7 @@ namespace ERP_Demo
             {
                 if (Session["roleFullAccess"] != null || Session["roleTransactions"] != null || Session["roleReports"] != null || Session["roleSelectedAccess"] != null)
                 {
-                    Message.Text = "WELCOME:" + Session["username"].ToString();
+                    Message.Text = "WELCOME:- " + Session["username"].ToString();
 
                     if(Session["roleReports"].ToString() == "YES")
                     {
@@ -27,6 +27,7 @@ namespace ERP_Demo
                     }
                     else if(Session["roleSelectedAccess"].ToString() == "YES")
                     {
+                        Menu1.Items.Remove(Menu1.FindItem("Transaction"));
                         if (Menu1.Items.Count > 0)
                         {
                             if(Session["roleAccess"].ToString().Trim() == "Product Category")
@@ -150,15 +151,11 @@ namespace ERP_Demo
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
         {
-            if(e.Item.Text == "LogOut")
+            if(e.Item.Text == "LOGOUT")
             {
+                Application["Duplicate"] = null;
                 Application["editFlag"] = null;
                 Session["roleFullAccess"] = null;
                 Session["roleTransactions"] = null;

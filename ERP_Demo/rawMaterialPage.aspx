@@ -5,6 +5,7 @@
                 onMasterBatchSelected();
                 onAltRawMaterialSelected();
                 onAltRMMasterBatchSelected();
+                rawMaterialSelected();
             }
 
             function onMasterBatchSelected() {
@@ -47,15 +48,15 @@
                 var rawMaterialName = document.getElementById("<%=rawMaterialDropDownList.ClientID%>");
                 var getRMName = rawMaterialName.options[rawMaterialName.selectedIndex].text;
 
-                var rawMaterialGrade = document.getElementById("<%=rmGradeDropDownList.ClientID%>");
-                var getRMGrade = rawMaterialGrade.options[rawMaterialGrade.selectedIndex].text;
-
                 if (getRMName == "Select Raw Material") {
                     document.getElementById("<%=rmNameLabel.ClientID%>").innerHTML = "Please select raw material.".fontcolor("red");
                     return false;
                 }
-                else if (getRMGrade == "Select Raw Material Grade") {
-                    document.getElementById("<%=rmGradeLabel.ClientID%>").innerHTML = "Please select raw material.".fontcolor("red");
+                var rawMaterialGrade = document.getElementById("<%=rmGradeDropDownList.ClientID%>");
+                var getRMGrade = rawMaterialGrade.options[rawMaterialGrade.selectedIndex].text;
+                
+                if (getRMGrade == "Select Raw Material Grade") {
+                    document.getElementById("<%=rmGradeLabel.ClientID%>").innerHTML = "Please select raw material grade.".fontcolor("red");
                     return false;
                 }
 
@@ -128,7 +129,6 @@
                 }
                 else
                 {
-                    alert("SOmething MIssing");
                     return false;
                 }
             }
@@ -149,42 +149,40 @@
     </div>
         <br />
                                         <%-- RAW MATERIAL --%>
-        <asp:Table ID="rawMaterialTable" runat="server" CssClass="Table1" Height="30%" Width="70%">
-            <asp:TableRow runat="server" HorizontalAlign="Center" BackColor="SkyBlue" Height="25%">
+        <asp:Table ID="rawMaterialTable" runat="server" CssClass="Table1" Height="40%" Width="70%">
+            <asp:TableRow runat="server" HorizontalAlign="Center" BackColor="SkyBlue" Height="35%">
                 <asp:TableCell runat="server" Font-Bold="true" ColumnSpan="6">RAW MATERIAL DETAILS</asp:TableCell>
             </asp:TableRow>
             <asp:TableRow runat="server">
-                <asp:TableCell runat="server" CssClass="margin">RAW MATERIAL</asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">R/M Grade</asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">R/M NAME</asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">R/M GRADE</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">R/M MAKE</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">COLOUR</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MASTERBATCH </asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">ALT RAW MATERIAL(REQ)</asp:TableCell>
             </asp:TableRow>
             <asp:TableRow runat="server" CssClass="spacingtop">
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="rawMaterialDropDownList" DataTextField="material_name" DataValueField="material_name" runat="server" onselectedindexchanged="rawMaterialNameChanged" AutoPostBack="true"></asp:DropDownList><br />
-                    <asp:RequiredFieldValidator runat="server" id="rawMaterialNameReq" controltovalidate="rawMaterialDropDownList" errormessage="Please select raw material!" CssClass="required" />
                     <asp:Label ID="rmNameLabel" runat="server"></asp:Label>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server" >
                     <asp:DropDownList ID="rmGradeDropDownList" DataTextField="material_grade" DataValueField="material_grade" runat="server" onselectedindexchanged="rawMaterialGradeChanged" AutoPostBack="true"></asp:DropDownList><br />
-                    <asp:RequiredFieldValidator runat="server" id="rawMaterialGradeReq" controltovalidate="rmGradeDropDownList" errormessage="Please select raw material grade!" CssClass="required" />
                     <asp:Label ID="rmGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server" >
                     <asp:TextBox ID="rmMakeTextBox" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true" ></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin"><asp:TextBox ID="colourTextBox" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true" ></asp:TextBox>
+                <asp:TableCell runat="server" ><asp:TextBox ID="colourTextBox" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true" ></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="masterbatchDropDownList" runat="server" onchange="onMasterBatchSelected()">
                                                 <asp:ListItem Value="NO">NO</asp:ListItem>
                                                 <asp:ListItem Value="YES">YES</asp:ListItem>
                                           </asp:DropDownList><br />
                     <asp:RequiredFieldValidator runat="server" id="masterBatchReq" controltovalidate="masterbatchDropDownList" errormessage="Please select option!" CssClass="required" />
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="altRawMaterialDropDownList" runat="server" onchange="onAltRawMaterialSelected()">
                         <asp:ListItem Value="NO">NO</asp:ListItem> 
                         <asp:ListItem Value="YES">YES</asp:ListItem>
@@ -203,35 +201,32 @@
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="masterBatchLabel" runat="server">
-                <asp:TableCell runat="server" CssClass="margin">MB NAME</asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">MB GRADE</asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">MB MFG</asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB NAME <div class="required" style="display:inline">*</div></asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB GRADE <div class="required" style="display:inline">*</div></asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB MFG </asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR CODE</asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="masterBatchTextBox" runat="server" CssClass="spacingtop">
-                <asp:TableCell runat="server" CssClass="margin">
-                    <div class="required" style="padding-left:12em">*</div>
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="mbNameDropDownList" DataTextField="mb_name" DataValueField="mb_name" runat="server" onselectedindexchanged="masterBatchNameChanged" AutoPostBack="true"></asp:DropDownList><br /><br />
                     <asp:Label ID="mbNameLabel" runat="server"></asp:Label>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
-                    <div class="required" style="padding-left:12em">*</div>
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="mbGradeDropDownList" DataTextField="mb_grade" DataValueField="mb_grade" runat="server" onselectedindexchanged="masterBatchGradeChanged" AutoPostBack="true"></asp:DropDownList><br /><br />
                     <asp:Label ID="mbGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin" >
+                <asp:TableCell runat="server">
                     <asp:TextBox ID="mbMfgTextBox" DataTextField="mb_mfg" DataValueField="mb_mfg" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:TextBox ID="mbColorTextBox" DataTextField="mb_color" DataValueField="mb_color" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:TextBox ID="mbColorCodeTextBox" DataTextField="mb_color_code" DataValueField="mb_color_code" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
-                                        
                                     <%-- ALTERNATE RAW MATERIAL --%>
 
             <asp:Table ID="altRawMaterialTable" runat="server" CssClass="Table1" Height="52%" Width="70%">
@@ -241,30 +236,28 @@
                     </asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow ID="altRawMaterialLabel" runat="server" VerticalAlign="Bottom">
-                    <asp:TableCell runat="server" CssClass="margin">RAW MATERIAL</asp:TableCell>
-                    <asp:TableCell runat="server" CssClass="margin">R/M Grade</asp:TableCell>
+                    <asp:TableCell runat="server" CssClass="margin">R/M NAME <div class="required" style="display:inline;">*</div></asp:TableCell>
+                    <asp:TableCell runat="server" CssClass="margin">R/M GRADE <div class="required" style="display:inline;">*</div></asp:TableCell>
                     <asp:TableCell runat="server" CssClass="margin">R/M MAKE</asp:TableCell>
                     <asp:TableCell runat="server" CssClass="margin">COLOUR</asp:TableCell>
                     <asp:TableCell runat="server" CssClass="margin">ALT. MASTERBATCH</asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow runat="server" CssClass="spacingtop">
-                    <asp:TableCell runat="server" CssClass="margin">
-                        <div class="required" style="padding-left:12em">*</div>
+                    <asp:TableCell runat="server">
                         <asp:DropDownList ID="altRMDropDownList" DataTextField="material_name" DataValueField="material_name" runat="server" onselectedindexchanged="altRawMaterialNameChanged" AutoPostBack="true"></asp:DropDownList><br /><br />
                         <asp:Label ID="altRMLabel" runat="server"></asp:Label>
                     </asp:TableCell>
-                    <asp:TableCell runat="server" CssClass="margin">
-                        <div class="required" style="padding-left:12em">*</div>
+                    <asp:TableCell runat="server">
                         <asp:DropDownList ID="altRawMaterialGradeDropDownList" DataTextField="material_grade" DataValueField="material_grade" runat="server" onselectedindexchanged="altRawMaterialGradeChanged" AutoPostBack="true"></asp:DropDownList><br /><br />
                         <asp:Label ID="altRMGradeLabel" runat="server"></asp:Label>
                     </asp:TableCell>
-                    <asp:TableCell runat="server" CssClass="margin">
+                    <asp:TableCell runat="server">
                         <asp:TextBox ID="altRawMaterialMakeTextBox" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true"></asp:TextBox>
                     </asp:TableCell>
-                    <asp:TableCell runat="server" CssClass="margin">
+                    <asp:TableCell runat="server">
                         <asp:TextBox ID="altColourTextBox" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true"></asp:TextBox>
                     </asp:TableCell>
-                    <asp:TableCell runat="server" CssClass="margin">
+                    <asp:TableCell runat="server">
                         <asp:DropDownList ID="altRawMaterialMasterBatchDropDownList" runat="server" onchange="onAltRMMasterBatchSelected()">
                             <asp:ListItem Value="NO">NO</asp:ListItem>
                             <asp:ListItem Value="YES">YES</asp:ListItem>
@@ -279,30 +272,28 @@
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="altRawMaterialMasterBatchLabel" runat="server" VerticalAlign="Bottom">
-                <asp:TableCell runat="server" CssClass="margin">MB NAME</asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">MB GRADE</asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB NAME <div class="required" style="display:inline">*</div></asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB GRADE <div class="required" style="display:inline">*</div></asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB MFG</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR CODE</asp:TableCell>
             </asp:TableRow>
             <asp:TableRow runat="server" HorizontalAlign="Center">
-                <asp:TableCell runat="server" CssClass="margin">
-                    <div class="required" style="padding-left:12em">*</div>
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="altRMBNameDropDownList" DataTextField="mb_name" DataValueField="mb_name" runat="server" OnSelectedIndexChanged="altMasterBatchNameChanged" AutoPostBack="true"></asp:DropDownList><br />
                     <asp:Label ID="altRMBNameLabel" runat="server"></asp:Label>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
-                    <div class="required" style="padding-left:12em">*</div>
+                <asp:TableCell runat="server">
                     <asp:DropDownList ID="altRMBGradeDropDownList" DataTextField="mb_grade" DataValueField="mb_grade" runat="server" OnSelectedIndexChanged="altMasterBatchGradeChanged" AutoPostBack="true"></asp:DropDownList><br />
                     <asp:Label ID="altRMBGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:TextBox ID="altRMBMfgTextBox" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:TextBox ID="altRMBColorTextBox" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" CssClass="margin">
+                <asp:TableCell runat="server">
                     <asp:TextBox ID="altRMBColorCodeTextBox" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
             </asp:TableRow>

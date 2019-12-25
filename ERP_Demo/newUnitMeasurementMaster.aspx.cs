@@ -45,26 +45,28 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            if (Application["editFlag"] is true)
+            try
             {
-                Application["Duplicate"] = false;
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                string query = "UPDATE unit_of_measurement_master SET unit_of_measurement='" + unitofmeasurementTextBox.Text.ToString() + "',abbreviation='" + abbreviationTextBox.Text.ToString() + "' WHERE Id='" + Application["unitOfMeasurementId"] + "'";
-                SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                string sqlquery = "SELECT unit_of_measurement FROM unit_of_measurement_master";
-                //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+
+                if (Application["editFlag"] is true)
+                {
+                    string sqlqueryE = "SELECT unit_of_measurement FROM unit_of_measurement_master EXCEPT SELECT unit_of_measurement FROM unit_of_measurement_master where id = '" + Application["unitOfMeasurementId"].ToString() + "'";
+                    Application["queryD"] = sqlqueryE;
+                }
+                else
+                {
+                    string sqlqueryN = "SELECT unit_of_measurement FROM unit_of_measurement_master";
+                    Application["queryD"] = sqlqueryN;
+                }
+
+                using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
                 {
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (unitofmeasurementTextBox.Text.ToLower() == reader["unit_of_measurement"].ToString().ToLower())
+                        if (unitofmeasurementTextBox.Text.ToLower().Trim() == reader["unit_of_measurement"].ToString().ToLower().Trim())
                         {
                             Application["Duplicate"] = true;
                             break;
@@ -76,7 +78,13 @@ namespace ERP_Demo
                     }
                     reader.Close();
                 }
-                if (Application["Duplicate"] is false)
+                if(Application["Duplicate"] is false && Application["editFlag"] is true)
+                {
+                    string query = "UPDATE unit_of_measurement_master SET unit_of_measurement='" + unitofmeasurementTextBox.Text.ToString() + "',abbreviation='" + abbreviationTextBox.Text.ToString() + "' WHERE Id='" + Application["unitOfMeasurementId"] + "'";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else if (Application["Duplicate"] is false)
                 {
                     string query = "INSERT INTO unit_of_measurement_master(unit_of_measurement,abbreviation)VALUES('" + unitofmeasurementTextBox.Text + "','" + abbreviationTextBox.Text + "')";
                     SqlCommand cmd = new SqlCommand(query.ToString(), con);
@@ -84,16 +92,21 @@ namespace ERP_Demo
                 }
                 else
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Unit Already Exists.')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Unit already exists.')", true);
+                }
+                con.Close();
+                if (Application["Duplicate"] is false)
+                {
+                    Application["Duplicate"] = null;
+                    Application["unitOfMeasurementId"] = null;
+                    Application["queryD"] = null;
+                    Application["editFlag"] = null;
+                    Response.Redirect("~/displayUnitOfMeasurement.aspx");
                 }
             }
-            Application["unitOfMeasurementId"] = null;
-            Application["editFlag"] = null;
-            con.Close();
-            if (Application["Duplicate"] is false)
+            catch(Exception ex)
             {
-                Application["Duplicate"] = null;
-                Response.Redirect("~/displayUnitOfMeasurement.aspx");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
             }
         }
 

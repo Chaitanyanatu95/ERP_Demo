@@ -10,7 +10,7 @@
 namespace ERP_Demo {
     
     
-    public partial class Fpa {
+    public partial class FPA {
         
         /// <summary>
         /// lblOperatorName control.
@@ -47,6 +47,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList operatorNameDropDownList;
+        
+        /// <summary>
+        /// workerReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator workerReq;
         
         /// <summary>
         /// partNameDropDownList control.
@@ -146,24 +155,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
-        /// <summary>
-        /// lblTotalQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalQty;
-        
-        /// <summary>
-        /// totalQtyTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox totalQtyTextBox;
         
         /// <summary>
         /// lblOperationType control.
@@ -274,6 +265,15 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
         
         /// <summary>
+        /// customValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator customValid;
+        
+        /// <summary>
         /// lblProdRejectionQty control.
         /// </summary>
         /// <remarks>
@@ -308,24 +308,6 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FpaRejectionQtyTextBox;
-        
-        /// <summary>
-        /// lblWipQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWipQty;
-        
-        /// <summary>
-        /// wipQtyTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox wipQtyTextBox;
         
         /// <summary>
         /// lblEfficiency control.

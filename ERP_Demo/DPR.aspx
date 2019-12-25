@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPR-Operator.aspx.cs" Inherits="ERP_Demo.Dpr" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPR.aspx.cs" Inherits="ERP_Demo.DPR" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <html>
     <head>

@@ -14,18 +14,20 @@
      <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True" OnPageIndexChanging="partsGridView_PageIndexChanging"
                 OnRowCommand="parts_RowCommand" OnRowCancelingEdit="parts_RowCancelingEdit"
-                alternatingrowstyle-backcolor="Linen" headerstyle-backcolor="SkyBlue"
-                CellPadding="4" CssClass="Table1" Font-Size="Medium" AllowPaging="True" PageSize="15">
+                CssClass="Table1" Font-Size="Medium" AllowPaging="True" PageSize="15">
                 <%-- Theme Properties --%>
                 <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" />
+                <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="blue" HorizontalAlign="center" />
+                <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>
+                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
-                    <asp:TemplateField HeaderText="Part No" ItemStyle-Width="100">
+                    <asp:TemplateField HeaderText="PART NO" ItemStyle-Width="100">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("part_no") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Part Name" ItemStyle-Width="200">
+                    <asp:TemplateField HeaderText="PART NAME" ItemStyle-Width="200">
                         <ItemTemplate>
                             <asp:Label ID="lblPartName" Text='<%# Eval("part_name") %>' runat="server"/>
                             <cc1:HoverMenuExtender ID="HoverMenuExtender1" runat="server"
@@ -37,7 +39,7 @@
                             </asp:Panel>
                         </ItemTemplate>
                     </asp:TemplateField>
-                   <asp:TemplateField HeaderText="More Details" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="19">
+                   <asp:TemplateField HeaderText="MORE DETAILS" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="19">
                        <ItemTemplate>
                            <asp:Button CssClass="nextPage" ID="viewDetailsButton" Text="Details" runat="server" CommandArgument='<%# Eval("id") %>' CommandName="viewDetails" Height="27"/>
                        </ItemTemplate>

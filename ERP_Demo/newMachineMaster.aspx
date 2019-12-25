@@ -39,27 +39,40 @@
                 }
             }
         }
+
+        function validatePage() {
+            if (Page_ClientValidate()) {
+                return confirm('Do you want to save?');
+            }
+            else {
+                return false;
+            }
+        }
+
     </script>
     <asp:Table ID="Table1" runat="server" Height="20%" Width="65%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center">
             <asp:TableCell runat="server" ColumnSpan="5" CssClass="CustomerHeader"><h3>MACHINE MASTER</h3></asp:TableCell>
         </asp:TableRow>
-        <asp:TableRow runat="server" TableSection="TableBody">
-            <asp:TableCell runat="server" CssClass="margin">M/C NO</asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin">M/C NAME</asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin" ColumnSpan="2">M/C SPECS <br /> Supported Formats: xls,xlsx,pdf</asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow runat="server" TableSection="TableBody">
-            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="machineNoTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="machineNoReq" CssClass="required" runat="server" ErrorMessage="please enter machine no" ControlToValidate="machineNoTextBox"></asp:RequiredFieldValidator></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="machineNameTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="machineNameReq" CssClass="required" runat="server" ErrorMessage="please enter machine name" ControlToValidate="machineNameTextBox"></asp:RequiredFieldValidator></asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin"><br /><br />
-                <asp:FileUpload runat="server" ID="machineFileUpload" onchange="return machineSpecFileValidation();"/>
-                <asp:Label ID="lblMachineSpec" runat="server" style="display:inline; color:blue;"></asp:Label>
-                <asp:ImageButton ID="btnMachineSpecs" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnMachineSpecs_Click" OnClientClick="return confirm('Do you want to delete?');"/><br />
-               <asp:Label ID="errorMachineFile" runat="server"></asp:Label>
+        <asp:TableRow runat="server">
+            <asp:TableCell runat="server" CssClass="margin">M/C NO <div class="required" style="display:inline">*</div><br />
+                <asp:TextBox ID="machineNoTextBox" runat="server"></asp:TextBox>
+                <br /><asp:RequiredFieldValidator ID="machineNoReq" CssClass="required" runat="server" ErrorMessage="please enter machine no" ControlToValidate="machineNoTextBox"></asp:RequiredFieldValidator>
             </asp:TableCell>
-            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="confirm('Do you want to save?');" />
-            <asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click" CausesValidation="false" CssClass="nextPage" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin">M/C NAME<div class="required" style="display:inline">*</div><br />
+                    <asp:TextBox ID="machineNameTextBox" runat="server"></asp:TextBox>
+                    <br /><asp:RequiredFieldValidator ID="machineNameReq" CssClass="required" runat="server" ErrorMessage="please enter machine name" ControlToValidate="machineNameTextBox"></asp:RequiredFieldValidator>
+            </asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin">M/C SPECS <br /> Supported Formats: xls,xlsx,pdf <br />
+                    <asp:FileUpload runat="server" ID="machineFileUpload" onchange="return machineSpecFileValidation();"/>
+                    <asp:Label ID="lblMachineSpec" runat="server" style="display:inline; color:blue;"></asp:Label>
+                    <asp:ImageButton ID="btnMachineSpecs" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnMachineSpecs_Click" OnClientClick="return confirm('Do you want to delete?');"/><br />
+                   <asp:Label ID="errorMachineFile" runat="server"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin">
+                <asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="return validatePage()" />
+                <asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click" CausesValidation="false" CssClass="nextPage" OnClientClick="return confirm('Do you want to cancel?');"/>
+            </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
 </asp:Content>

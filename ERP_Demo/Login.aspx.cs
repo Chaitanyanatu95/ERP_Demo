@@ -20,7 +20,10 @@ namespace ERP_Demo
         {
             try
             {
-                SqlConnection con = new SqlConnection(@"Data Source=pbplastics.database.windows.net;Initial Catalog=pbplasticserp;Integrated Security=True");
+                //Server String
+                //Server=tcp:pbplastics.database.windows.net,1433;Initial Catalog=pbplasticserp;Persist Security Info=False;User ID=pbplastics;Password=Pranav_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SELECT * FROM worker_master WHERE user_id='" + userlabel.Text + "' and user_password='" + passlabel.Text + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();

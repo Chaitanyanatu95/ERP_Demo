@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace ERP_Demo
 {
-    public partial class Dpr : System.Web.UI.Page
+    public partial class DPR : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,6 +50,7 @@ namespace ERP_Demo
                         reader.Close();
                         partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
                     }
+
                     noShotsStartTextBox.ReadOnly = true;
                     noShotsEndTextBox.ReadOnly = true;
                     rejectionPCSTextBox.Text = null;
@@ -107,6 +108,20 @@ namespace ERP_Demo
                         reader.Close();
                     }
 
+                    using (SqlCommand cmd = new SqlCommand("SELECT post_operation_required FROM parts_master where part_name='"+partNameDropDownList.SelectedItem.Text+"'", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Application["tempPostReq"] = reader["post_operation_required"];
+                        }
+                        reader.Close();
+                        if (Application["tempPostReq"].ToString() == "YES")
+                                Application["postOprReq"] = "OPEN";
+                            else
+                                Application["postOprReq"] = "CLOSED";
+                    }
+                        
                     using (SqlCommand cmd = new SqlCommand("SELECT machine_no FROM machine_master", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -170,6 +185,7 @@ namespace ERP_Demo
                 noShotsTextBox.Text = "";
                 downTimeTextBox.Text = "";
                 efficiencyTextBox.Text = "";
+                Application["postOprReq"] = "";
                 noShotsStartTextBox.ReadOnly = true;
                 noShotsEndTextBox.ReadOnly = true;
                 rejectionPCSTextBox.ReadOnly = true;
@@ -257,7 +273,7 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr)VALUES('" + Session["username"].ToString() + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req)VALUES('" + workerNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "','"+Application["postOprReq"].ToString() +"')", con);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";

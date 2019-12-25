@@ -45,26 +45,28 @@ namespace ERP_Demo
 
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            con.Open();
-            if (Application["editFlag"] is true)
+            try
             {
-                Application["Duplicate"] = false;
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["downTimeCodeId"].ToString() + "')", true);
-                string query = "UPDATE shift_master SET shift_time='" + shiftNameTextBox.Text.ToString() + "',hours='" + workingHoursTextBox.Text.ToString() + "' WHERE Id='" + Application["shiftId"] + "'";
-                SqlCommand cmd = new SqlCommand(query.ToString(), con);
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                string sqlquery = "SELECT shift_time FROM shift_master";
+                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                con.Open();
+
+                if (Application["editFlag"] is true)
+                {
+                    string sqlqueryE = "SELECT shift_time FROM shift_master EXCEPT SELECT shift_time FROM shift_master where id = '" + Application["shiftId"].ToString() + "'";
+                    Application["queryD"] = sqlqueryE;
+                }
+                else
+                {
+                    string sqlqueryN = "SELECT shift_time FROM shift_master";
+                    Application["queryD"] = sqlqueryN;
+                }
                 //ArrayList al = new ArrayList();
-                using (SqlCommand cmmd = new SqlCommand(sqlquery, con))
+                using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
                 {
                     SqlDataReader reader = cmmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        if (shiftNameTextBox.Text.ToLower() == reader["shift_time"].ToString().ToLower())
+                        if (shiftNameTextBox.Text.ToLower().Trim() == reader["shift_time"].ToString().ToLower().Trim())
                         {
                             Application["Duplicate"] = true;
                             break;
@@ -76,7 +78,13 @@ namespace ERP_Demo
                     }
                     reader.Close();
                 }
-                if (Application["Duplicate"] is false)
+                if(Application["Duplicate"] is false && Application["editFlag"] is true)
+                {
+                    string query = "UPDATE shift_master SET shift_time='" + shiftNameTextBox.Text.ToString() + "',hours='" + workingHoursTextBox.Text.ToString() + "' WHERE Id='" + Application["shiftId"] + "'";
+                    SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                    cmd.ExecuteNonQuery();
+                }
+                else if (Application["Duplicate"] is false)
                 {
                     string query = "INSERT INTO shift_master(shift_time, hours)VALUES('" + shiftNameTextBox.Text + "', '" + workingHoursTextBox.Text + "')";
                     SqlCommand cmd = new SqlCommand(query.ToString(), con);
@@ -84,17 +92,21 @@ namespace ERP_Demo
                 }
                 else
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Shift Already Exists.')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Shift already exists.')", true);
+                }
+                con.Close();
+                if (Application["Duplicate"] is false)
+                {
+                    Application["Duplicate"] = null;
+                    Application["editFlag"] = null;
+                    Application["queryD"] = null;
+                    Application["shiftId"] = null;
+                    Response.Redirect("~/displayShift.aspx");
                 }
             }
-            
-            Application["editFlag"] = null;
-            Application["shiftId"] = null;
-            con.Close();
-            if (Application["Duplicate"] is false)
+            catch(Exception ex)
             {
-                Application["Duplicate"] = null;
-                Response.Redirect("~/displayShift.aspx");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
             }
         }
 

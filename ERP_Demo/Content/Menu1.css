@@ -1,21 +1,22 @@
 ﻿#page-container {
     position: relative;
-    margin-top: 109px;
+    padding-top: 150px;
     min-height: 100vh;
     background-color: whitesmoke;
 }
 
 #header {
     position: fixed;
-    z-index:1;
+    z-index: 1;
     top: 0;
     width: 100%;
     text-align: center;
     background-color: aliceblue;
-    height: 90px;
+    height: 100px;
 }
+
 #content-wrap {
-    background-color:whitesmoke;
+    background-color: whitesmoke;
     padding-bottom: 2.5rem; /* Footer height */
 }
 
@@ -23,19 +24,29 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color:black;
+    background-color: black;
     color: white;
     font-weight: 100;
     font-size: small;
-    text-align:center;
-    padding-top:10px;
-    height:40px;
+    text-align: center;
+    padding-top: 10px;
+    height: 40px;
+}
+
+.btn {
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    padding: 3px 7px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .MYMenuClass {
     color: grey;
     background-color: whitesmoke;
-    width: 100%;
+    width: 120%;
+    margin-left:-20px;
 }
 
     .MYMenuClass ul {
@@ -47,8 +58,7 @@
         .MYMenuClass ul li {
             background: whitesmoke none no-repeat;
             text-align: center; /* set width if needed.*/
-            width: 200px;
-            height: 28px;
+            width: 250PX;
         }
 
 .MYMenuClass ul li a 
@@ -58,17 +68,18 @@
 }
 
     .MYMenuClass ul li a:hover {
-        background-color: #3480fa;
+        background-color: skyblue;
         background-image: none;
     }
 
 .Table1 {
-    border-collapse:initial;
+    font-family:Verdana;
+    border-collapse: initial;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    padding-bottom:2px;
-    height:37px;
+    padding-bottom: 2px;
+    height: 37px;
 }
 
 .margin {
@@ -82,13 +93,12 @@
 }
 
 .marginTextBox {
-    border:0px solid black;
+    border: 0px solid black;
     margin-left: 40px;
     resize: none;
 }
-    
+
 .tableClass {
-    text-align: left;
     overflow: auto;
     margin-left: auto;
     margin-right: auto;
@@ -96,27 +106,35 @@
 
     .tableClass td {
         border: 1px solid #808080;
-        padding:20px 4px 20px 4px;
+        padding: 10px 2px 10px 2px;
     }
 
 .CustomerHeader {
     background-color: SkyBlue;
 }
 
+.CustomerHeader th{
+    text-align: center;
+}
+
 .custButtonCss {
     color: black;
     background-color: floralwhite;
     border: 1px groove black;
-    margin:10px auto 10px 40px;
+    margin: 10px auto 10px 40px;
     padding: 4px 7px 2px 4px;
 }
 
+    .custButtonCss:hover {
+        color: black;
+        background-color: skyblue;
+    }
     .sizeAbbreviationTextbox {
         width: 80px;
     }
 
 .underline {
-    padding-bottom:15px;
+    padding-bottom: 15px;
 }
 
 .spacing {
@@ -124,37 +142,46 @@
 }
 
 .vendorRowSpacing{
-    margin-top:20px;
+    margin-top: 20px;
 }
+
 .spacingBottom {
     padding-bottom: 150px;
 }
 
 .spacingtop {
-    line-height: 4px;
+    line-height: 12px;
 }
+
 .required{
     color:red;
 }
 
 .nextPage{
-    color:black;
-    background-color:floralwhite;
-    border:1px groove black;
-    margin:10px 10px 10px 10px;
-    padding:4px 7px 2px 4px;
+    text-align:center;
+    color: black;
+    background-color: floralwhite;
+    border: 1px groove black;
+    margin: 10px 10px 10px 10px;
+    
 }
+
+.nextPage:hover{
+    color:black;
+    background-color:skyblue;
+}
+
 .line {
     line-break: auto;
 }
 
 .partTable1 {
     text-align: left;
-    padding-bottom:10px;
+    padding-bottom: 10px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .linebreak{
-    display:block;
+    display: block;
 }
