@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class newWorkerMaster {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class newWorkerMaster
+    {
+
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-        
+
         /// <summary>
         /// empNameTextBox control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox empNameTextBox;
-        
+
         /// <summary>
         /// empNameReq control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator empNameReq;
-        
+
         /// <summary>
         /// empIdTextBox control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox empIdTextBox;
-        
+
         /// <summary>
         /// empIdReq control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator empIdReq;
-        
+
         /// <summary>
         /// userIdTextBox control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox userIdTextBox;
-        
+
         /// <summary>
         /// userIdReq control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator userIdReq;
-        
+
         /// <summary>
         /// userPasswordTextBox control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox userPasswordTextBox;
-        
+
         /// <summary>
         /// userPassReq control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator userPassReq;
-        
+
         /// <summary>
         /// rightsToBeAllocatedCheckBoxList control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList rightsToBeAllocatedCheckBoxList;
-        
+
         /// <summary>
         /// selectedAccessDropDownList control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList selectedAccessDropDownList;
-        
+
         /// <summary>
         /// CustomValidator1 control.
         /// </summary>
@@ -119,5 +121,23 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+
+        /// <summary>
+        /// lblSuccessMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
+
+        /// <summary>
+        /// lblErrorMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
     }
 }

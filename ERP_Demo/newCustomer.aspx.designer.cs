@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class newCustomer {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class newCustomer
+    {
+
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-        
+
         /// <summary>
         /// customerNameLabel control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerNameLabel;
-        
+
         /// <summary>
         /// customerNameTextBox control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerNameTextBox;
-        
+
         /// <summary>
         /// custNameReq control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator custNameReq;
-        
+
         /// <summary>
         /// customerAddressOneLabel control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerAddressOneLabel;
-        
+
         /// <summary>
         /// customerAddressOneTextBox control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerAddressOneTextBox;
-        
+
         /// <summary>
         /// customerAddressReq control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator customerAddressReq;
-        
+
         /// <summary>
         /// customerAddressTwoLabel control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerAddressTwoLabel;
-        
+
         /// <summary>
         /// customerAddressTwoTextBox control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerAddressTwoTextBox;
-        
+
         /// <summary>
         /// customerContactLabel control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerContactLabel;
-        
+
         /// <summary>
         /// customerContactNoTextBox control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerContactNoTextBox;
-        
+
         /// <summary>
         /// customerPhoneReq control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator customerPhoneReq;
-        
+
         /// <summary>
         /// customerEmailLabel control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerEmailLabel;
-        
+
         /// <summary>
         /// customerEmailIdTextBox control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerEmailIdTextBox;
-        
+
         /// <summary>
         /// regexEmailValid control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
-        
+
         /// <summary>
         /// customerEmailIdReq control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator customerEmailIdReq;
-        
+
         /// <summary>
         /// customerContactPersonLabel control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerContactPersonLabel;
-        
+
         /// <summary>
         /// customerContactPersonTextBox control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerContactPersonTextBox;
-        
+
         /// <summary>
         /// customerContactPersonReq control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator customerContactPersonReq;
-        
+
         /// <summary>
         /// customerGstNumberLabel control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell customerGstNumberLabel;
-        
+
         /// <summary>
         /// customerGstDetailsTextBox control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox customerGstDetailsTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator5 control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
-        
+
         /// <summary>
         /// RegularExpressionValidator control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator;
-        
+
         /// <summary>
         /// saveCellLabel control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell saveCellLabel;
-        
+
         /// <summary>
         /// saveButtonLabel control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveButtonLabel;
-        
+
         /// <summary>
         /// cancelLabel control.
         /// </summary>
@@ -245,5 +247,23 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cancelLabel;
+
+        /// <summary>
+        /// lblSuccessMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
+
+        /// <summary>
+        /// lblErrorMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
     }
 }

@@ -6,11 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ERP_Demo
 {
     public partial class newRawMaterialMaster : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -24,25 +27,33 @@ namespace ERP_Demo
 
         protected void LoadEditValuesInController()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                String sqlquery = "SELECT * FROM raw_material_master where id = @id";
-                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    cmd.Parameters.AddWithValue("@id", (Application["rawMaterialId"]).ToString().Trim());
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    String sqlquery = "SELECT * FROM raw_material_master where id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                     {
-                        rmName.Text = reader["material_name"].ToString();
-                        rmGrade.Text = reader["material_grade"].ToString();
-                        rmColor.Text = reader["material_color"].ToString();
-                        rmMake.Text = reader["material_make"].ToString();
+                        cmd.Parameters.AddWithValue("@id", (Application["rawMaterialId"]).ToString().Trim());
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            rmName.Text = reader["material_name"].ToString();
+                            rmGrade.Text = reader["material_grade"].ToString();
+                            rmColor.Text = reader["material_color"].ToString();
+                            rmMake.Text = reader["material_make"].ToString();
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    con.Close();
                 }
-                con.Close();
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -50,7 +61,7 @@ namespace ERP_Demo
         {
             try
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
 
                 if (Application["editFlag"] is true)
@@ -109,7 +120,8 @@ namespace ERP_Demo
             }
             catch(Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 

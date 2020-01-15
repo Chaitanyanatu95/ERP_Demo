@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class displayFamily {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class displayFamily
+    {
+
         /// <summary>
         /// displayFamilyTable control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table displayFamilyTable;
-        
+
         /// <summary>
         /// rowFamilyDisplay control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableRow rowFamilyDisplay;
-        
+
         /// <summary>
         /// FamilyCell control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell FamilyCell;
-        
+
         /// <summary>
         /// familyLabel control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label familyLabel;
-        
+
         /// <summary>
         /// rowFamilyLink control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableRow rowFamilyLink;
-        
+
         /// <summary>
         /// cellFamilyLink control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellFamilyLink;
-        
+
         /// <summary>
         /// familyButton control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button familyButton;
-        
+
         /// <summary>
         /// cellFamilySearch control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellFamilySearch;
-        
+
         /// <summary>
         /// searchLabel control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label searchLabel;
-        
+
         /// <summary>
         /// cellFamilySearchButton control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellFamilySearchButton;
-        
+
         /// <summary>
         /// searchTextBox control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-        
+
         /// <summary>
         /// familyGridView control.
         /// </summary>
@@ -119,23 +121,23 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView familyGridView;
-        
+
         /// <summary>
-        /// lblDownTimeCodeSuccessMessage control.
+        /// lblFamilySuccessMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDownTimeCodeSuccessMessage;
-        
+        protected global::System.Web.UI.WebControls.Label lblFamilySuccessMessage;
+
         /// <summary>
-        /// lblDownTimeCodeErrorMessage control.
+        /// lblFamilyErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDownTimeCodeErrorMessage;
+        protected global::System.Web.UI.WebControls.Label lblFamilyErrorMessage;
     }
 }

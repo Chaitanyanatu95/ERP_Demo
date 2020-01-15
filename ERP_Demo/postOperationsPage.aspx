@@ -304,11 +304,7 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <center>
-            <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
-            <br />
-            <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
-        </center>
+       
     <asp:Table runat="server" CssClass="Table1">
             <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
                 <asp:TableCell runat="server">PACKAGING DETAILS (REQ) <div class="required" style="display:inline">*</div></asp:TableCell>
@@ -385,4 +381,9 @@
             <asp:TableCell runat="server" >&nbsp;&nbsp;&nbsp;<asp:Button Text="CANCEL" runat="server" OnClick="Cancel_Click"  CssClass="nextPage" CausesValidation="false" OnClientClick="return confirm('Do you want to Cancel?');" /></asp:TableCell>
         </asp:TableRow> 
     </asp:table>
+     <center>
+            <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
+            <br />
+            <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
+        </center>
 </asp:Content>

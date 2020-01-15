@@ -1,12 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPRList.aspx.cs" Inherits="ERP_Demo.DPRList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
     <asp:GridView ID="productionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
-                ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="90%">
+                ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="90%" OnPageIndexChanging="productionGridView_PageIndexChanging" AllowPaging="true" PageSize="10">
                 <%-- Theme Properties --%>
+                <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" />
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
-                <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-                <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>    
+                <PagerStyle BackColor="White" ForeColor="blue" HorizontalAlign="Center" />
+                <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px" />    
                 <FooterStyle BackColor="WhiteSmoke"/>
                 <Columns>
                     <asp:TemplateField HeaderText="PART NAME">
@@ -19,9 +19,9 @@
                             <asp:Label Text='<%# Eval("date_dpr") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="WORKER NAME">
+                    <asp:TemplateField HeaderText="OPERATOR NAME">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("worker_name") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("operator_name") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="R/M GRADE">
@@ -79,11 +79,21 @@
                             <asp:Label Text='<%# Eval("efficiency") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="STATUS">
+                    <asp:TemplateField HeaderText=" DPR STATUS">
                         <ItemTemplate>
                              <asp:Label Text='<%# Eval("post_opr_req") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText=" FPA STATUS">
+                        <ItemTemplate>
+                             <asp:Label Text='<%# Eval("fpa_status") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
     </asp:GridView>
+    <center>
+        <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
+        <br/>
+        <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
+    </center>
     </asp:Content>

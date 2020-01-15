@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ERP_Demo
 {
     public partial class displayFamily : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,30 +24,37 @@ namespace ERP_Demo
 
         void PopulateGridview()
         {
-            DataTable dtbl = new DataTable();
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            try
             {
-                sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM family_master", sqlCon);
-                sqlDa.Fill(dtbl);
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM family_master", sqlCon);
+                    sqlDa.Fill(dtbl);
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    familyGridView.DataSource = dtbl;
+                    familyGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    familyGridView.DataSource = dtbl;
+                    familyGridView.DataBind();
+                    familyGridView.Rows[0].Cells.Clear();
+                    familyGridView.Rows[0].Cells.Add(new TableCell());
+                    familyGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    familyGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    familyGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+            catch(Exception ex)
             {
-                familyGridView.DataSource = dtbl;
-                familyGridView.DataBind();
+                lblFamilySuccessMessage.Text = "";
+                lblFamilyErrorMessage.Text = ex.Message;
             }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                familyGridView.DataSource = dtbl;
-                familyGridView.DataBind();
-                familyGridView.Rows[0].Cells.Clear();
-                familyGridView.Rows[0].Cells.Add(new TableCell());
-                familyGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                familyGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                familyGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-
         }
 
         protected void familyGridView_RowEditing(object sender, GridViewEditEventArgs e)
@@ -66,7 +75,7 @@ namespace ERP_Demo
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "DELETE FROM family_master WHERE id = @id";
@@ -74,14 +83,14 @@ namespace ERP_Demo
                     sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(familyGridView.DataKeys[e.RowIndex].Value.ToString()));
                     sqlCmd.ExecuteNonQuery();
                     PopulateGridview();
-                    lblDownTimeCodeSuccessMessage.Text = "Selected Record Deleted";
-                    lblDownTimeCodeErrorMessage.Text = "";
+                    lblFamilySuccessMessage.Text = "Selected Record Deleted";
+                    lblFamilyErrorMessage.Text = "";
                 }
             }
             catch (Exception ex)
             {
-                lblDownTimeCodeSuccessMessage.Text = "";
-                lblDownTimeCodeErrorMessage.Text = ex.Message;
+                lblFamilySuccessMessage.Text = "";
+                lblFamilyErrorMessage.Text = ex.Message;
             }
         }
 
@@ -92,14 +101,22 @@ namespace ERP_Demo
 
         protected void familyGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            try
             {
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
-                string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                Application["familyId"] = commandArgs[0];
-                bool editFlag = true;
-                Application["editFlag"] = editFlag;
-                Response.Redirect("~/newFamilyMaster.aspx/");
+                if (e.CommandName == "Edit")
+                {
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["familyId"] = commandArgs[0];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/newFamilyMaster.aspx/");
+                }
+            }
+            catch(Exception ex)
+            {
+                lblFamilySuccessMessage.Text = "";
+                lblFamilyErrorMessage.Text = ex.Message;
             }
         }
     }

@@ -77,5 +77,10 @@
                          </table>
                     </form>
                 </div>
+                 <center>
+                <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
+                <br />
+                <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
+                </center>
             </body>
     </html>

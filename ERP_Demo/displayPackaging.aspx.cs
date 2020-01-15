@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ERP_Demo
 {
     public partial class displayPackaging : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,38 +24,42 @@ namespace ERP_Demo
 
         void PopulateGridview()
         {
-            DataTable dtbl = new DataTable();
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            try
             {
-                sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_master EXCEPT SELECT * FROM packaging_master WHERE packaging_type = 'N/A' order by id OFFSET 1 ROWS", sqlCon);
-                sqlDa.Fill(dtbl);
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM packaging_master EXCEPT SELECT * FROM packaging_master WHERE packaging_type = 'N/A' order by id OFFSET 1 ROWS", sqlCon);
+                    sqlDa.Fill(dtbl);
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    packagingGridView.DataSource = dtbl;
+                    packagingGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    packagingGridView.DataSource = dtbl;
+                    packagingGridView.DataBind();
+                    packagingGridView.Rows[0].Cells.Clear();
+                    packagingGridView.Rows[0].Cells.Add(new TableCell());
+                    packagingGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    packagingGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    packagingGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+            catch(Exception ex)
             {
-                packagingGridView.DataSource = dtbl;
-                packagingGridView.DataBind();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                packagingGridView.DataSource = dtbl;
-                packagingGridView.DataBind();
-                packagingGridView.Rows[0].Cells.Clear();
-                packagingGridView.Rows[0].Cells.Add(new TableCell());
-                packagingGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                packagingGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                packagingGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-
         }
-
-
+        
         protected void packagingGridView_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            //string temp;
             packagingGridView.EditIndex = e.NewEditIndex;
-            //temp = customerGridView.Rows[0].Cells[0].Text;
             PopulateGridview();
         }
 
@@ -67,7 +73,7 @@ namespace ERP_Demo
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "DELETE FROM packaging_master WHERE id = @id";
@@ -93,14 +99,22 @@ namespace ERP_Demo
 
         protected void packagingGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            try
             {
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
-                string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                Application["packagingId"] = commandArgs[0];
-                bool editFlag = true;
-                Application["editFlag"] = editFlag;
-                Response.Redirect("~/newPackaging.aspx/");
+                if (e.CommandName == "Edit")
+                {
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["packagingId"] = commandArgs[0];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/newPackaging.aspx/");
+                }
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
     }

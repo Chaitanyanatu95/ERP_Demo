@@ -42,8 +42,8 @@
                 </Columns>
     </asp:GridView>
         <center>
-            <asp:Label ID="lblDownTimeCodeSuccessMessage" Text="" runat="server" ForeColor="Green" />
+            <asp:Label ID="lblFamilySuccessMessage" Text="" runat="server" ForeColor="Green" />
             <br />
-            <asp:Label ID="lblDownTimeCodeErrorMessage" Text="" runat="server" ForeColor="Red" />
+            <asp:Label ID="lblFamilyErrorMessage" Text="" runat="server" ForeColor="Red" />
         </center>
 </asp:Content>

@@ -31,13 +31,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label employeeName;
         
         /// <summary>
-        /// workerNameDropDownList control.
+        /// operatorNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList workerNameDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList operatorNameDropDownList;
         
         /// <summary>
         /// RequiredFieldValidator10 control.
@@ -67,13 +67,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.HtmlControls.HtmlInputText dateSelectionTextBox;
         
         /// <summary>
-        /// workerNameReq control.
+        /// dateReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator workerNameReq;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator dateReq;
         
         /// <summary>
         /// partNameDropDownList control.
@@ -193,15 +193,6 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
         
         /// <summary>
-        /// noShotsTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox noShotsTextBox;
-        
-        /// <summary>
         /// validationShots control.
         /// </summary>
         /// <remarks>
@@ -209,6 +200,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label validationShots;
+        
+        /// <summary>
+        /// noShotsTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox noShotsTextBox;
         
         /// <summary>
         /// rejectionPCSTextBox control.

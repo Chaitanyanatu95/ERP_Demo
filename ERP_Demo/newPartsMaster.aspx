@@ -190,5 +190,10 @@
                         &nbsp;&nbsp;&nbsp; <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to Cancel?');"  />
                     </asp:TableCell>
         </asp:TableRow>
-    </asp:Table><br /><br />
+    </asp:Table>
+    <center>
+            <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
+            <br />
+            <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
+        </center><br /><br />
 </asp:Content>

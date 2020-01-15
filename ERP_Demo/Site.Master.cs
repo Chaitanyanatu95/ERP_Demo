@@ -19,18 +19,35 @@ namespace ERP_Demo
 
                     if(Session["roleReports"].ToString() == "YES")
                     {
-                        if(Menu1.Items.Count > 0)
+                        if (Menu1.Items.Count > 0)
                         {
-                            Menu1.Items.Remove(Menu1.FindItem("Masters"));
-                            Menu1.Items.Remove(Menu1.FindItem("Transaction"));
+                            if (Session["roleFullAccess"].ToString() == "NO")
+                            {
+                                Menu1.Items.Remove(Menu1.FindItem("Masters"));
+                            }
+                            if (Session["roleTransactions"].ToString() == "NO")
+                            {
+                                Menu1.Items.Remove(Menu1.FindItem("Transaction"));
+                            }
                         }
                     }
                     else if(Session["roleSelectedAccess"].ToString() == "YES")
                     {
-                        Menu1.Items.Remove(Menu1.FindItem("Transaction"));
+                        //Menu1.Items.Remove(Menu1.FindItem("Masters"));
+
                         if (Menu1.Items.Count > 0)
                         {
-                            if(Session["roleAccess"].ToString().Trim() == "Product Category")
+                            if (Session["roleTransactions"].ToString() == "NO")
+                            {
+                                Menu1.Items.Remove(Menu1.FindItem("Transaction"));
+                            }
+
+                            if (Session["roleReports"].ToString() == "NO")
+                            {
+                                Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                            }
+
+                            if (Session["roleAccess"].ToString().Trim() == "Product Category")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
                                 Menu1.FindItem("Masters").ChildItems.Clear();
@@ -132,15 +149,19 @@ namespace ERP_Demo
                     }
                     else if(Session["roleTransactions"].ToString() == "YES")
                     {
-                        if(Menu1.Items.Count > 0)
+                        Menu1.Items.Remove(Menu1.FindItem("Masters"));
+
+                        if (Menu1.Items.Count > 0)
                         {
+                            if (Session["roleReports"].ToString() == "NO")
+                            {
+                                Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                            }
                             Menu1.Items.Add(new MenuItem()
                             {
-                                Text = "View Parts",
+                                Text = "VIEW PARTS",
                                 NavigateUrl = "~/displayPartsWorker.aspx"
                             });
-                            Menu1.Items.Remove(Menu1.FindItem("Masters"));
-                            Menu1.Items.Remove(Menu1.FindItem("Reports"));
                         }
                     }
                 }

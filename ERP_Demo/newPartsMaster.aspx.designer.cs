@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class newPartsMaster {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class newPartsMaster
+    {
+
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-        
+
         /// <summary>
         /// partId control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableRow partId;
-        
+
         /// <summary>
         /// partNoTextBox control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox partNoTextBox;
-        
+
         /// <summary>
         /// partNameTextBox control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox partNameTextBox;
-        
+
         /// <summary>
         /// partNameReq control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator partNameReq;
-        
+
         /// <summary>
         /// customerNameDropDownList control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList customerNameDropDownList;
-        
+
         /// <summary>
         /// custNameReq control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator custNameReq;
-        
+
         /// <summary>
         /// custPartNoTextBox control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox custPartNoTextBox;
-        
+
         /// <summary>
         /// familyDropDownList control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList familyDropDownList;
-        
+
         /// <summary>
         /// prodCategoryReq control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator prodCategoryReq;
-        
+
         /// <summary>
         /// moldNameTextBox control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox moldNameTextBox;
-        
+
         /// <summary>
         /// moldNameReq control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator moldNameReq;
-        
+
         /// <summary>
         /// moldYearTextBox control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox moldYearTextBox;
-        
+
         /// <summary>
         /// moldYearReq control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator moldYearReq;
-        
+
         /// <summary>
         /// moldLifeTextBox control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox moldLifeTextBox;
-        
+
         /// <summary>
         /// noOfCavitiesTextBox control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox noOfCavitiesTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// unitMeasurementDropDownList control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList unitMeasurementDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// partWeightTextBox control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox partWeightTextBox;
-        
+
         /// <summary>
         /// partWeightReq control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator partWeightReq;
-        
+
         /// <summary>
         /// shotWeightTextBox control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox shotWeightTextBox;
-        
+
         /// <summary>
         /// shotWeightReq control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator shotWeightReq;
-        
+
         /// <summary>
         /// cycleTimeTextBox control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox cycleTimeTextBox;
-        
+
         /// <summary>
         /// cycleTimeReq control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator cycleTimeReq;
-        
+
         /// <summary>
         /// jigReqDropDownList control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList jigReqDropDownList;
-        
+
         /// <summary>
         /// jigFixLabel control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label jigFixLabel;
-        
+
         /// <summary>
         /// moldProductionCycleTextBox control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox moldProductionCycleTextBox;
-        
+
         /// <summary>
         /// productionLbl control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label productionLbl;
-        
+
         /// <summary>
         /// samplePartNo control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox samplePartNo;
-        
+
         /// <summary>
         /// lblFile control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFile;
-        
+
         /// <summary>
         /// partPhotoFileUpload control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload partPhotoFileUpload;
-        
+
         /// <summary>
         /// errorFile control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label errorFile;
-        
+
         /// <summary>
         /// btnFile control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnFile;
-        
+
         /// <summary>
         /// lblMoldFile control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMoldFile;
-        
+
         /// <summary>
         /// moldSpecFileUpload control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload moldSpecFileUpload;
-        
+
         /// <summary>
         /// errorMoldFile control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label errorMoldFile;
-        
+
         /// <summary>
         /// btnMoldFile control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnMoldFile;
-        
+
         /// <summary>
         /// nextPage control.
         /// </summary>
@@ -362,5 +364,23 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button nextPage;
+
+        /// <summary>
+        /// lblSuccessMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
+
+        /// <summary>
+        /// lblErrorMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
     }
 }

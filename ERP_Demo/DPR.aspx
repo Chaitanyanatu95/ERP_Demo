@@ -17,10 +17,10 @@
             <asp:TableCell runat="server" ColumnSpan="6"><h3>DPR OPERATOR</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center">
-            <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="employeeName" runat="server" style="font-weight:700; color:black">Employee Name <div class="required" style="display:inline">*</div></asp:Label><br /><br /><asp:DropDownList ID="workerNameDropDownList" DataTextField="worker_name" DataValueField="worker_name" runat="server" AutoPostBack="true"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="workerNameDropDownList" CssClass="required" ErrorMessage="Please select worker name."></asp:RequiredFieldValidator></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="employeeName" runat="server" style="font-weight:700; color:black">Operator Name <div class="required" style="display:inline">*</div></asp:Label><br /><br /><asp:DropDownList ID="operatorNameDropDownList" DataTextField="worker_name" DataValueField="worker_name" runat="server" AutoPostBack="true"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="operatorNameDropDownList" CssClass="required" ErrorMessage="Please select worker name."></asp:RequiredFieldValidator></asp:TableCell>
             <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="Date" runat="server" style="font-weight:700; color:black">Date <div class="required" style="display:inline">*</div></asp:Label><br />
-                <input type="text" id="dateSelectionTextBox" runat="server" style="font-weight:700; color:black; text-align:center"/>
-                <br /><asp:RequiredFieldValidator ID="workerNameReq" runat="server" ControlToValidate="dateSelectionTextBox" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></asp:TableCell>
+                <input type="text" id="dateSelectionTextBox" runat="server" style="font-weight:500; color:black; text-align:center"/>
+                <br /><asp:RequiredFieldValidator ID="dateReq" runat="server" ControlToValidate="dateSelectionTextBox" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom" >
             <asp:TableCell runat="server" ColumnSpan="1"><div style="font-weight:700; color:black">Part Name <div class="required" style="display:inline">*</div></div><br />
@@ -47,10 +47,11 @@
             <asp:TableCell runat="server"><div style="font-weight:700; color:black">No. of Shots (End Counter) <div class="required" style="display:inline">*</div></div><br />
                 <asp:TextBox ID="noShotsEndTextBox" runat="server" OnTextChanged="noShotsEndTextBox_TextChanged" AutoPostBack="true" ReadOnly="true"></asp:TextBox>
                 <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="noShotsEndTextBox" CssClass="required" ErrorMessage="Please enter end counter."></asp:RequiredFieldValidator>
+                <br /><asp:Label ID="validationShots" runat="server" CssClass="required"></asp:Label>
             </asp:TableCell>
             <asp:TableCell runat="server" style="padding-bottom:40px;"><div style="font-weight:700; color:black">Total No. of Shots <div class="required" style="display:inline">*</div></div><br />
                 <asp:TextBox ID="noShotsTextBox" runat="server" ReadOnly="true" OnTextChanged="noShotsEndTextBox_TextChanged"></asp:TextBox>
-                <br /><asp:Label ID="validationShots" runat="server" CssClass="required"></asp:Label>
+                <br />
             </asp:TableCell>
             <asp:TableCell runat="server"><div style="font-weight:700; color:black">Rejection (PCS) <div class="required" style="display:inline">*</div></div><br />
                 <asp:TextBox ID="rejectionPCSTextBox" runat="server" OnTextChanged="rejectionPCSTextBox_TextChanged" AutoPostBack="true" ReadOnly="true"></asp:TextBox>

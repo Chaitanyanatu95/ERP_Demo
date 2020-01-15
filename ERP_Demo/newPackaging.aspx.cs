@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,8 @@ namespace ERP_Demo
 {
     public partial class newPackaging : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -23,23 +26,31 @@ namespace ERP_Demo
 
         protected void LoadEditValuesInController()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                String sqlquery = "SELECT * FROM packaging_master where id = @id";
-                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    cmd.Parameters.AddWithValue("@id", (Application["packagingId"]).ToString().Trim());
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    String sqlquery = "SELECT * FROM packaging_master where id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                     {
-                        packagingTypeTextBox.Text = reader["packaging_type"].ToString();
-                        sizeTextBox.Text = reader["size"].ToString();
+                        cmd.Parameters.AddWithValue("@id", (Application["packagingId"]).ToString().Trim());
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            packagingTypeTextBox.Text = reader["packaging_type"].ToString();
+                            sizeTextBox.Text = reader["size"].ToString();
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    con.Close();
                 }
-                con.Close();
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -47,7 +58,7 @@ namespace ERP_Demo
         {
             try
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
                 if (Application["editFlag"] is true)
                 {
@@ -106,7 +117,8 @@ namespace ERP_Demo
             }
             catch(Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 

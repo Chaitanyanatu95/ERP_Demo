@@ -8,11 +8,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.Common;
 using System.Text.RegularExpressions;
+using System.Configuration;
 
 namespace ERP_Demo
 {
     public partial class newMachineMaster : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,24 +29,32 @@ namespace ERP_Demo
 
         protected void LoadEditValuesInController()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                String sqlquery = "SELECT * FROM machine_master where id = @id";
-                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    cmd.Parameters.AddWithValue("@id", (Application["machineId"]).ToString().Trim());
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    String sqlquery = "SELECT * FROM machine_master where id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                     {
-                        machineNoTextBox.Text = reader["machine_no"].ToString();
-                        machineNameTextBox.Text = reader["machine_name"].ToString();
-                        lblMachineSpec.Text = reader["machine_file_upload"].ToString();
+                        cmd.Parameters.AddWithValue("@id", (Application["machineId"]).ToString().Trim());
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            machineNoTextBox.Text = reader["machine_no"].ToString();
+                            machineNameTextBox.Text = reader["machine_name"].ToString();
+                            lblMachineSpec.Text = reader["machine_file_upload"].ToString();
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    con.Close();
                 }
-                con.Close();
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -56,7 +67,7 @@ namespace ERP_Demo
                 {
                     machineFileUpload.SaveAs(Server.MapPath("~/UploadedFiles/Machine/") + machineFileUpload.FileName);
                 }
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
                 if (Application["editFlag"] is true)
                 {
@@ -113,7 +124,8 @@ namespace ERP_Demo
             }
             catch(Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -126,30 +138,38 @@ namespace ERP_Demo
 
         protected void btnMachineSpecs_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-
-            if (lblMachineSpec.Text != null)
+            try
             {
-                if (Application["editFlag"] is true)
+                SqlConnection con = new SqlConnection(settings.ToString());
+
+                if (lblMachineSpec.Text != null)
                 {
-                    var path = Server.MapPath(lblMachineSpec.Text);
-                    //System.Diagnostics.Debug.WriteLine(path);
-                    if (File.Exists(path))
+                    if (Application["editFlag"] is true)
                     {
-                        using (SqlCommand cmd = new SqlCommand("UPDATE machine_master set machine_file_upload = '' where id = '" + Application["machineId"] + "'", con))
+                        var path = Server.MapPath(lblMachineSpec.Text);
+                        //System.Diagnostics.Debug.WriteLine(path);
+                        if (File.Exists(path))
                         {
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            File.Delete(Server.MapPath(lblMachineSpec.Text));
+                            using (SqlCommand cmd = new SqlCommand("UPDATE machine_master set machine_file_upload = '' where id = '" + Application["machineId"] + "'", con))
+                            {
+                                con.Open();
+                                cmd.ExecuteNonQuery();
+                                File.Delete(Server.MapPath(lblMachineSpec.Text));
+                            }
+                            lblMachineSpec.Text = "";
+                            con.Close();
                         }
-                        lblMachineSpec.Text = "";
-                        con.Close();
-                    }
-                    else
-                    {
-                        lblMachineSpec.Text = "";
+                        else
+                        {
+                            lblMachineSpec.Text = "";
+                        }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
     }

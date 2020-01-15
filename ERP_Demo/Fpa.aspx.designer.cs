@@ -13,13 +13,31 @@ namespace ERP_Demo {
     public partial class FPA {
         
         /// <summary>
-        /// lblOperatorName control.
+        /// lblWorkerName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOperatorName;
+        protected global::System.Web.UI.WebControls.Label lblWorkerName;
+        
+        /// <summary>
+        /// lblShift control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShift;
+        
+        /// <summary>
+        /// lblDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
         /// lblPartName control.
@@ -40,13 +58,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblProductionHistory;
         
         /// <summary>
-        /// operatorNameDropDownList control.
+        /// workerNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList operatorNameDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList workerNameDropDownList;
         
         /// <summary>
         /// workerReq control.
@@ -56,6 +74,42 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator workerReq;
+        
+        /// <summary>
+        /// workerShiftDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList workerShiftDetails;
+        
+        /// <summary>
+        /// RequiredFieldValidator9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
+        
+        /// <summary>
+        /// dateSelectionTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText dateSelectionTextBox;
+        
+        /// <summary>
+        /// dateReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator dateReq;
         
         /// <summary>
         /// partNameDropDownList control.
@@ -112,13 +166,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.Label lblEmployeeName;
         
         /// <summary>
-        /// workerNameDropDownList control.
+        /// operatorNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList workerNameDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList operatorNameDropDownList;
         
         /// <summary>
         /// RequiredFieldValidator2 control.
@@ -265,13 +319,13 @@ namespace ERP_Demo {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
         
         /// <summary>
-        /// customValid control.
+        /// errorLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator customValid;
+        protected global::System.Web.UI.WebControls.Label errorLbl;
         
         /// <summary>
         /// lblProdRejectionQty control.
@@ -308,6 +362,15 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FpaRejectionQtyTextBox;
+        
+        /// <summary>
+        /// RequiredFieldValidator8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator8;
         
         /// <summary>
         /// lblEfficiency control.

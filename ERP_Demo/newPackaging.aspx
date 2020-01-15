@@ -27,4 +27,9 @@
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+    <center>
+            <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
+            <br />
+            <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
+        </center>
 </asp:Content>

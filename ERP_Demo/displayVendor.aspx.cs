@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ERP_Demo
 {
     public partial class displayVendor : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,57 +24,69 @@ namespace ERP_Demo
 
         void PopulateGridview()
         {
-            DataTable dtbl = new DataTable();
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            try
             {
-                sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM vendor_master", sqlCon);
-                sqlDa.Fill(dtbl);
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM vendor_master", sqlCon);
+                    sqlDa.Fill(dtbl);
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    vendorGridView.DataSource = dtbl;
+                    vendorGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    vendorGridView.DataSource = dtbl;
+                    vendorGridView.DataBind();
+                    vendorGridView.Rows[0].Cells.Clear();
+                    vendorGridView.Rows[0].Cells.Add(new TableCell());
+                    vendorGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    vendorGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    vendorGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+            catch(Exception ex)
             {
-                vendorGridView.DataSource = dtbl;
-                vendorGridView.DataBind();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                vendorGridView.DataSource = dtbl;
-                vendorGridView.DataBind();
-                vendorGridView.Rows[0].Cells.Clear();
-                vendorGridView.Rows[0].Cells.Add(new TableCell());
-                vendorGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                vendorGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                vendorGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-
         }
 
 
         protected void vendorGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            try
             {
-                string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                Application["vendorId"] = commandArgs[0];
-                bool editFlag = true;
-                Application["editFlag"] = editFlag;
-                Response.Redirect("~/newVendor.aspx/");
+                if (e.CommandName == "Edit")
+                {
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["vendorId"] = commandArgs[0];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/newVendor.aspx/");
+                }
             }
-
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
         }
-
         protected void vendorGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             vendorGridView.EditIndex = -1;
             PopulateGridview();
         }
-
         protected void vendorGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "DELETE FROM vendor_master WHERE id = @id";
@@ -90,7 +104,6 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
-
         protected void vendorButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/newVendor.aspx");

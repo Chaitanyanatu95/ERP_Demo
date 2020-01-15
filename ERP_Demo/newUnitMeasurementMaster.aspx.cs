@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,8 @@ namespace ERP_Demo
 {
     public partial class newUnitMeasurementMaster : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -23,23 +26,31 @@ namespace ERP_Demo
 
         protected void LoadEditValuesInController()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                String sqlquery = "SELECT * FROM unit_of_measurement_master where id = @id";
-                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    cmd.Parameters.AddWithValue("@id", (Application["unitOfMeasurementId"]).ToString().Trim());
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    String sqlquery = "SELECT * FROM unit_of_measurement_master where id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                     {
-                        unitofmeasurementTextBox.Text = reader["unit_of_measurement"].ToString();
-                        abbreviationTextBox.Text = reader["abbreviation"].ToString();
+                        cmd.Parameters.AddWithValue("@id", (Application["unitOfMeasurementId"]).ToString().Trim());
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            unitofmeasurementTextBox.Text = reader["unit_of_measurement"].ToString();
+                            abbreviationTextBox.Text = reader["abbreviation"].ToString();
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    con.Close();
                 }
-                con.Close();
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -47,7 +58,7 @@ namespace ERP_Demo
         {
             try
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
 
                 if (Application["editFlag"] is true)
@@ -106,7 +117,8 @@ namespace ERP_Demo
             }
             catch(Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 

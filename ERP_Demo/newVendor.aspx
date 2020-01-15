@@ -44,4 +44,9 @@
             <asp:Button ID="cancelLabel" Text="CANCEL" runat="server" OnClick="Cancel_Click" CausesValidation="false" CssClass="nextPage" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+    <center>
+            <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
+            <br />
+            <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
+        </center>
 </asp:Content>

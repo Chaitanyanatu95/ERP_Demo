@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
+using System.Configuration;
 
 namespace ERP_Demo
 {
     public partial class DPR : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -23,23 +22,23 @@ namespace ERP_Demo
 
         protected void LoadValuesInControlls()
         {
-            if (Session["username"] is null)
+            try
             {
-                Response.Redirect("~/Login.aspx/");
-            }
-            else
-            {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                using (con)
+                if (Session["username"] is null)
                 {
+                    Response.Redirect("~/Login.aspx/");
+                }
+                else
+                {
+                    SqlConnection con = new SqlConnection(settings.ToString());
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT worker_name FROM worker_master", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
-                        workerNameDropDownList.DataSource = reader;
-                        workerNameDropDownList.DataBind();
+                        operatorNameDropDownList.DataSource = reader;
+                        operatorNameDropDownList.DataBind();
                         reader.Close();
-                        workerNameDropDownList.Items.Insert(0, new ListItem("Select Worker Name", ""));
+                        operatorNameDropDownList.Items.Insert(0, new ListItem("Select Worker Name", ""));
                     }
 
                     using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM parts_master", con))
@@ -50,209 +49,254 @@ namespace ERP_Demo
                         reader.Close();
                         partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
                     }
-
                     noShotsStartTextBox.ReadOnly = true;
                     noShotsEndTextBox.ReadOnly = true;
                     rejectionPCSTextBox.Text = null;
                     expQuantityTextBox.Text = null;
                     actQuantityTextBox.Text = null;
+                    con.Close();
                 }
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
         protected void machineUsedChanged(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT cycle_time FROM parts_master WHERE part_name= '" + partNameDropDownList.SelectedItem.Value + "' ", con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT cycle_time FROM parts_master WHERE part_name= '" + partNameDropDownList.SelectedItem.Value + "' ", con))
                     {
-                        Application["cycleTime"] = reader["cycle_time"].ToString();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Application["cycleTime"] = reader["cycle_time"].ToString();
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    using (SqlCommand cmd = new SqlCommand("SELECT shift_time FROM shift_master", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        shiftDetailsDropDownList.DataSource = reader;
+                        shiftDetailsDropDownList.DataBind();
+                        reader.Close();
+                        shiftDetailsDropDownList.Items.Insert(0, new ListItem("Select Shift Details", ""));
+                    }
+                    con.Close();
+                    noShotsStartTextBox.ReadOnly = true;
+                    noShotsEndTextBox.ReadOnly = true;
+                    expQuantityTextBox.Text = null;
                 }
-                using (SqlCommand cmd = new SqlCommand("SELECT shift_time FROM shift_master", con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    shiftDetailsDropDownList.DataSource = reader;
-                    shiftDetailsDropDownList.DataBind();
-                    reader.Close();
-                    shiftDetailsDropDownList.Items.Insert(0, new ListItem("Select Shift Details", ""));
-                }
-                con.Close();
-                noShotsStartTextBox.ReadOnly = true;
-                noShotsEndTextBox.ReadOnly = true;
-                expQuantityTextBox.Text = null;
+            }
+            catch(Exception ex)
+            {
+                lblErrorMessage.Text = ex.Message;
+                lblSuccessMessage.Text = "";
             }
         }
 
         protected void partNameChanged(object sender, EventArgs e)
         {
-            if (partNameDropDownList.SelectedItem.Text != "Select Part Name")
+            try
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                using (con)
+                if (partNameDropDownList.SelectedItem.Text != "Select Part Name")
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT no_of_cavities FROM parts_master WHERE part_name= '" + partNameDropDownList.SelectedItem.Value + "' ", con))
+                    SqlConnection con = new SqlConnection(settings.ToString());
+                    using (con)
                     {
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        while (reader.Read())
+                        con.Open();
+                        using (SqlCommand cmd = new SqlCommand("SELECT no_of_cavities FROM parts_master WHERE part_name= '" + partNameDropDownList.SelectedItem.Value + "' ", con))
                         {
-                            Application["noOfCavities"] = reader["no_of_cavities"].ToString();
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                Application["noOfCavities"] = reader["no_of_cavities"].ToString();
+                            }
+                            reader.Close();
                         }
-                        reader.Close();
-                    }
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT post_operation_required FROM parts_master where part_name='"+partNameDropDownList.SelectedItem.Text+"'", con))
-                    {
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        while (reader.Read())
+                        using (SqlCommand cmd = new SqlCommand("SELECT post_operation_required FROM parts_master where part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
                         {
-                            Application["tempPostReq"] = reader["post_operation_required"];
-                        }
-                        reader.Close();
-                        if (Application["tempPostReq"].ToString() == "YES")
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                Application["tempPostReq"] = reader["post_operation_required"];
+                            }
+                            reader.Close();
+                            if (Application["tempPostReq"].ToString() == "YES")
                                 Application["postOprReq"] = "OPEN";
                             else
                                 Application["postOprReq"] = "CLOSED";
-                    }
-                        
-                    using (SqlCommand cmd = new SqlCommand("SELECT machine_no FROM machine_master", con))
-                    {
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        machineUsedDropDownList.DataSource = reader;
-                        machineUsedDropDownList.DataBind();
-                        reader.Close();
-                        machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
-                    }
+                        }
 
-                    using (SqlCommand cmd2 = new SqlCommand("SELECT rm_grade,alt_rm_grade FROM parts_master where part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
-                    {
-                        DataTable dt = new DataTable();
-                        SqlDataAdapter ad = new SqlDataAdapter(cmd2);
-                        ad.Fill(dt);
-
-                        materialGradeDropDownList.Items.Clear();
-                        if (dt.Rows.Count > 0)
+                        using (SqlCommand cmd = new SqlCommand("SELECT machine_no FROM machine_master", con))
                         {
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            machineUsedDropDownList.DataSource = reader;
+                            machineUsedDropDownList.DataBind();
+                            reader.Close();
+                            machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
+                        }
 
-                            for (int i = 0; i < dt.Rows.Count; i++)
+                        using (SqlCommand cmd2 = new SqlCommand("SELECT rm_grade,alt_rm_grade FROM parts_master where part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
+                        {
+                            DataTable dt = new DataTable();
+                            SqlDataAdapter ad = new SqlDataAdapter(cmd2);
+                            ad.Fill(dt);
+
+                            materialGradeDropDownList.Items.Clear();
+                            if (dt.Rows.Count > 0)
                             {
 
-                                string item1 = dt.Rows[i]["rm_grade"].ToString();
-                                string item2 = dt.Rows[i]["alt_rm_grade"].ToString();
+                                for (int i = 0; i < dt.Rows.Count; i++)
+                                {
 
-                                materialGradeDropDownList.Items.Insert(0, new ListItem("Select Material Grade", ""));
-                                materialGradeDropDownList.Items.Add(new ListItem(item1, dt.Rows[i]["rm_grade"].ToString()));
-                                if (item2.ToString() != "")
-                                    materialGradeDropDownList.Items.Add(new ListItem(item2, dt.Rows[i]["alt_rm_grade"].ToString()));
+                                    string item1 = dt.Rows[i]["rm_grade"].ToString();
+                                    string item2 = dt.Rows[i]["alt_rm_grade"].ToString();
+
+                                    materialGradeDropDownList.Items.Insert(0, new ListItem("Select Material Grade", ""));
+                                    materialGradeDropDownList.Items.Add(new ListItem(item1, dt.Rows[i]["rm_grade"].ToString()));
+                                    if (item2.ToString() != "")
+                                        materialGradeDropDownList.Items.Add(new ListItem(item2, dt.Rows[i]["alt_rm_grade"].ToString()));
+                                }
                             }
+                            con.Close();
+                            shiftDetailsDropDownList.Items.Clear();
+                            downTimeCodeDropDownList.Items.Clear();
+                            noShotsStartTextBox.Text = "";
+                            noShotsEndTextBox.Text = "";
+                            noShotsTextBox.Text = "";
+                            expQuantityTextBox.Text = "";
+                            actQuantityTextBox.Text = "";
+                            rejectionPCSTextBox.Text = "";
+                            downTimeTextBox.Text = "";
+                            efficiencyTextBox.Text = "";
+                            noShotsStartTextBox.ReadOnly = true;
+                            noShotsEndTextBox.ReadOnly = true;
+                            rejectionPCSTextBox.ReadOnly = true;
+                            downTimeTextBox.ReadOnly = true;
                         }
-                        con.Close();
-                        shiftDetailsDropDownList.Items.Clear();
-                        downTimeCodeDropDownList.Items.Clear();
-                        noShotsStartTextBox.Text = "";
-                        noShotsEndTextBox.Text = "";
-                        noShotsTextBox.Text = "";
-                        expQuantityTextBox.Text = "";
-                        actQuantityTextBox.Text = "";
-                        rejectionPCSTextBox.Text = "";
-                        downTimeTextBox.Text = "";
-                        efficiencyTextBox.Text = "";
-                        noShotsStartTextBox.ReadOnly = true;
-                        noShotsEndTextBox.ReadOnly = true;
-                        rejectionPCSTextBox.ReadOnly = true;
-                        downTimeTextBox.ReadOnly = true;
                     }
                 }
+                else
+                {
+                    machineUsedDropDownList.Items.Clear();
+                    materialGradeDropDownList.Items.Clear();
+                    shiftDetailsDropDownList.Items.Clear();
+                    downTimeCodeDropDownList.Items.Clear();
+                    actQuantityTextBox.Text = "";
+                    rejectionPCSTextBox.Text = "";
+                    expQuantityTextBox.Text = "";
+                    noShotsStartTextBox.Text = "";
+                    noShotsEndTextBox.Text = "";
+                    noShotsTextBox.Text = "";
+                    downTimeTextBox.Text = "";
+                    efficiencyTextBox.Text = "";
+                    Application["postOprReq"] = "";
+                    noShotsStartTextBox.ReadOnly = true;
+                    noShotsEndTextBox.ReadOnly = true;
+                    rejectionPCSTextBox.ReadOnly = true;
+                    downTimeTextBox.ReadOnly = true;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                machineUsedDropDownList.Items.Clear();
-                materialGradeDropDownList.Items.Clear();
-                shiftDetailsDropDownList.Items.Clear();
-                downTimeCodeDropDownList.Items.Clear();
-                actQuantityTextBox.Text = "";
-                rejectionPCSTextBox.Text = "";
-                expQuantityTextBox.Text = "";
-                noShotsStartTextBox.Text = "";
-                noShotsEndTextBox.Text = "";
-                noShotsTextBox.Text = "";
-                downTimeTextBox.Text = "";
-                efficiencyTextBox.Text = "";
-                Application["postOprReq"] = "";
-                noShotsStartTextBox.ReadOnly = true;
-                noShotsEndTextBox.ReadOnly = true;
-                rejectionPCSTextBox.ReadOnly = true;
-                downTimeTextBox.ReadOnly = true;
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
         protected void shiftDetailsChanged(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT hours FROM shift_master WHERE shift_time= '" + shiftDetailsDropDownList.SelectedItem.Value + "' ", con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT hours FROM shift_master WHERE shift_time= '" + shiftDetailsDropDownList.SelectedItem.Value + "' ", con))
                     {
-                        Application["shiftTime"] = reader["hours"].ToString();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Application["shiftTime"] = reader["hours"].ToString();
+                        }
+                        calculateExpectedQuantity();
+                        reader.Close();
                     }
-                    calculateExpectedQuantity();
-                    reader.Close();
                 }
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
         protected void calculateExpectedQuantity()
         {
-            if (machineUsedDropDownList.SelectedItem.Text.ToString() != "Select Machine Used" || partNameDropDownList.SelectedItem.Text.ToString() != "Select Part Name" || shiftDetailsDropDownList.SelectedItem.Text.ToString() != "Select Shift Details")
+            try
             {
-                string cycleTime = Application["cycleTime"].ToString();
-                string noOfCavities = Application["noOfCavities"].ToString();
-                string shiftTime = Application["shiftTime"].ToString();
-                expQuantityTextBox.Text = Math.Ceiling((3600 / double.Parse(cycleTime)) * (double.Parse(noOfCavities) * double.Parse(shiftTime)) * 0.9).ToString();
-                noShotsStartTextBox.ReadOnly = false;
-                noShotsEndTextBox.ReadOnly = false;
+                if (machineUsedDropDownList.SelectedItem.Text.ToString() != "Select Machine Used" || partNameDropDownList.SelectedItem.Text.ToString() != "Select Part Name" || shiftDetailsDropDownList.SelectedItem.Text.ToString() != "Select Shift Details")
+                {
+                    string cycleTime = Application["cycleTime"].ToString();
+                    string noOfCavities = Application["noOfCavities"].ToString();
+                    string shiftTime = Application["shiftTime"].ToString();
+                    expQuantityTextBox.Text = Math.Ceiling((3600 / double.Parse(cycleTime)) * (double.Parse(noOfCavities) * double.Parse(shiftTime)) * 0.9).ToString();
+                    noShotsStartTextBox.ReadOnly = false;
+                    noShotsEndTextBox.ReadOnly = false;
+                }
+                else
+                {
+                    noShotsStartTextBox.ReadOnly = true;
+                    noShotsEndTextBox.ReadOnly = true;
+                    expQuantityTextBox.Text = null;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                noShotsStartTextBox.ReadOnly = true;
-                noShotsEndTextBox.ReadOnly = true;
-                expQuantityTextBox.Text = null;
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
         protected void calculateActualQuantity()
         {
-            if (actQuantityTextBox.Text.ToString() != null)
+            try
             {
-                actQuantityTextBox.Text = Convert.ToString(((int.Parse(noShotsTextBox.Text) * Convert.ToInt32(Application["noOfCavities"])) - int.Parse(rejectionPCSTextBox.Text)));
-
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT down_time_type FROM down_time_master", con))
+                if (actQuantityTextBox.Text.ToString() != null)
                 {
-                    
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    downTimeCodeDropDownList.DataSource = reader;
-                    downTimeCodeDropDownList.DataBind();
-                    reader.Close();
-                    downTimeCodeDropDownList.Items.Insert(0, new ListItem("Select Down Time Type", ""));
+                    actQuantityTextBox.Text = Convert.ToString(((int.Parse(noShotsTextBox.Text) * Convert.ToInt32(Application["noOfCavities"])) - int.Parse(rejectionPCSTextBox.Text)));
+
+                    SqlConnection con = new SqlConnection(settings.ToString());
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT down_time_type FROM down_time_master", con))
+                    {
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        downTimeCodeDropDownList.DataSource = reader;
+                        downTimeCodeDropDownList.DataBind();
+                        reader.Close();
+                        downTimeCodeDropDownList.Items.Insert(0, new ListItem("Select Down Time Type", ""));
+                    }
+                    con.Close();
                 }
-                con.Close();
+                else
+                {
+                    downTimeCodeDropDownList.Items.Clear();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                downTimeCodeDropDownList.Items.Clear();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -271,9 +315,9 @@ namespace ERP_Demo
                 }
                 else
                 {
-                    SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                    SqlConnection con = new SqlConnection(settings.ToString());
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO production(worker_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req)VALUES('" + workerNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "','"+Application["postOprReq"].ToString() +"')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO production(operator_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req,fpa_status)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "','"+Application["postOprReq"].ToString() +"','')", con);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";
@@ -297,13 +341,15 @@ namespace ERP_Demo
                     {
                         noShotsEndTextBox.Text = string.Empty;
                         noShotsTextBox.Text = string.Empty;
-                        validationShots.Text = "Value cannot be 0 or less starting value of shots";
+                        validationShots.Text = "Value cannot be 0 or less than starting value of shots";
                     }
                     else
                     {
                         noShotsTextBox.Text = (int.Parse(noShotsEndTextBox.Text.ToString().Trim()) - int.Parse(noShotsStartTextBox.Text.ToString().Trim())).ToString();
                         validationShots.Text = string.Empty;
                         rejectionPCSTextBox.ReadOnly = false;
+                        rejectionPCSTextBox.Text = "";
+                        actQuantityTextBox.Text = "";
                     }
                 }
                 else
@@ -314,9 +360,10 @@ namespace ERP_Demo
                     rejectionPCSTextBox.ReadOnly = true;
                 }
             }
-            catch(Exception ne)
+            catch(Exception ex)
             {
-              ne.Message.ToString();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -329,16 +376,24 @@ namespace ERP_Demo
 
         protected void downTimeCodeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (downTimeCodeDropDownList.SelectedItem.Text == "N/A" && actQuantityTextBox.Text.ToString() != "")
+            try
             {
-                downTimeTextBox.ReadOnly = true;
-                downTimeTextBox.Text = "0";
-                if (noShotsEndTextBox.Text.ToString() != "" && expQuantityTextBox.Text.ToString() != "")
-                    calculateEfficiency();
+                if (downTimeCodeDropDownList.SelectedItem.Text == "N/A" && actQuantityTextBox.Text.ToString() != "")
+                {
+                    downTimeTextBox.ReadOnly = true;
+                    downTimeTextBox.Text = "0";
+                    if (noShotsEndTextBox.Text.ToString() != "" && expQuantityTextBox.Text.ToString() != "")
+                        calculateEfficiency();
+                }
+                else
+                {
+                    downTimeTextBox.ReadOnly = false;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                downTimeTextBox.ReadOnly = false;
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 

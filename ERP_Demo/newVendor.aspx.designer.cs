@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class newVendor {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class newVendor
+    {
+
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-        
+
         /// <summary>
         /// vendorIdTextBox control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorIdTextBox;
-        
+
         /// <summary>
         /// vendorNameLabel control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorNameLabel;
-        
+
         /// <summary>
         /// vendorNameTextBox control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorNameTextBox;
-        
+
         /// <summary>
         /// vendorNameReq control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorNameReq;
-        
+
         /// <summary>
         /// vendorAddressOneLabel control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorAddressOneLabel;
-        
+
         /// <summary>
         /// vendorAddressOneTextBox control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorAddressOneTextBox;
-        
+
         /// <summary>
         /// vendorAddressOneReq control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorAddressOneReq;
-        
+
         /// <summary>
         /// vendorAddressTwoLabel control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorAddressTwoLabel;
-        
+
         /// <summary>
         /// vendorAddressTwoTextBox control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorAddressTwoTextBox;
-        
+
         /// <summary>
         /// vendorContactLabel control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorContactLabel;
-        
+
         /// <summary>
         /// vendorContactNoTextBox control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorContactNoTextBox;
-        
+
         /// <summary>
         /// vendorContactReq control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorContactReq;
-        
+
         /// <summary>
         /// vendorEmailLabel control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorEmailLabel;
-        
+
         /// <summary>
         /// vendorEmailIdTextBox control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorEmailIdTextBox;
-        
+
         /// <summary>
         /// regexEmailValid control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
-        
+
         /// <summary>
         /// vendorEmailReq control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorEmailReq;
-        
+
         /// <summary>
         /// vendorContactPersonLabel control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorContactPersonLabel;
-        
+
         /// <summary>
         /// vendorContactPersonTextBox control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorContactPersonTextBox;
-        
+
         /// <summary>
         /// vendorContactPersonReq control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorContactPersonReq;
-        
+
         /// <summary>
         /// vendorGstNumberLabel control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell vendorGstNumberLabel;
-        
+
         /// <summary>
         /// vendorGstDetailsTextBox control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox vendorGstDetailsTextBox;
-        
+
         /// <summary>
         /// vendorGstReq control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator vendorGstReq;
-        
+
         /// <summary>
         /// RegularExpressionValidator control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator;
-        
+
         /// <summary>
         /// saveRowLabel control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableRow saveRowLabel;
-        
+
         /// <summary>
         /// saveCellLabel control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell saveCellLabel;
-        
+
         /// <summary>
         /// saveButtonLabel control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveButtonLabel;
-        
+
         /// <summary>
         /// cancelLabel control.
         /// </summary>
@@ -263,5 +265,23 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cancelLabel;
+
+        /// <summary>
+        /// lblSuccessMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
+
+        /// <summary>
+        /// lblErrorMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ERP_Demo
 {
     public partial class displayParts : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         private void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -28,53 +30,63 @@ namespace ERP_Demo
 
         void PopulateGridview()
         {
-            DataTable dtbl = new DataTable();
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            try
             {
-                sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM parts_master", sqlCon);
-                sqlDa.Fill(dtbl);
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM parts_master", sqlCon);
+                    sqlDa.Fill(dtbl);
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    partsGridView.DataSource = dtbl;
+                    partsGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    partsGridView.DataSource = dtbl;
+                    partsGridView.DataBind();
+                    partsGridView.Rows[0].Cells.Clear();
+                    partsGridView.Rows[0].Cells.Add(new TableCell());
+                    partsGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    partsGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    partsGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+            catch(Exception ex)
             {
-                partsGridView.DataSource = dtbl;
-                partsGridView.DataBind();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                partsGridView.DataSource = dtbl;
-                partsGridView.DataBind();
-                partsGridView.Rows[0].Cells.Clear();
-                partsGridView.Rows[0].Cells.Add(new TableCell());
-                partsGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                partsGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                partsGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-
         }
-
-
+        
         protected void parts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            try
             {
-                string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                Application["partNoEdit"] = commandArgs[0];
-                Application["partNameEdit"] = commandArgs[1];
-                bool editFlag = true;
-                Application["editFlag"] = editFlag;
-                Response.Redirect("~/newPartsMaster.aspx/");
+                if (e.CommandName == "Edit")
+                {
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["partNoEdit"] = commandArgs[0];
+                    Application["partNameEdit"] = commandArgs[1];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/newPartsMaster.aspx/");
+                }
+                if (e.CommandName == "viewDetails")
+                {
+                    Application["viewDetailsId"] = e.CommandArgument.ToString();
+                    Response.Redirect("viewDetails.aspx");
+                }
             }
-            if (e.CommandName == "viewDetails")
+            catch(Exception ex)
             {
-                Application["viewDetailsId"] = e.CommandArgument.ToString();
-                Response.Redirect("viewDetails.aspx");
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
-            //string temp;
-            //partsGridView.EditIndex = e.NewEditIndex;
-            //temp = partsGridView.Rows[0].Cells[0].Text;
-            //PopulateGridview();
         }
 
         protected void parts_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -87,7 +99,7 @@ namespace ERP_Demo
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "DELETE FROM parts_master WHERE id = @id";

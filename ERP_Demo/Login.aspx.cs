@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ERP_Demo
 {
@@ -22,8 +23,8 @@ namespace ERP_Demo
             {
                 //Server String
                 //Server=tcp:pbplastics.database.windows.net,1433;Initial Catalog=pbplasticserp;Persist Security Info=False;User ID=pbplastics;Password=Pranav_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+                SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SELECT * FROM worker_master WHERE user_id='" + userlabel.Text + "' and user_password='" + passlabel.Text + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -32,12 +33,9 @@ namespace ERP_Demo
                     Session["roleFullAccess"] = Session["roleTransactions"] = Session["roleReports"] = Session["roleSelectedAccess"] = Session["roleAccess"] = string.Empty;
                     Session["username"] = reader["worker_name"].ToString();
                     //System.Diagnostics.Debug.WriteLine(reader["rights"].ToString());
-                    if (reader["Full_Access"].ToString() == "YES")
-                        Session["roleFullAccess"] = reader["Full_Access"].ToString();
-                    if (reader["Transactions"].ToString() == "YES")
-                        Session["roleTransactions"] = reader["Transactions"].ToString();
-                    if (reader["Reports"].ToString() == "YES")
-                        Session["roleReports"] = reader["Reports"].ToString();
+                    Session["roleFullAccess"] = reader["Full_Access"].ToString();
+                    Session["roleTransactions"] = reader["Transactions"].ToString();
+                    Session["roleReports"] = reader["Reports"].ToString();
                     if (reader["Selected_Access"].ToString() == "YES")
                     {
                         Session["roleSelectedAccess"] = reader["Selected_Access"].ToString();
@@ -53,7 +51,8 @@ namespace ERP_Demo
             }
             catch (Exception ex)
             {
-                Response.Write(ex.Message);
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
     }

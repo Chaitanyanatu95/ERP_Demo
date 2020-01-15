@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -12,6 +13,8 @@ namespace ERP_Demo
 {
     public partial class viewDetails : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -22,7 +25,7 @@ namespace ERP_Demo
 
         protected void LoadValuesInController()
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand("SELECT * FROM parts_master where id='" + Application["viewDetailsId"] + "'", sqlCon);
@@ -43,7 +46,6 @@ namespace ERP_Demo
                     textPartWeight.Text = reader["part_weight"].ToString();
                     textShotWeight.Text = reader["shot_weight"].ToString();
                     textProductionInPcs.Text = reader["production_in_pcs"].ToString();
-                    //textMouldSpecSheet.Text = reader["mold_spec_sheet"].ToString();
                     textCycleTime.Text = reader["cycle_time"].ToString();
                     textJigFixReq.Text = reader["jig_fixture_req"].ToString();
                     dataRawMaterial.Text = reader["raw_material"].ToString();
@@ -75,7 +77,7 @@ namespace ERP_Demo
 
         protected void imageMouldSpecSheet_Click(object sender, ImageClickEventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand("SELECT mold_spec_sheet FROM parts_master where id='" + Application["viewDetailsId"] + "'", sqlCon);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ERP_Demo
 {
     public partial class displayCustomer : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,50 +24,58 @@ namespace ERP_Demo
 
         void PopulateGridview()
         {
-            DataTable dtbl = new DataTable();
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            try
             {
-                sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM customer_master", sqlCon);
-                sqlDa.Fill(dtbl);
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM customer_master", sqlCon);
+                    sqlDa.Fill(dtbl);
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    customerGridView.DataSource = dtbl;
+                    customerGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    customerGridView.DataSource = dtbl;
+                    customerGridView.DataBind();
+                    customerGridView.Rows[0].Cells.Clear();
+                    customerGridView.Rows[0].Cells.Add(new TableCell());
+                    customerGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    customerGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    customerGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+            catch(Exception ex)
             {
-                customerGridView.DataSource = dtbl;
-                customerGridView.DataBind();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                customerGridView.DataSource = dtbl;
-                customerGridView.DataBind();
-                customerGridView.Rows[0].Cells.Clear();
-                customerGridView.Rows[0].Cells.Add(new TableCell());
-                customerGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                customerGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                customerGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-
         }
 
 
         protected void customer_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //string temp;
-            //customerGridView.EditIndex = e.NewEditIndex;
-            //temp = customerGridView.Rows[0].Cells[0].Text;
-            //PopulateGridview();
-            if (e.CommandName == "Edit")
+            try
             {
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
-                string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                Application["custId"] = commandArgs[0];
-                //Application["custId"] = commandArgs[1];
-                bool editFlag = true;
-                Application["editFlag"] = editFlag;
-                Response.Redirect("~/newCustomer.aspx/");
+                if (e.CommandName == "Edit")
+                {
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["custId"] = commandArgs[0];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/newCustomer.aspx/");
+                }
             }
-
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
         }
 
         protected void customer_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -78,7 +88,7 @@ namespace ERP_Demo
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "UPDATE customer_master SET customer_name=@customer_name,customer_address_one=@customer_address_one,customer_address_two=@customer_address_two,customer_contact=@customer_contact,customer_email=@customer_email,customer_contact_person=@customer_contact_person,customer_gst_details=@customer_gst_details WHERE id = @id";
@@ -109,7 +119,7 @@ namespace ERP_Demo
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "DELETE FROM customer_master WHERE id = @id";

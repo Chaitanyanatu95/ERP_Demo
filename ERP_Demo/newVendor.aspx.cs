@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace ERP_Demo
 {
     public partial class newVendor : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,55 +31,71 @@ namespace ERP_Demo
 
         protected void LoadValuesInController()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM parts_master ORDER BY ID DESC", con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    //Int32 count = (Int32)cmd.ExecuteScalar();
-                    //System.Diagnostics.Debug.WriteLine(count);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM parts_master ORDER BY ID DESC", con))
                     {
-                        Application["input"] = reader["part_no"];
-                    }
-                    reader.Close();
-                    if (Application["input"] == null)
-                        Application["input"] = 0;
-                    int input = int.Parse(Regex.Replace(Application["input"].ToString(), "[^0-9]+", string.Empty));
-                    vendorIdTextBox.Text = "PBPV#" + (input + 1);
+                        //Int32 count = (Int32)cmd.ExecuteScalar();
+                        //System.Diagnostics.Debug.WriteLine(count);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Application["input"] = reader["part_no"];
+                        }
+                        reader.Close();
+                        if (Application["input"] == null)
+                            Application["input"] = 0;
+                        int input = int.Parse(Regex.Replace(Application["input"].ToString(), "[^0-9]+", string.Empty));
+                        vendorIdTextBox.Text = "PBPV#" + (input + 1);
 
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
         protected void LoadEditValuesInController()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
-            using (con)
+            try
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["vendorId"].ToString() + "')", true);
-                con.Open();
-                String sqlquery = "SELECT * FROM vendor_master where id = @id";
-                using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
                 {
-                    cmd.Parameters.AddWithValue("@id", (Application["vendorId"]).ToString().Trim());
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["vendorId"].ToString() + "')", true);
+                    con.Open();
+                    String sqlquery = "SELECT * FROM vendor_master where id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sqlquery, con))
                     {
-                        vendorIdTextBox.Text = reader["vendor_id"].ToString();
-                        vendorNameTextBox.Text = reader["vendor_name"].ToString();
-                        vendorAddressOneTextBox.Text = reader["vendor_address_one"].ToString();
-                        vendorAddressTwoTextBox.Text = reader["vendor_address_two"].ToString();
-                        vendorContactNoTextBox.Text = reader["vendor_contact"].ToString();
-                        vendorEmailIdTextBox.Text = reader["vendor_email"].ToString();
-                        vendorContactPersonTextBox.Text = reader["vendor_contact_person"].ToString();
-                        vendorGstDetailsTextBox.Text = reader["vendor_gst_details"].ToString();
+                        cmd.Parameters.AddWithValue("@id", (Application["vendorId"]).ToString().Trim());
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            vendorIdTextBox.Text = reader["vendor_id"].ToString();
+                            vendorNameTextBox.Text = reader["vendor_name"].ToString();
+                            vendorAddressOneTextBox.Text = reader["vendor_address_one"].ToString();
+                            vendorAddressTwoTextBox.Text = reader["vendor_address_two"].ToString();
+                            vendorContactNoTextBox.Text = reader["vendor_contact"].ToString();
+                            vendorEmailIdTextBox.Text = reader["vendor_email"].ToString();
+                            vendorContactPersonTextBox.Text = reader["vendor_contact_person"].ToString();
+                            vendorGstDetailsTextBox.Text = reader["vendor_gst_details"].ToString();
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    con.Close();
                 }
-                con.Close();
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
@@ -85,7 +103,7 @@ namespace ERP_Demo
         {
             try
             {
-                SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=pbplastics;Integrated Security=True");
+                SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
                 if (Application["editFlag"] is true)
                 {
@@ -142,7 +160,8 @@ namespace ERP_Demo
             }
             catch(Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert("+ex.Message+")", true);
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 

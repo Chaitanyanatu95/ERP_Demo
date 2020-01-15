@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ERP_Demo
 {
     public partial class displayMachine : System.Web.UI.Page
     {
+        ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,32 +24,38 @@ namespace ERP_Demo
 
         void PopulateGridview()
         {
-            DataTable dtbl = new DataTable();
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+            try
             {
-                sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM machine_master", sqlCon);
-                sqlDa.Fill(dtbl);
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM machine_master", sqlCon);
+                    sqlDa.Fill(dtbl);
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    machineGridView.DataSource = dtbl;
+                    machineGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    machineGridView.DataSource = dtbl;
+                    machineGridView.DataBind();
+                    machineGridView.Rows[0].Cells.Clear();
+                    machineGridView.Rows[0].Cells.Add(new TableCell());
+                    machineGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    machineGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    machineGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+            catch(Exception ex)
             {
-                machineGridView.DataSource = dtbl;
-                machineGridView.DataBind();
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                machineGridView.DataSource = dtbl;
-                machineGridView.DataBind();
-                machineGridView.Rows[0].Cells.Clear();
-                machineGridView.Rows[0].Cells.Add(new TableCell());
-                machineGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                machineGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                machineGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
-
         }
-
 
         protected void machineGridView_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -67,7 +75,7 @@ namespace ERP_Demo
         {
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True"))
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
                     string query = "DELETE FROM machine_master WHERE id = @id";
@@ -93,14 +101,22 @@ namespace ERP_Demo
 
         protected void machineGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            try
             {
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
-                string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                Application["machineId"] = commandArgs[0];
-                bool editFlag = true;
-                Application["editFlag"] = editFlag;
-                Response.Redirect("~/newMachineMaster.aspx/");
+                if (e.CommandName == "Edit")
+                {
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["machineId"] = commandArgs[0];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/newMachineMaster.aspx/");
+                }
+            }
+            catch(Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
     }

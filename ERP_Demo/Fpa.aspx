@@ -3,6 +3,9 @@
 <html>
 <head>
     <script type="text/javascript">
+        $( function() {
+                 $("#<%=dateSelectionTextBox.ClientID %>").datepicker({ showAnim: "fold", dateFormat: "dd-mm-yy"});
+            } );
         function validationPage() {
             var rejectionQuantity = document.getElementById('<%=((TextBox)prodRejHisGrid.FooterRow.FindControl("txtRejQuantityFooter")).ClientID %>');
             var partName = document.getElementById('<%=partNameDropDownList.ClientID %>');
@@ -38,14 +41,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript" src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <style>
-        table{
-            padding-top:15px;
-        }
-        td{
-            text-align:center;
-        }
-    </style>
     <title>pb plastics | fpa</title>
 </head>
 <body>
@@ -55,15 +50,20 @@
             <th runat="server" style="background-color:skyblue;text-align:center" colspan="7"><h3>FPA Worker</h3></th>
         </tr>
         <tr>
-            <td><asp:Label ID="lblOperatorName" runat="server" style="font-weight:700; color:black;">Employee Name <div class="required" style=" display:inline;">*</div></asp:Label></td>
+            <td><asp:Label ID="lblWorkerName" runat="server" style="font-weight:700; color:black;">Worker Name <div class="required" style=" display:inline;">*</div></asp:Label></td>
+            <td><asp:Label ID="lblShift" runat="server" style="font-weight:700; color:black;">Shift <div class="required" style=" display:inline;">*</div></asp:Label></td>
+            <td><asp:Label ID="lblDate" runat="server" style="font-weight:700; color:black;">Date <div class="required" style=" display:inline;">*</div></asp:Label></td>
             <td><asp:Label ID="lblPartName" runat="server" style="font-weight:700; color:black; text-align:center">Part Name <div class="required" style=" display:inline;">*</div></asp:Label></td>
             <td colspan="4"><asp:Label ID="lblProductionHistory" runat="server" style="font-weight:700; color:black; text-align:center">Production History</asp:Label></td>
        </tr>
         <tr>
-            <td><asp:DropDownList ID="operatorNameDropDownList" DataValueField="worker_name" DataTextField="worker_name" runat="server"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="workerReq" runat="server" ControlToValidate="operatorNameDropDownList" CssClass="required" ErrorMessage="Please select worker."></asp:RequiredFieldValidator></td>
+            <td><asp:DropDownList ID="workerNameDropDownList" DataValueField="worker_name" DataTextField="worker_name" runat="server"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="workerReq" runat="server" ControlToValidate="workerNameDropDownList" CssClass="required" ErrorMessage="Please select worker."></asp:RequiredFieldValidator></td>
+            <td><asp:DropDownList ID="workerShiftDetails" DataValueField="shift_time" DataTextField="shift_time" runat="server"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="workerShiftDetails" CssClass="required" ErrorMessage="Please select shift."></asp:RequiredFieldValidator></td>
+            <td><input type="text" id="dateSelectionTextBox" runat="server" style="font-weight:700; color:black; text-align:center" size="10"/>
+                <br /><asp:RequiredFieldValidator ID="dateReq" runat="server" ControlToValidate="dateSelectionTextBox" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></td>
             <td><asp:DropDownList ID="partNameDropDownList" DataValueField="part_name" DataTextField="part_name" onselectedindexchanged="partNameChanged" runat="server" AutoPostBack="true"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="partNameReq" runat="server" ControlToValidate="partNameDropDownList" CssClass="required" ErrorMessage="Please select part name."></asp:RequiredFieldValidator></td>
             <td><asp:Label ID="lblShiftDetails" runat="server" style="font-weight:700; color:black; text-align:center">Shift <div class="required" style=" display:inline;">*</div></asp:Label><br /><asp:DropDownList ID="shiftDetailsDropDownList" DataValueField="shift_details" DataTextField="shift_details" OnSelectedIndexChanged="shiftChanged" AutoPostBack="true" runat="server"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="shiftDetailsDropDownList" CssClass="required" ErrorMessage="Please select shift."></asp:RequiredFieldValidator></td>
-            <td><asp:Label ID="lblEmployeeName" runat="server" style="font-weight:700; color:black; text-align:center">Employee Name <div class="required" style=" display:inline;">*</div><br /></asp:Label><asp:DropDownList ID="workerNameDropDownList" DataValueField="worker_name" DataTextField="worker_name" runat="server" AutoPostBack="true" OnSelectedIndexChanged="workerChanged"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="workerNameDropDownList" CssClass="required" ErrorMessage="Please select part name."></asp:RequiredFieldValidator></td>
+            <td><asp:Label ID="lblEmployeeName" runat="server" style="font-weight:700; color:black; text-align:center">Operator Name <div class="required" style=" display:inline;">*</div><br /></asp:Label><asp:DropDownList ID="operatorNameDropDownList" DataValueField="operator_name" DataTextField="operator_name" runat="server" AutoPostBack="true" OnSelectedIndexChanged="workerChanged"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="workerNameDropDownList" CssClass="required" ErrorMessage="Please select worker name."></asp:RequiredFieldValidator></td>
             <td><asp:Label ID="lblProductionDate" runat="server" style="font-weight:700; color:black; text-align:center">Date <div class="required" style=" display:inline;">*</div></asp:Label><br /><asp:DropDownList ID="dateDropDownList" DataValueField="date_dpr" DataTextField="date_dpr" runat="server" OnSelectedIndexChanged="dateChanged" AutoPostBack="true"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="dateDropDownList" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></td>
        </tr>
         </table><br/>
@@ -83,15 +83,15 @@
                 <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="timeTextBox" CssClass="required" ErrorMessage="Please enter time."></asp:RequiredFieldValidator>
             </td>
             <td><asp:Label ID="lblAcceptedQty" runat="server" style="font-weight:700; color:black; text-align:center">OK Quantity <div class="required" style=" display:inline;">*</div></asp:Label><br />
-                <asp:TextBox ID="actualQtyTextBox" runat="server" Width="50px" AutoPostBack="true"></asp:TextBox>
+                <asp:TextBox ID="actualQtyTextBox" runat="server" Width="50px" OnTextChanged="actualQtyTextBox_TextChanged" AutoPostBack="true"></asp:TextBox>
                 <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="actualQtyTextBox" CssClass="required" ErrorMessage="Please enter OK quantity."></asp:RequiredFieldValidator><br />
-                <asp:CustomValidator ID="customValid" runat="server" ControlToValidate="actualQtyTextBox" OnServerValidate="customValid_ServerValidate" CssClass="required" ErrorMessage="Quantity should not exceed total quantity!"></asp:CustomValidator>
+                <asp:Label ID="errorLbl" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
             <td><asp:Label ID="lblProdRejectionQty" runat="server" style="font-weight:700; color:black; text-align:center">Prod Rejection Quantity</asp:Label><br />
                <asp:GridView ID="prodRejHisGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="prodRejHisGrid_RowCommand" 
-        OnRowDeleting="prodRejHisGrid_RowDeleting" DataKeyNames="id" ShowFooter="true" CssClass="Table1" Width="30%">
+                OnRowDeleting="prodRejHisGrid_RowDeleting" DataKeyNames="id" ShowFooter="true" CssClass="Table1" Width="30%">
             <Columns>
                  <asp:TemplateField HeaderText="REJECTION CODE">
                     <ItemTemplate>
@@ -122,10 +122,12 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView></td>
-            <td><asp:Label ID="lblFpaRejectionQty" runat="server" style="font-weight:700; color:black; text-align:center">FPA Rejection Quantity</asp:Label><br />
-                <asp:TextBox ID="FpaRejectionQtyTextBox" runat="server" Width="50px" AutoPostBack="True" OnTextChanged="FpaRejectionQtyTextBox_TextChanged"></asp:TextBox></td>
+            <td><asp:Label ID="lblFpaRejectionQty" runat="server" style="font-weight:700; color:black; text-align:center">FPA Rejection Quantity <div class="required" style=" display:inline;">*</div></asp:Label><br />
+                <asp:TextBox ID="FpaRejectionQtyTextBox" runat="server" Width="50px" AutoPostBack="True" OnTextChanged="FpaRejectionQtyTextBox_TextChanged"></asp:TextBox><br />
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="FpaRejectionQtyTextBox" CssClass="required" ErrorMessage="Please enter FPA rejection"></asp:RequiredFieldValidator>
+            </td>
             <td colspan="2"><asp:Label ID="lblEfficiency" runat="server" style="font-weight:700; color:black; text-align:center">Efficiency <div class="required" style=" display:inline;">*</div></asp:Label>
-                     <br /><asp:TextBox ID="efficiencyTextBox" Width="50px" ReadOnly="true" runat="server"></asp:TextBox>
+                    <br /><asp:TextBox ID="efficiencyTextBox" Width="50px" ReadOnly="true" runat="server"></asp:TextBox>
             </td>
         </tr>
         </table>
