@@ -10,7 +10,6 @@ namespace ERP_Demo
     public partial class DPR : System.Web.UI.Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -145,7 +144,7 @@ namespace ERP_Demo
                             machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
                         }
 
-                        using (SqlCommand cmd2 = new SqlCommand("SELECT rm_grade,alt_rm_grade FROM parts_master where part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
+                        using (SqlCommand cmd2 = new SqlCommand("SELECT DISTINCT rm_grade,alt_rm_grade FROM parts_master where part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
                         {
                             DataTable dt = new DataTable();
                             SqlDataAdapter ad = new SqlDataAdapter(cmd2);
@@ -317,7 +316,8 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(settings.ToString());
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO production(operator_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req,fpa_status)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "','" + dateSelectionTextBox.Value + "','"+Application["postOprReq"].ToString() +"','')", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO production(operator_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req,fpa_status)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + materialGradeDropDownList.SelectedItem.Text + "','" + machineUsedDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + expQuantityTextBox.Text + "','" + noShotsTextBox.Text + "','" + rejectionPCSTextBox.Text + "','" + rejectionKGSTextBox.Text + "','" + actQuantityTextBox.Text + "','" + downTimeTextBox.Text + "','" + downTimeCodeDropDownList.SelectedItem.Text + "','" + efficiencyTextBox.Text + "',@DateDpr,'" + Application["postOprReq"].ToString() +"','')", con);
+                    cmd.Parameters.AddWithValue("@DateDpr", dateSelection.Value);
                     cmd.ExecuteNonQuery();
                     lblSuccessMessage.Text = "Selected Record Updated";
                     lblErrorMessage.Text = "";

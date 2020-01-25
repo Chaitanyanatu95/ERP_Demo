@@ -10,7 +10,7 @@
             <asp:TableCell ID="cellWorkerSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="workerGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="workerGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="workerGridView_RowEditing" OnRowCancelingEdit="workerGridView_RowCancelingEdit"
                 OnRowCommand="workerGridView_RowCommand" OnRowDeleting="workerGridView_RowDeleting"
@@ -19,7 +19,6 @@
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px" />      
-                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
                     <asp:TemplateField HeaderText="EMPLOYEE NAME">
                         <ItemTemplate>

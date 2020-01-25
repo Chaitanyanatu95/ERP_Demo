@@ -11,134 +11,107 @@ namespace ERP_Demo
 {
 
 
-    public partial class displayParts
+    public partial class dprReports
     {
 
         /// <summary>
-        /// displayPartsTable control.
+        /// workerNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table displayPartsTable;
+        protected global::System.Web.UI.WebControls.Label workerNameLabel;
 
         /// <summary>
-        /// rowPartsDisplay control.
+        /// shiftNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowPartsDisplay;
+        protected global::System.Web.UI.WebControls.Label shiftNameLabel;
 
         /// <summary>
-        /// cellParts control.
+        /// dateSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellParts;
+        protected global::System.Web.UI.WebControls.Label dateSelectLabel;
 
         /// <summary>
-        /// partsLabel control.
+        /// dateSelectLabel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label partsLabel;
+        protected global::System.Web.UI.WebControls.Label dateSelectLabel2;
 
         /// <summary>
-        /// rowPartsLink control.
+        /// partNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowPartsLink;
+        protected global::System.Web.UI.WebControls.Label partNameLabel;
 
         /// <summary>
-        /// cellPartsLink control.
+        /// generateReportsBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellPartsLink;
+        protected global::System.Web.UI.WebControls.Button generateReportsBtn;
 
         /// <summary>
-        /// partsButton control.
+        /// workerNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button partsButton;
+        protected global::System.Web.UI.WebControls.DropDownList workerNameDropDownList;
 
         /// <summary>
-        /// cellPartsSearch control.
+        /// shiftDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellPartsSearch;
+        protected global::System.Web.UI.WebControls.DropDownList shiftDropDownList;
 
         /// <summary>
-        /// searchLabel control.
+        /// dateSelection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label searchLabel;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection;
 
         /// <summary>
-        /// cellPartsText control.
+        /// dateSelection2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellPartsText;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection2;
 
         /// <summary>
-        /// searchTextBox control.
+        /// partNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-
-        /// <summary>
-        /// cellPartsSearchButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellPartsSearchButton;
-
-        /// <summary>
-        /// searchButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button searchButton;
-
-        /// <summary>
-        /// partsGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView partsGridView;
+        protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
 
         /// <summary>
         /// lblSuccessMessage control.

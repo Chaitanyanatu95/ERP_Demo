@@ -122,5 +122,35 @@ namespace ERP_Demo
         {
             Response.Redirect("~/newPartsMaster.aspx");
         }
+
+        protected void searchPart()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM parts_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE part_name LIKE @PartName + '%'";
+                        cmd.Parameters.AddWithValue("@PartName", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        partsGridView.DataSource = dt;
+                        partsGridView.DataBind();
+                    }
+                }
+            }
+        }
+
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchPart();
+        }
     }
 }

@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" CssClass="tableClass" Width="65%">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="3" Font-Bold="true" Font-Names="Verdana"><h3>CUSTOMER MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="3" Font-Bold="true" Font-Names="Verdana"><h3>ADD/EDIT CUSTOMER</h3></asp:TableCell>
         </asp:TableRow>
 
         <asp:TableRow runat="server">
@@ -60,7 +60,7 @@
             <asp:TableCell ID="customerGstNumberLabel" runat="server" CssClass="margin">GST NUMBER 
                 <div class="required" style="display:inline">*</div><br />
                 <asp:TextBox ID="customerGstDetailsTextBox" runat="server"></asp:TextBox>
-                <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator5" CssClass="required" runat="server" ErrorMessage="Please enter GST NO." ControlToValidate="customerNameTextBox" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator5" CssClass="required" runat="server" ErrorMessage="Please enter GST NO." ControlToValidate="customerGstDetailsTextBox" SetFocusOnError="true"></asp:RequiredFieldValidator>
                 <br /><asp:RegularExpressionValidator ID="RegularExpressionValidator" runat="server"  
                     ControlToValidate="customerGstDetailsTextBox" ErrorMessage="GST Number should be 15 in length."  
                     ValidationExpression="^[0-9,A-Z,a-z]{15}$" CssClass="required"></asp:RegularExpressionValidator>

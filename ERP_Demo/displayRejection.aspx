@@ -10,7 +10,7 @@
             <asp:TableCell ID="cellRejectionSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="rejectionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="rejectionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="rejectionGridView_RowEditing" OnRowCancelingEdit="rejectionGridView_RowCancelingEdit"
                 OnRowCommand="rejectionGridView_RowCommand" OnRowDeleting="rejectionGridView_RowDeleting"
@@ -19,7 +19,6 @@
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                 <RowStyle ForeColor="black" Height="40px" BackColor="WhiteSmoke"/>     
-                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
                     <asp:TemplateField HeaderText="REJECTION TYPE">
                         <ItemTemplate>

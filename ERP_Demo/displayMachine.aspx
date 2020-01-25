@@ -10,7 +10,7 @@
             <asp:TableCell ID="cellMachineSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="machineGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="machineGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="machineGridView_RowEditing" OnRowCancelingEdit="machineGridView_RowCancelingEdit"
                 OnRowCommand="machineGridView_RowCommand" OnRowDeleting="machineGridView_RowDeleting"
@@ -19,7 +19,6 @@
                 <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>    
-                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
                     <asp:TemplateField HeaderText="MACHINE NO">
                         <ItemTemplate>

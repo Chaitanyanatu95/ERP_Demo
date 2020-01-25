@@ -11,7 +11,7 @@ namespace ERP_Demo
 {
 
 
-    public partial class reports
+    public partial class fpaReports
     {
 
         /// <summary>
@@ -87,22 +87,22 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.DropDownList shiftDropDownList;
 
         /// <summary>
-        /// dateSelectionTextBox control.
+        /// dateSelection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dateSelectionTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection;
 
         /// <summary>
-        /// dateSelectionTextBox2 control.
+        /// dateSelection2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dateSelectionTextBox2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection2;
 
         /// <summary>
         /// partNameDropDownList control.
@@ -112,15 +112,6 @@ namespace ERP_Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
-
-        /// <summary>
-        /// DBDataPlaceHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder DBDataPlaceHolder;
 
         /// <summary>
         /// lblSuccessMessage control.

@@ -62,7 +62,7 @@ namespace ERP_Demo
         {
             try
             {
-
+                Application["Duplicate"] = false;
                 if (machineFileUpload.HasFile)
                 {
                     machineFileUpload.SaveAs(Server.MapPath("~/UploadedFiles/Machine/") + machineFileUpload.FileName);

@@ -11,7 +11,7 @@
         </asp:TableRow>
     </asp:Table>
 
-     <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True" OnPageIndexChanging="partsGridView_PageIndexChanging"
                 OnRowCommand="parts_RowCommand" OnRowCancelingEdit="parts_RowCancelingEdit"
                 CssClass="Table1" Font-Size="Medium" AllowPaging="True" PageSize="15">
@@ -20,7 +20,6 @@
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="blue" HorizontalAlign="center" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>
-                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
                     <asp:TemplateField HeaderText="PART NO" ItemStyle-Width="100">
                         <ItemTemplate>

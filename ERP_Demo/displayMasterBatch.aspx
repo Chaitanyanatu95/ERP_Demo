@@ -10,7 +10,7 @@
             <asp:TableCell ID="cellMasterbatchSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="masterbatchGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="masterbatchGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="masterbatchGridView_RowEditing" OnRowCancelingEdit="masterbatchGridView_RowCancelingEdit"
                 OnRowCommand="masterbatchGridView_RowCommand" OnRowDeleting="masterbatchGridView_RowDeleting"
@@ -19,7 +19,6 @@
                 <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                 <RowStyle ForeColor="black" Height="40px" BackColor="WhiteSmoke"/>   
-                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
                     <asp:TemplateField HeaderText="MASTERBATCH NAME">
                         <ItemTemplate>

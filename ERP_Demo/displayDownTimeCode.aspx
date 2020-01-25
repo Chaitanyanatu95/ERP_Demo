@@ -11,7 +11,7 @@
             <asp:TableCell ID="cellDownTimeCodeSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="downtimeGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="downtimeGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowCommand="downtimeGridView_RowCommand"
                 OnRowCancelingEdit="downtimeGridView_RowCancelingEdit"
@@ -21,7 +21,6 @@
                 <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="false" Font-Size="Small"/>
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>
-                <FooterStyle BackColor="WhiteSmoke" />       
                 <Columns>
                     <asp:TemplateField HeaderText="DOWN TIME CODE">
                         <ItemTemplate>

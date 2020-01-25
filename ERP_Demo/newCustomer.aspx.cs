@@ -65,6 +65,7 @@ namespace ERP_Demo
         {
             try
             {
+                Application["Duplicate"] = false;
                 SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
                 if (Application["editFlag"] is true)

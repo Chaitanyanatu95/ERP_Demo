@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class DPR {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class DPR
+    {
+
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-        
+
         /// <summary>
         /// employeeName control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label employeeName;
-        
+
         /// <summary>
         /// operatorNameDropDownList control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList operatorNameDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator10 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator10;
-        
+
         /// <summary>
         /// Date control.
         /// </summary>
@@ -56,16 +58,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Date;
-        
+
         /// <summary>
-        /// dateSelectionTextBox control.
+        /// dateSelection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText dateSelectionTextBox;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection;
+
         /// <summary>
         /// dateReq control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator dateReq;
-        
+
         /// <summary>
         /// partNameDropDownList control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// materialGradeDropDownList control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList materialGradeDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// machineUsedDropDownList control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList machineUsedDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator3 control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
+
         /// <summary>
         /// shiftDetailsDropDownList control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList shiftDetailsDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator4 control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
-        
+
         /// <summary>
         /// expQuantityTextBox control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox expQuantityTextBox;
-        
+
         /// <summary>
         /// noShotsStartTextBox control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox noShotsStartTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator5 control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
-        
+
         /// <summary>
         /// noShotsEndTextBox control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox noShotsEndTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator6 control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
-        
+
         /// <summary>
         /// validationShots control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label validationShots;
-        
+
         /// <summary>
         /// noShotsTextBox control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox noShotsTextBox;
-        
+
         /// <summary>
         /// rejectionPCSTextBox control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox rejectionPCSTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator7 control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
-        
+
         /// <summary>
         /// rejectionKGSTextBox control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox rejectionKGSTextBox;
-        
+
         /// <summary>
         /// actQuantityTextBox control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox actQuantityTextBox;
-        
+
         /// <summary>
         /// downTimeCodeDropDownList control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList downTimeCodeDropDownList;
-        
+
         /// <summary>
         /// RequiredFieldValidator8 control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator8;
-        
+
         /// <summary>
         /// downTimeTextBox control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox downTimeTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator9 control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
-        
+
         /// <summary>
         /// efficiencyTextBox control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox efficiencyTextBox;
-        
+
         /// <summary>
         /// lblSuccessMessage control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
-        
+
         /// <summary>
         /// lblErrorMessage control.
         /// </summary>

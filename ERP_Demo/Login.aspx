@@ -36,6 +36,7 @@
                     }
                     .main{
                        display: flex;
+                       height:100px;
                        position: relative;
                        background-color:aliceblue;
                     }
@@ -49,10 +50,14 @@
                     }
                 </style>
         </head>
-            <body>
+            <body style="font-family:Raleway;">
                 <div class="main" >
-                    <img src="Images/logoc.png" alt="" height="80" style="display:inline; margin-left:500px"/>
-        <div style="font-family:Raleway; display:inline; float:left; font-size:28px; font-weight:700; margin:auto; margin-right:500px;">PLASTIC INJECTION MOLDING</div>
+                    <img src="~/Images/logoc.png" alt="Plastic Injection Molding" height="90" runat="server" style="                            display: inline-block;
+                            text-align: center;
+                            margin-left: auto;
+                            margin-right: 0
+                    " />
+                    <h1 style="display:inline; margin-left:0; margin-right:auto; margin-top:48px;">PB PLASTICS ERP</h1>
                     </div>
                 <div class=container4>
                    <form id="form1" runat="server">

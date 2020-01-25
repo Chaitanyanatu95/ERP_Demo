@@ -10,7 +10,7 @@
             <asp:TableCell ID="cellFamilySearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="familyGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="familyGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowCommand="familyGridView_RowCommand" OnRowCancelingEdit="familyGridView_RowCancelingEdit"
                 OnRowDeleting="familyGridView_RowDeleting"
@@ -18,7 +18,6 @@
                 <%-- Theme Properties --%>
                 <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-                <FooterStyle BackColor="WhiteSmoke" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>   
                 <Columns>
                     <asp:TemplateField HeaderText="PRODUCT CATEGORY">

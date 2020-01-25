@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FPAList.aspx.cs" Inherits="ERP_Demo.FPAList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="fpaGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+    <asp:GridView ID="fpaGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
         ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" OnPageIndexChanging="fpaGridView_PageIndexChanging" AllowPaging="true" PageSize="10" BorderWidth="1px" CssClass="Table1" Width="90%">
         <%-- Theme Properties --%>
         <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NextPreviousFirstLast" NextPageText="Next" PreviousPageText="Previous"/>
@@ -8,7 +8,6 @@
         <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
         <PagerStyle BackColor="WhiteSmoke" ForeColor="Blue" HorizontalAlign="Center" CssClass="spacing"/>
         <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>    
-        <FooterStyle BackColor="WhiteSmoke"/>
                 <Columns>
                     <asp:TemplateField HeaderText="WORKER NAME">
                         <ItemTemplate>

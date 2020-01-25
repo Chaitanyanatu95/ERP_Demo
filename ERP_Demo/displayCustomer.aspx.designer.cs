@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class displayCustomer {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class displayCustomer
+    {
+
         /// <summary>
         /// displayCustomerTable control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table displayCustomerTable;
-        
+
         /// <summary>
         /// rowCustomerDisplay control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableRow rowCustomerDisplay;
-        
+
         /// <summary>
         /// cellCustomer control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellCustomer;
-        
+
         /// <summary>
         /// customerLabel control.
         /// </summary>
@@ -47,16 +49,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label customerLabel;
-        
-        /// <summary>
-        /// rowCustomerLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowCustomerLink;
-        
+
         /// <summary>
         /// cellCustomerLink control.
         /// </summary>
@@ -65,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellCustomerLink;
-        
+
         /// <summary>
         /// customerButton control.
         /// </summary>
@@ -74,7 +67,25 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button customerButton;
-        
+
+        /// <summary>
+        /// TableCell1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell TableCell1;
+
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
         /// <summary>
         /// cellCustomerSearch control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellCustomerSearch;
-        
+
         /// <summary>
         /// searchLabel control.
         /// </summary>
@@ -92,16 +103,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label searchLabel;
-        
+
         /// <summary>
-        /// cellCustomerSearchButton control.
+        /// cellCustomerSearchText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellCustomerSearchButton;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellCustomerSearchText;
+
         /// <summary>
         /// searchTextBox control.
         /// </summary>
@@ -110,7 +121,25 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-        
+
+        /// <summary>
+        /// cellCustomerSearchButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell cellCustomerSearchButton;
+
+        /// <summary>
+        /// searchButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchButton;
+
         /// <summary>
         /// customerGridView control.
         /// </summary>
@@ -119,7 +148,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView customerGridView;
-        
+
         /// <summary>
         /// lblSuccessMessage control.
         /// </summary>
@@ -128,7 +157,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
-        
+
         /// <summary>
         /// lblErrorMessage control.
         /// </summary>

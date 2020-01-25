@@ -11,7 +11,6 @@ namespace ERP_Demo
     public partial class FPA : System.Web.UI.Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,18 +30,18 @@ namespace ERP_Demo
                 else
                 {
                     //operatorNameTextBox.Text = Session["username"].ToString();
-                    SqlConnection con = new SqlConnection(settings.ToString());
-                    con.Open();
+                    SqlConnection connection1 = new SqlConnection(settings.ToString());
+                    connection1.Open();
 
                     //Delete rejection history from master
-                    using (SqlCommand sqlCmd = new SqlCommand("DELETE FROM production_rejection_history_master", con))
+                    using (SqlCommand sqlCmd = new SqlCommand("DELETE FROM production_rejection_history_master", connection1))
                     {
                         sqlCmd.ExecuteNonQuery();
                     }
                     actualQtyTextBox.ReadOnly = true;
                     LoadProductRejHisValues();
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT worker_name FROM worker_master", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT worker_name FROM worker_master", connection1))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         workerNameDropDownList.DataSource = reader;
@@ -51,7 +50,7 @@ namespace ERP_Demo
                         workerNameDropDownList.Items.Insert(0, new ListItem("Select Worker Name", ""));
                     }
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT shift_time FROM shift_master", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT shift_time FROM shift_master", connection1))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         workerShiftDetails.DataSource = reader;
@@ -60,7 +59,7 @@ namespace ERP_Demo
                         workerShiftDetails.Items.Insert(0, new ListItem("Select Shift", ""));
                     }
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM parts_master", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT part_name FROM parts_master", connection1))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         partNameDropDownList.DataSource = reader;
@@ -68,7 +67,7 @@ namespace ERP_Demo
                         reader.Close();
                         partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
                     }
-                    con.Close();
+                    connection1.Close();
                 }
             }
             catch (Exception ex)
@@ -173,7 +172,7 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(settings.ToString());
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT operator_name FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT operator_name FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         operatorNameDropDownList.DataSource = reader;
@@ -207,10 +206,11 @@ namespace ERP_Demo
                 {
                     SqlConnection con = new SqlConnection(settings.ToString());
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT date_dpr FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operator_name ='" + operatorNameDropDownList.SelectedItem.Text + "'", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT date_dpr FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operator_name ='" + operatorNameDropDownList.SelectedItem.Text + "'", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         dateDropDownList.DataSource = reader;
+                        dateDropDownList.DataTextFormatString = "{0:d}";
                         dateDropDownList.DataBind();
                         reader.Close();
                         dateDropDownList.Items.Insert(0, new ListItem("Select Date", ""));
@@ -294,8 +294,10 @@ namespace ERP_Demo
                         //System.Diagnostics.Debug.WriteLine(noOfPartsTextBox.Text.ToString());
                         reader.Close();
                     }
-                    using (SqlCommand cmd = new SqlCommand("SELECT act_qty FROM production WHERE shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr='" + dateDropDownList.SelectedItem.Text.ToString() + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", sqlCon))
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT act_qty FROM production WHERE date_dpr = CONVERT(DATETIME, @DateDpr , 105)", sqlCon))
                     {
+                        cmd.Parameters.AddWithValue("@DateDpr", dateDropDownList.SelectedItem.Text);
                         SqlDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
@@ -303,8 +305,12 @@ namespace ERP_Demo
                         }
                         reader.Close();
                     }
-                    using (SqlCommand sqlCmd = new SqlCommand("SELECT wip_qty FROM fpa_operation WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date='" + dateDropDownList.SelectedItem.Text + "' AND shift='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type='" + operationTypeList.SelectedItem.Text + "'", sqlCon))
+
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["totalQty"] + "')", true);
+
+                    using (SqlCommand sqlCmd = new SqlCommand("SELECT wip_qty FROM fpa_operation WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date = CONVERT(DATETIME, @DateDpr , 105) AND shift='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type='" + operationTypeList.SelectedItem.Text + "'", sqlCon))
                     {
+                        sqlCmd.Parameters.AddWithValue("@DateDpr", dateDropDownList.SelectedItem.Text);
                         SqlDataReader reader = sqlCmd.ExecuteReader();
                         while (reader.Read())
                         {
@@ -312,6 +318,8 @@ namespace ERP_Demo
                         }
                         reader.Close();
                     }
+                    
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["newWip"] + "')", true);
 
                     if (Application["newWip"].ToString() != "")
                     {
@@ -324,6 +332,9 @@ namespace ERP_Demo
                         Application["newTotalQty"] = false;
                         Application["totalQtyFpa"] = int.Parse(Application["totalQty"].ToString());
                     }
+                    
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["newTotalQty"] + "')", true);
+                    
                     sqlCon.Close();
                     FpaRejectionQtyTextBox.Text = "";
                     actualQtyTextBox.Text = "";
@@ -396,14 +407,16 @@ namespace ERP_Demo
                                 {
                                     arr.Add(dtRow);
                                 }
-                                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["otherWipQty"] + "')", true);
+
+                                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ arr.Count + "')", true);
 
                                 foreach (object data in arr)
                                 {
                                     if (((DataRow)data)["type"].ToString() != operationTypeList.SelectedItem.Text)
                                     {
-                                        using (SqlCommand sqlCmd2 = new SqlCommand("SELECT wip_qty FROM fpa_operation WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date='" + dateDropDownList.SelectedItem.Text + "' AND shift='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type = '" + ((DataRow)data)["type"].ToString() + "'", sqlCon))
+                                        using (SqlCommand sqlCmd2 = new SqlCommand("SELECT wip_qty FROM fpa_operation WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date=CONVERT(DATETIME, @DateDpr , 105) AND shift='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type = '" + ((DataRow)data)["type"].ToString() + "'", sqlCon))
                                         {
+                                            sqlCmd2.Parameters.AddWithValue("@DateDpr", dateDropDownList.SelectedItem.Text);
                                             SqlDataReader reader = sqlCmd2.ExecuteReader();
                                             while (reader.Read())
                                             {
@@ -431,16 +444,26 @@ namespace ERP_Demo
                                     }
                                     else if (((DataRow)data)["type"].ToString() == operationTypeList.SelectedItem.Text)
                                     {
-                                        using (SqlCommand sqlCmd3 = new SqlCommand("SELECT wip_qty FROM fpa_operation WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date='" + dateDropDownList.SelectedItem.Text + "' AND shift='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type != '" + ((DataRow)data)["type"].ToString() + "'", sqlCon))
+                                        if (arr.Count > 1)
                                         {
-                                            SqlDataReader reader = sqlCmd3.ExecuteReader();
-                                            while (reader.Read())
+                                            using (SqlCommand sqlCmd3 = new SqlCommand("SELECT wip_qty FROM fpa_operation WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date= CONVERT(DATETIME, @DateDpr , 105) AND shift='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type != '" + ((DataRow)data)["type"].ToString() + "'", sqlCon))
                                             {
-                                                Application["otherWipQty"] += reader["wip_qty"].ToString();
+                                                sqlCmd3.Parameters.AddWithValue("@DateDpr", dateDropDownList.SelectedItem.Text);
+                                                SqlDataReader reader = sqlCmd3.ExecuteReader();
+                                                while (reader.Read())
+                                                {
+                                                    Application["otherWipQty"] += reader["wip_qty"].ToString();
+                                                }
+                                                reader.Close();
                                             }
-                                            reader.Close();
                                         }
-                                        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + int.Parse(Application["otherWipQty"].ToString()) + "')", true);
+                                        else
+                                        {
+                                            Application["otherWipQty"] = 0;
+                                        }
+
+                                        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + Application["otherWipQty"].ToString() + "')", true);
+                                        
                                         if (Application["otherWipQty"].ToString() != "")
                                         {
                                             if (int.Parse(Application["otherWipQty"].ToString()) == 0 && int.Parse(Application["wipQty"].ToString()) == 0)
@@ -549,7 +572,7 @@ namespace ERP_Demo
             }
         }
 
-        protected void BindProductionTagGrid()
+        protected void BindProductionRejHistoryGrid()
         {
             prodRejHisGrid.DataSource = (DataTable)Application["ProductionRejectionDetails"];
             prodRejHisGrid.DataBind();
@@ -563,7 +586,7 @@ namespace ERP_Demo
                 DataTable dtProductionRejHis = new DataTable();
                 dtProductionRejHis.Columns.AddRange(new DataColumn[2] { new DataColumn("REJECTION CODE"), new DataColumn("REJECTION QUANTITY") });
                 Application["ProductionRejectionDetails"] = dtProductionRejHis;
-                BindProductionTagGrid();
+                BindProductionRejHistoryGrid();
 
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
@@ -574,12 +597,12 @@ namespace ERP_Demo
                 }
                 if (dtProductionRejHis.Rows.Count > 0)
                 {
-                    BindProductionTagGrid();
+                    BindProductionRejHistoryGrid();
                 }
                 else
                 {
                     dtProductionRejHis.Rows.Add(dtProductionRejHis.NewRow());
-                    BindProductionTagGrid();
+                    BindProductionRejHistoryGrid();
                     prodRejHisGrid.Rows[0].Cells.Clear();
                     prodRejHisGrid.Rows[0].Cells.Add(new TableCell());
                     prodRejHisGrid.Rows[0].Cells[0].ColumnSpan = dtProductionRejHis.Columns.Count;
@@ -618,16 +641,21 @@ namespace ERP_Demo
                     {
                         if (Application["fpaStatus"] is true)
                         {
-                            SqlCommand cmd1 = new SqlCommand("UPDATE production set fpa_status='CLOSED' WHERE date_dpr='" + dateDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", con);
+                            SqlCommand cmd1 = new SqlCommand("UPDATE production set fpa_status='CLOSED' WHERE date_dpr = @DateDpr AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", con);
+                            cmd1.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                             cmd1.ExecuteNonQuery();
 
-                            SqlCommand cmd2 = new SqlCommand("UPDATE production set post_opr_req='CLOSED' WHERE date_dpr='" + dateDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", con);
+                            SqlCommand cmd2 = new SqlCommand("UPDATE production set post_opr_req='CLOSED' WHERE date_dpr =  @DateDpr AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", con);
+                            cmd2.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                             cmd2.ExecuteNonQuery();
                         }
-                        SqlCommand cmd3 = new SqlCommand("UPDATE fpa_operation set wip_qty='" + Application["wipQty"] + "' WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date='" + dateDropDownList.SelectedItem.Text + "' AND shift = '" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type='" + operationTypeList.SelectedItem.Text + "'", con);
+                        SqlCommand cmd3 = new SqlCommand("UPDATE fpa_operation set wip_qty='" + Application["wipQty"] + "' WHERE operator_name='" + operatorNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date =  @DateDpr AND shift = '" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operation_type='" + operationTypeList.SelectedItem.Text + "'", con);
+                        cmd3.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                         cmd3.ExecuteNonQuery();
 
-                        SqlCommand cmd4 = new SqlCommand("INSERT INTO fpa(operator_name,worker_name,part_name,date,shift,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + workerNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + Application["totalQty"].ToString() + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + efficiencyTextBox.Text + "')", con);
+                        SqlCommand cmd4 = new SqlCommand("INSERT INTO fpa(operator_name,worker_shift,worker_date,worker_name,part_name,date,shift,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + workerShiftDetails.SelectedItem.Text + "', @WorkerDate, '"+workerNameDropDownList.SelectedItem.Text+"','"+partNameDropDownList.SelectedItem.Text+ "', @DateDpr,'" + shiftDetailsDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + Application["totalQty"].ToString() + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + efficiencyTextBox.Text + "')", con);
+                        cmd4.Parameters.AddWithValue("@WorkerDate", DateTime.Parse(dateSelection.Value));
+                        cmd4.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                         cmd4.ExecuteNonQuery();
 
                         Application["okQty"] = false;
@@ -637,13 +665,17 @@ namespace ERP_Demo
                     }
                     else if (Application["newTotalQty"] is false && Application["okQty"] is true)
                     {
-                        SqlCommand cmd = new SqlCommand("INSERT INTO fpa(operator_name,worker_shift,worker_date,worker_name,part_name,date,shift,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + workerShiftDetails.SelectedItem.Text + "','" + dateSelectionTextBox.Value + "','" + workerNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + Application["totalQty"].ToString() + "','" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "','" + actualQtyTextBox.Text + "','" + FpaRejectionQtyTextBox.Text + "','" + efficiencyTextBox.Text + "')", con);
+                        SqlCommand cmd = new SqlCommand("INSERT INTO fpa(operator_name,worker_shift,worker_date,worker_name,part_name,date,shift,operation_type,total_qty,no_of_parts,total_time,exp_qty,rej_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + workerShiftDetails.SelectedItem.Text + "',@WorkerDate,'" + workerNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "',@DateDpr,'" + shiftDetailsDropDownList.SelectedItem.Text + "', '" + operationTypeList.SelectedItem.Text + "', '" + Application["totalQty"].ToString() + "', '" + noOfPartsTextBox.Text + "','" + timeTextBox.Text + "', '" + actualQtyTextBox.Text + "', '" + FpaRejectionQtyTextBox.Text + "', '" + efficiencyTextBox.Text + "')", con);
+                        cmd.Parameters.AddWithValue("@WorkerDate", DateTime.Parse(dateSelection.Value));
+                        cmd.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                         cmd.ExecuteNonQuery();
 
-                        SqlCommand cmd2 = new SqlCommand("INSERT INTO fpa_operation(operator_name,worker_name,part_name,date,shift,operation_type,wip_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "','" + workerNameDropDownList.SelectedItem.Text + "','" + partNameDropDownList.SelectedItem.Text + "','" + dateDropDownList.SelectedItem.Text + "','" + shiftDetailsDropDownList.SelectedItem.Text + "','" + operationTypeList.SelectedItem.Text + "','" + Application["wipQty"].ToString() + "','" + efficiencyTextBox.Text + "')", con);
+                        SqlCommand cmd2 = new SqlCommand("INSERT INTO fpa_operation(operator_name,worker_name,part_name,date,shift,operation_type,wip_qty,efficiency)VALUES('" + operatorNameDropDownList.SelectedItem.Text + "', '" + workerNameDropDownList.SelectedItem.Text + "', '" + partNameDropDownList.SelectedItem.Text + "', @DateDpr, '" + shiftDetailsDropDownList.SelectedItem.Text + "', '" + operationTypeList.SelectedItem.Text + "', '" + Application["wipQty"].ToString() + "', '" + efficiencyTextBox.Text + "')", con);
+                        cmd2.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                         cmd2.ExecuteNonQuery();
 
-                        SqlCommand cmd3 = new SqlCommand("UPDATE production set fpa_status='OPEN' WHERE date_dpr='" + dateDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", con);
+                        SqlCommand cmd3 = new SqlCommand("UPDATE production set fpa_status='OPEN' WHERE date_dpr = @DateDpr AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDetailsDropDownList.SelectedItem.Text + "' AND operator_name='" + operatorNameDropDownList.SelectedItem.Text + "'", con);
+                        cmd3.Parameters.AddWithValue("@DateDpr", DateTime.Parse(dateDropDownList.SelectedItem.Text));
                         cmd3.ExecuteNonQuery();
 
 

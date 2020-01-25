@@ -1,17 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPR.aspx.cs" Inherits="ERP_Demo.DPR" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <html>
-    <head>
-        <title> pb plastics | DPR</title>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-        <script type="text/javascript" src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-        <script type="text/javascript" src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <script type="text/javascript">
-             $( function() {
-                 $("#<%=dateSelectionTextBox.ClientID %>").datepicker({ showAnim: "fold", dateFormat: "dd-mm-yy"});
-            } );
-        </script>
-    </head>
     <asp:Table ID="Table1" runat="server" CssClass="tableClass" Width="85%" Height="70%" style="padding-top:70px;">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" BackColor="SkyBlue">
             <asp:TableCell runat="server" ColumnSpan="6"><h3>DPR OPERATOR</h3></asp:TableCell>
@@ -19,8 +7,8 @@
         <asp:TableRow runat="server" HorizontalAlign="Center">
             <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="employeeName" runat="server" style="font-weight:700; color:black">Operator Name <div class="required" style="display:inline">*</div></asp:Label><br /><br /><asp:DropDownList ID="operatorNameDropDownList" DataTextField="worker_name" DataValueField="worker_name" runat="server" AutoPostBack="true"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="operatorNameDropDownList" CssClass="required" ErrorMessage="Please select worker name."></asp:RequiredFieldValidator></asp:TableCell>
             <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="Date" runat="server" style="font-weight:700; color:black">Date <div class="required" style="display:inline">*</div></asp:Label><br />
-                <input type="text" id="dateSelectionTextBox" runat="server" style="font-weight:500; color:black; text-align:center"/>
-                <br /><asp:RequiredFieldValidator ID="dateReq" runat="server" ControlToValidate="dateSelectionTextBox" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></asp:TableCell>
+                <input type="date" id="dateSelection" runat="server" style="font-weight:500; color:black; text-align:center"/>
+                <br /><asp:RequiredFieldValidator ID="dateReq" runat="server" ControlToValidate="dateSelection" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom" >
             <asp:TableCell runat="server" ColumnSpan="1"><div style="font-weight:700; color:black">Part Name <div class="required" style="display:inline">*</div></div><br />
@@ -85,5 +73,4 @@
         <br/>
         <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
     </center>
-</html>
 </asp:Content>

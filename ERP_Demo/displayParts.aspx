@@ -6,13 +6,13 @@
             <asp:TableCell ID="cellParts" ColumnSpan="3"><asp:Label ID="partsLabel" runat="server"><h3><u>PARTS DETAILS</u></h3></asp:Label></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow ID="rowPartsLink" runat="server">
-            <asp:TableCell ID="cellPartsLink" runat="server"><asp:Button ID="partsButton" runat="server" Text="ADD NEW" Font-Size="Small" OnClick="partsButton_Click"></asp:Button></asp:TableCell>
-            <asp:TableCell ID="cellPartsSearch" runat="server"><asp:Label ID="searchLabel" runat="server">&nbsp Search:- &nbsp</asp:Label></asp:TableCell>
-            <asp:TableCell ID="cellPartsSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="cellPartsLink" runat="server"><asp:Button ID="partsButton" runat="server" Text="ADD NEW" Font-Size="X-Small" OnClick="partsButton_Click"></asp:Button></asp:TableCell>
+            <asp:TableCell ID="cellPartsSearch" runat="server"><asp:Label ID="searchLabel" runat="server" Font-Size="Smaller">&nbsp Search:- &nbsp</asp:Label></asp:TableCell>
+            <asp:TableCell ID="cellPartsText" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
+            <asp:TableCell ID="cellPartsSearchButton" runat="server">&nbsp;&nbsp;<asp:Button ID="searchButton" runat="server" Font-Size="X-Small" OnClick="searchButton_Click" Text="Search" /></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-
-     <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True" OnPageIndexChanging="partsGridView_PageIndexChanging"
                 OnRowCommand="parts_RowCommand" OnRowCancelingEdit="parts_RowCancelingEdit" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px"
                 OnRowDeleting="parts_RowDeleting" CssClass="Table1" Font-Size="Medium" AllowPaging="True" PageSize="15">
@@ -21,7 +21,6 @@
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="blue" HorizontalAlign="center" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>
-                <FooterStyle BackColor="WhiteSmoke"/>
                 <Columns>
                     <asp:TemplateField HeaderText="PART NO" ItemStyle-Width="100">
                         <ItemTemplate>

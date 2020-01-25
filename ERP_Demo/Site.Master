@@ -5,7 +5,7 @@
     <link href="~/Content/Menu1.css" rel="stylesheet" runat="server" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - PB PLASTICS ERP</title>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
@@ -35,10 +35,10 @@
         </asp:ScriptManager>-->
     <header id="header">
         <div class="col-md-12">
-            <img src="~/Images/logoc.png" alt="Plastic Injection Molding" height="90" runat="server" style="padding-bottom:10px;margin:auto;">
-            <h1 style="text-align:center; display:inline-block; font-family:Raleway; font-size:40px; margin:auto; margin-top:10px;">PLASTIC INJECTION MOLDING
+            <img src="~/Images/logoc.png" alt="Plastic Injection Molding" height="90" runat="server" style="padding-bottom:10px; float:left;">
+            <h1 style="text-align:center; display:inline-block; font-family:Raleway; font-size:40px; float:left; margin-left:10px; margin-top:33px;">PB PLASTICS ERP
             </h1>
-            <asp:label id="Message" style="float:right; font-size:15px; padding-top:25px; font-weight:bold;" runat="server"/>
+            <asp:label id="Message" style="float:right; font-size:15px; margin-top:70px; font-weight:bold;" runat="server"/>
             <asp:Menu ID="Menu1" runat="server" OnMenuItemClick="Menu1_MenuItemClick" CssClass="MYMenuClass" Orientation="Horizontal">
                 <Items>
                     <asp:MenuItem Text="HOME" Value="Home" NavigateUrl="/Default.aspx"></asp:MenuItem>
@@ -62,27 +62,28 @@
                         <asp:MenuItem Text="DPR" NavigateUrl="/DPR.aspx"></asp:MenuItem>
                         <asp:MenuItem Text="FPA" NavigateUrl="/FPA.aspx"></asp:MenuItem>
                     </asp:MenuItem>
-                    <asp:MenuItem Text="REPORTS" Value="Reports">
+                    <asp:MenuItem Text="REPORTS" Value="DisplayList">
                         <asp:MenuItem Text="DPR LIST" NavigateUrl="/DPRlist.aspx"></asp:MenuItem>
                         <asp:MenuItem Text="FPA LIST" NavigateUrl="/FPAlist.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="REPORT GENERATION" NavigateUrl="/reports.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="REPORT GENERATION" Value="Reports">
+                            <asp:MenuItem Text="DPR REPORTS" NavigateUrl="/dprReports.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="FPA REPORTS" NavigateUrl="/fpaReports.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
                     </asp:MenuItem>
                     <asp:MenuItem Text="LOGOUT" Value="LogOut"></asp:MenuItem>
                 </Items>
             </asp:Menu>
             </div>
                 </header>
-        
-    <div id="page-container">
-   <div id="content-wrap">
-        <asp:ContentPlaceHolder ID="MainContent" runat="server">
-        </asp:ContentPlaceHolder>
-   </div>
-   <footer id="footer">
-       <b>Copyright © 2019 PB Plastics - All Rights Reserved</b>
-   </footer>
- </div>
-    </form>
-
-</body>
+            <div id="page-container">
+                <div id="content-wrap">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                </asp:ContentPlaceHolder>
+                </div>
+            </div>
+           <footer id="footer">
+               <b>Copyright © 2019 PB Plastics - All Rights Reserved</b>
+           </footer>
+        </form>
+    </body>
 </html>

@@ -84,37 +84,6 @@ namespace ERP_Demo
             PopulateGridview();
         }
 
-        protected void customer_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            try
-            {
-                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
-                {
-                    sqlCon.Open();
-                    string query = "UPDATE customer_master SET customer_name=@customer_name,customer_address_one=@customer_address_one,customer_address_two=@customer_address_two,customer_contact=@customer_contact,customer_email=@customer_email,customer_contact_person=@customer_contact_person,customer_gst_details=@customer_gst_details WHERE id = @id";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@customer_name", (customerGridView.Rows[e.RowIndex].FindControl("txtCName") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@customer_address_one", (customerGridView.Rows[e.RowIndex].FindControl("txtCAddOne") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@customer_address_two", (customerGridView.Rows[e.RowIndex].FindControl("txtCAddTwo") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@customer_contact", (customerGridView.Rows[e.RowIndex].FindControl("txtCContact") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@customer_email", (customerGridView.Rows[e.RowIndex].FindControl("txtCEmail") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@customer_contact_person", (customerGridView.Rows[e.RowIndex].FindControl("txtCContactPerson") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@customer_gst_details", (customerGridView.Rows[e.RowIndex].FindControl("txtCGstDetails") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(customerGridView.DataKeys[e.RowIndex].Value.ToString()));
-                    sqlCmd.ExecuteNonQuery();
-                    customerGridView.EditIndex = -1;
-                    PopulateGridview();
-                    lblSuccessMessage.Text = "Selected Record Updated";
-                    lblErrorMessage.Text = "";
-                }
-            }
-            catch (Exception ex)
-            {
-                lblSuccessMessage.Text = "";
-                lblErrorMessage.Text = ex.Message;
-            }
-        }
-
         protected void customer_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -143,5 +112,40 @@ namespace ERP_Demo
             Response.Redirect("~/newCustomer.aspx");
         }
 
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchCustomer();
+        }
+
+        protected void searchCustomer()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM customer_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE customer_name LIKE @CustName + '%'";
+                        cmd.Parameters.AddWithValue("@CustName", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        customerGridView.DataSource = dt;
+                        customerGridView.DataBind();
+                    }
+                }
+            }
+        }
+
+        protected void customerGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            customerGridView.PageIndex = e.NewPageIndex;
+            this.searchCustomer();
+        }
     }
 }

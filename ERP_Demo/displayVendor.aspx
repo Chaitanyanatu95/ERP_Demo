@@ -10,7 +10,7 @@
             <asp:TableCell ID="cellVendorSearchButton" runat="server"><asp:TextBox ID="searchTextBox" runat="server" ></asp:TextBox></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
-     <asp:GridView ID="vendorGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+     <asp:GridView ID="vendorGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True"
                 OnRowCommand="vendorGridView_RowCommand" OnRowCancelingEdit="vendorGridView_RowCancelingEdit"
                 OnRowDeleting="vendorGridView_RowDeleting"
@@ -19,7 +19,6 @@
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>  
-                <FooterStyle BackColor="WhiteSmoke" />
                 <Columns>
                     <asp:TemplateField HeaderText="VENDOR ID">
                         <ItemTemplate>

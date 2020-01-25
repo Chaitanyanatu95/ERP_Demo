@@ -30,7 +30,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM production", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT id,operator_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req,fpa_status FROM production", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
