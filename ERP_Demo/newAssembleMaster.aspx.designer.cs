@@ -11,133 +11,97 @@ namespace ERP_Demo
 {
 
 
-    public partial class displayFamily
+    public partial class newAssembleMaster
     {
 
         /// <summary>
-        /// displayFamilyTable control.
+        /// assemblePart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table displayFamilyTable;
+        protected global::System.Web.UI.WebControls.TextBox assemblePart;
 
         /// <summary>
-        /// cellLabel control.
+        /// uomDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellLabel;
+        protected global::System.Web.UI.WebControls.DropDownList uomDropDownList;
 
         /// <summary>
-        /// customerLabel control.
+        /// countTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label customerLabel;
+        protected global::System.Web.UI.WebControls.TextBox countTextBox;
 
         /// <summary>
-        /// cellLink control.
+        /// countbtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellLink;
+        protected global::System.Web.UI.WebControls.Button countbtn;
 
         /// <summary>
-        /// familyButton control.
+        /// secondTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button familyButton;
+        protected global::System.Web.UI.HtmlControls.HtmlTable secondTable;
 
         /// <summary>
-        /// cellList control.
+        /// Repeater1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellList;
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
 
         /// <summary>
-        /// Label1 control.
+        /// calculateBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Button calculateBtn;
 
         /// <summary>
-        /// cellSearch control.
+        /// assWt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellSearch;
+        protected global::System.Web.UI.WebControls.TextBox assWt;
 
         /// <summary>
-        /// Label2 control.
+        /// lblSuccessMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
 
         /// <summary>
-        /// searchTextBox control.
+        /// lblErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-
-        /// <summary>
-        /// searchButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button searchButton;
-
-        /// <summary>
-        /// familyGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView familyGridView;
-
-        /// <summary>
-        /// lblFamilySuccessMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFamilySuccessMessage;
-
-        /// <summary>
-        /// lblFamilyErrorMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFamilyErrorMessage;
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
     }
 }

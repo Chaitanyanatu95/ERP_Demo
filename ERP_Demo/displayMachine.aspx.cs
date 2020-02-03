@@ -119,5 +119,38 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchMC();
+        }
+        protected void searchMC()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM machine_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE machine_name LIKE '%' + @machineName + '%'";
+                        cmd.Parameters.AddWithValue("@machineName", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        machineGridView.DataSource = dt;
+                        machineGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void machineGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            machineGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
+        }
     }
 }

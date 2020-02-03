@@ -1,13 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using System.Data.SqlClient;
-using System.Data.Common;
 using System.Text.RegularExpressions;
 using System.Configuration;
 
@@ -181,6 +176,8 @@ namespace ERP_Demo
                                 Application["mbMfgSelected"] = reader["mb_mfg"].ToString();
                                 Application["mbColorSelected"] = reader["mb_color"].ToString();
                                 Application["mbColorCodeSelected"] = reader["mb_color_code"].ToString();
+                                Application["mbPercentageValue"] = reader["mb_percentage"].ToString();
+
                             }
 
                             /*** ALt Raw Material Of The Part ***/
@@ -203,6 +200,7 @@ namespace ERP_Demo
                                 Application["altRMMBMfgSelected"] = reader["alt_mb_mfg"].ToString();
                                 Application["altRMMBColorSelected"] = reader["alt_mb_color"].ToString();
                                 Application["altRMMBColorCodeSelected"] = reader["alt_mb_color_code"].ToString();
+                                Application["altRMMBPercentageValue"] = reader["alt_mb_percentage"].ToString();
                             }
                         }
                         reader.Close();

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class displayUnitOfMeasurement {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class displayUnitOfMeasurement
+    {
+
         /// <summary>
         /// displayUnitOfMeasurementTable control.
         /// </summary>
@@ -20,88 +22,79 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table displayUnitOfMeasurementTable;
-        
+
         /// <summary>
-        /// rowUnitOfMeasurementDisplay control.
+        /// cellLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowUnitOfMeasurementDisplay;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellLabel;
+
         /// <summary>
-        /// UnitOfMeasurementCell control.
+        /// uomLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell UnitOfMeasurementCell;
-        
+        protected global::System.Web.UI.WebControls.Label uomLabel;
+
         /// <summary>
-        /// UnitOfMeasurementLabel control.
+        /// cellLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label UnitOfMeasurementLabel;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellLink;
+
         /// <summary>
-        /// rowUnitOfMeasurementLink control.
+        /// uomButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowUnitOfMeasurementLink;
-        
+        protected global::System.Web.UI.WebControls.Button uomButton;
+
         /// <summary>
-        /// cellUnitOfMeasurementLink control.
+        /// cellList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellUnitOfMeasurementLink;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellList;
+
         /// <summary>
-        /// unitOfMeasurementButton control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button unitOfMeasurementButton;
-        
+        protected global::System.Web.UI.WebControls.Label Label1;
+
         /// <summary>
-        /// cellUnitOfMeasurementSearch control.
+        /// cellSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellUnitOfMeasurementSearch;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellSearch;
+
         /// <summary>
-        /// searchLabel control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label searchLabel;
-        
-        /// <summary>
-        /// cellUnitOfMeasurementSearchButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellUnitOfMeasurementSearchButton;
-        
+        protected global::System.Web.UI.WebControls.Label Label2;
+
         /// <summary>
         /// searchTextBox control.
         /// </summary>
@@ -110,7 +103,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-        
+
+        /// <summary>
+        /// searchButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchButton;
+
         /// <summary>
         /// unitOfMeasurementGridView control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView unitOfMeasurementGridView;
-        
+
         /// <summary>
         /// lblSuccessMessage control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
-        
+
         /// <summary>
         /// lblErrorMessage control.
         /// </summary>

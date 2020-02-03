@@ -29,7 +29,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM down_time_master", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM down_time_master EXCEPT SELECT * FROM down_time_master WHERE down_time_type='N/A'", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
@@ -106,9 +106,46 @@ namespace ERP_Demo
             }
         }
 
-        protected void customerButton_Click(object sender, EventArgs e)
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchDownTimeCode();
+        }
+
+        protected void searchDownTimeCode()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM down_time_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE down_time_type LIKE '%' + @DownTime + '%'";
+                        cmd.Parameters.AddWithValue("@DownTime", searchTextBox.Text.Trim());
+                    }
+                    sql += " EXCEPT SELECT * FROM down_time_master WHERE down_time_type='N/A'";
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        downtimeGridView.DataSource = dt;
+                        downtimeGridView.DataBind();
+                    }
+                }
+            }
+        }
+
+        protected void downTimeButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/newDownTimeCode.aspx");
+        }
+
+        protected void downtimeGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            downtimeGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
         }
     }
 }

@@ -196,7 +196,7 @@
         
         <asp:Table ID="rawMaterialMasterBatchTable" runat="server" CssClass="Table1" Height="55%" Width="70%">
             <asp:TableRow runat="server" HorizontalAlign="Center" BackColor="SkyBlue">
-                <asp:TableCell runat="server" Font-Bold="true" ColumnSpan="5">
+                <asp:TableCell runat="server" Font-Bold="true" ColumnSpan="6">
                     <asp:Label runat="server" ID="masterBatchHeaderLabel" >MASTERBATCH DETAILS</asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
@@ -206,6 +206,7 @@
                 <asp:TableCell runat="server" CssClass="margin">MB MFG </asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR CODE</asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB PERCENTAGE</asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="masterBatchTextBox" runat="server" CssClass="spacingtop">
                 <asp:TableCell runat="server">
@@ -224,6 +225,9 @@
                 </asp:TableCell>
                 <asp:TableCell runat="server">
                     <asp:TextBox ID="mbColorCodeTextBox" DataTextField="mb_color_code" DataValueField="mb_color_code" runat="server" ReadOnly="true"></asp:TextBox>
+                </asp:TableCell>
+                <asp:TableCell runat="server">
+                    <asp:TextBox ID="mbPercentageTextBox" runat="server" ReadOnly="false"></asp:TextBox>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -268,7 +272,8 @@
                                         <%-- ALTERNATE RAW MATERIAL MASTERBATCH --%>
         <asp:Table ID="altRawMaterialMasterBatchTable" runat="server" CssClass="Table1" Height="11%" Width="70%">
             <asp:TableRow runat="server" HorizontalAlign="Center" BackColor="SkyBlue">
-                <asp:TableCell runat="server" ColumnSpan="5"><asp:Label runat="server" ID="altRMMasterBatchHeaderLabel" Font-Bold="true"  HorizontalAlign="Center">ALT RAW MATERIAL MASTERBATCH</asp:Label>
+                <asp:TableCell runat="server" ColumnSpan="6">
+                    <asp:Label runat="server" ID="altRMMasterBatchHeaderLabel" Font-Bold="true"  HorizontalAlign="Center">ALT RAW MATERIAL MASTERBATCH</asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="altRawMaterialMasterBatchLabel" runat="server" VerticalAlign="Bottom">
@@ -277,6 +282,7 @@
                 <asp:TableCell runat="server" CssClass="margin">MB MFG</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR</asp:TableCell>
                 <asp:TableCell runat="server" CssClass="margin">MB COLOR CODE</asp:TableCell>
+                <asp:TableCell runat="server" CssClass="margin">MB PERCENTAGE</asp:TableCell>
             </asp:TableRow>
             <asp:TableRow runat="server" HorizontalAlign="Center">
                 <asp:TableCell runat="server">
@@ -295,6 +301,9 @@
                 </asp:TableCell>
                 <asp:TableCell runat="server">
                     <asp:TextBox ID="altRMBColorCodeTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+                </asp:TableCell>
+                <asp:TableCell runat="server">
+                    <asp:TextBox ID="altRMBPercentageTextBox" runat="server" ReadOnly="False"></asp:TextBox>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>

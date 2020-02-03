@@ -51,6 +51,15 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.Label dateSelectLabel2;
 
         /// <summary>
+        /// operationTypeLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label operationTypeLabel;
+
+        /// <summary>
         /// partNameLabel control.
         /// </summary>
         /// <remarks>
@@ -103,6 +112,15 @@ namespace ERP_Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection2;
+
+        /// <summary>
+        /// operationTypeDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList operationTypeDropDownList;
 
         /// <summary>
         /// partNameDropDownList control.

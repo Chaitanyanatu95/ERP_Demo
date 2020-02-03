@@ -101,7 +101,7 @@
     <br />
     <asp:Table ID="Table1" runat="server" Height="70%" Width="80%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="4"><h3>PART ENTRY MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="4"><h3>PART ENTRY DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow ID="partId" runat="server" VerticalAlign="Bottom">
             <asp:TableCell runat="server" CssClass="margin" style="padding-bottom:30px;">PART NO <br />
@@ -156,16 +156,16 @@
                 <asp:TextBox ID="cycleTimeTextBox" runat="server" OnTextChanged="moldProductionCycleTextBox_TextChanged" AutoPostBack="true"></asp:TextBox><br />
                 <asp:RequiredFieldValidator runat="server" ID="cycleTimeReq" ControlToValidate="cycleTimeTextBox" ErrorMessage="Please enter cycle time!" CssClass="required" SetFocusOnError="true" />
             </asp:TableCell>
+             <asp:TableCell runat="server"  CssClass="margin">PRODUCTION PER HOUR IN NOS.<br />
+                <asp:TextBox ID="moldProductionCycleTextBox" runat="server" ReadOnly="true"></asp:TextBox><br />
+                <asp:Label ID="productionLbl" runat="server"></asp:Label>
+            </asp:TableCell>
             <asp:TableCell runat="server" CssClass="margin">JIG/FIXTURE (REQ) <div class="required" style="display:inline">*</div><br />
                 <asp:DropDownList ID="jigReqDropDownList" runat="server">
                         <asp:ListItem Value="NO">NO</asp:ListItem>
                         <asp:ListItem Value="YES">YES</asp:ListItem>
                     </asp:DropDownList><br />
                 <asp:Label ID="jigFixLabel" runat="server" CssClass="required"></asp:Label>
-            </asp:TableCell>
-            <asp:TableCell runat="server"  CssClass="margin">PRODUCTION PER HOUR IN NOS.<br />
-                <asp:TextBox ID="moldProductionCycleTextBox" runat="server" ReadOnly="true"></asp:TextBox><br />
-                <asp:Label ID="productionLbl" runat="server"></asp:Label>
             </asp:TableCell>
             <asp:TableCell runat="server"  CssClass="margin">SAMPLE PART NO <br />
                 <asp:TextBox ID="samplePartNo" runat="server"></asp:TextBox>

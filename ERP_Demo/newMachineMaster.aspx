@@ -52,7 +52,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" Height="20%" Width="65%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center">
-            <asp:TableCell runat="server" ColumnSpan="5" CssClass="CustomerHeader"><h3>MACHINE MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="5" CssClass="CustomerHeader"><h3>MACHINE DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin">M/C NO <div class="required" style="display:inline">*</div><br />

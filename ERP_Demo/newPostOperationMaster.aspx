@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" Height="25%" Width="30%" CssClass="tableClass" HorizontalAlign="Center">
         <asp:TableRow runat="server" TableSection="TableHeader" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="2" HorizontalAlign="Center"><h3>POST OPERATION MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="2" HorizontalAlign="Center"><h3>POST OPERATION DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server"  CssClass="margin">POST OPERATION TYPE</asp:TableCell>

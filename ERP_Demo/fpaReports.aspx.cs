@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -10,7 +9,7 @@ using ClosedXML.Excel;
 
 namespace ERP_Demo
 {
-    public partial class fpaReports : System.Web.UI.Page
+    public partial class fpaReports : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
 
@@ -63,11 +62,20 @@ namespace ERP_Demo
                             reader.Close();
                             partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
                         }
+
+                        using (SqlCommand cmd = new SqlCommand("SELECT * FROM post_operation_master EXCEPT SELECT * FROM post_operation_master WHERE type = 'N/A' order by id OFFSET 1 ROWS ", con))
+                        {
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            operationTypeDropDownList.DataSource = reader;
+                            operationTypeDropDownList.DataBind();
+                            reader.Close();
+                            operationTypeDropDownList.Items.Insert(0, new ListItem("Select Type", ""));
+                        }
                         con.Close();
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 lblSuccessMessage.Text = "";
                 lblErrorMessage.Text = ex.Message;
@@ -78,7 +86,7 @@ namespace ERP_Demo
         {
             try
             {
-                if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name")
+                if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Select atleast one option to generate report!')", true);
                 }
@@ -88,90 +96,193 @@ namespace ERP_Demo
                     SqlConnection con = new SqlConnection();
                     con.ConnectionString = settings.ToString();
 
-                    if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value =="" && dateSelection2.Value=="")
+                    /*SINGLE SELECTION*/
+
+                    if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "'";
+                        string query = "SELECT * FROM fpa WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "'";
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "'";
+                        string query = "SELECT * FROM fpa WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE date_dpr BETWEEN ='" + dateSelection.Value+ "' AND '"+dateSelection2.Value+"'";
+                        string query = "SELECT * FROM fpa WHERE operation_type ='" + operationTypeDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
-                        string query = "SELECT * FROM production WHERE operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "'";
+                        string query = "SELECT * FROM fpa WHERE date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+
+                    /*DOUBLE SELECTION*/
+                    /*1st Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "'";
+                        string query = "SELECT * FROM fpa WHERE operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "'";
+                        string query = "SELECT * FROM fpa WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
+                        string query = "SELECT * FROM fpa WHERE operation_type='" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    /*2nd Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
+                        string query = "SELECT * FROM fpa WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
+                        string query = "SELECT * FROM fpa WHERE shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND operation_type='" + operationTypeDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    /*3rd Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details = '"+shiftDropDownList.SelectedItem.Text+"' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
+                        string query = "SELECT * FROM fpa WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operation_type='" + operationTypeDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+
+                    /*4th Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
-                        string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        string query = "SELECT * FROM fpa WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
-                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
-                        string query = "SELECT * FROM production where part_name='"+partNameDropDownList.SelectedItem.Text+"' AND operator_name='"+workerNameDropDownList.SelectedItem.Text+"' AND shift_details='"+shiftDropDownList.SelectedItem.Text+"' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        string query = "SELECT * FROM fpa WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                   
-                    SqlCommand cmd = new SqlCommand(Application["query"].ToString(),con);
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE operation_type ='" + operationTypeDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+
+                    /*TRIPLE SELECTION*/
+
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details = '" + shiftDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND operation_type = '" + operationTypeDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND operation_type = '" + operationTypeDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND operation_type = '" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name = '" + workerNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "' AND operation_type = '" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name = '" + workerNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND operator_name = '" + workerNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM fpa WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND operation_type = '" + operationTypeDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+
+                    /*FOUR SELECTION*/
+
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text == "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa where part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa where operation_type='" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa where operation_type='" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa where operation_type='" + operationTypeDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM fpa where operation_type='" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details = '" + shiftDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+
+                    /*ALL SELECTED*/
+
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && operationTypeDropDownList.SelectedItem.Text != "Select Type" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM fpa where operation_type='" + operationTypeDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details = '" + shiftDropDownList.SelectedItem.Text + "' AND date BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else
+                    {
+                        lblErrorMessage.Text = "Please select valid entries.";
+                    }
+
+                    /* PROCESS */
+                    SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
                     da = new SqlDataAdapter(cmd);
                     using (DataTable dt = new DataTable())
                     {
                         da.Fill(dt);
                         using (XLWorkbook wb = new XLWorkbook())
                         {
-                            wb.Worksheets.Add(dt, "production");
+                            wb.Worksheets.Add(dt, "fpa");
                             Response.Clear();
                             Response.Buffer = true;
                             Response.Charset = "";
                             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            Response.AddHeader("content-disposition", "attachment;filename=production_report.xlsx");
+                            Response.AddHeader("content-disposition", "attachment;filename=fpa_report.xlsx");
                             using (MemoryStream MyMemoryStream = new MemoryStream())
                             {
                                 wb.SaveAs(MyMemoryStream);

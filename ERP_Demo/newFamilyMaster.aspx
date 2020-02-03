@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" HorizontalAlign="Center" Height="40%" Width="20%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="2"><h4>PRODUCT CATEGORY MASTER</h4></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="2"><h4>PRODUCT CATEGORY DETAILS</h4></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" VerticalAlign="Bottom">
             <asp:TableCell runat="server" CssClass="margin">ADD NEW CATEGORY <div class="required" style="display:inline">*</div><br />

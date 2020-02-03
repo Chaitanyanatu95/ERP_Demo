@@ -44,7 +44,7 @@
          <div id="page">
         <table runat="server" class="tableClass" style="width:80%; height:70%">
             <tr>
-                <th runat="server" style="background-color:skyblue;text-align:center" colspan="7"><h3>FPA Worker</h3></th>
+                <th runat="server" style="background-color:skyblue;text-align:center";colspan="7"><h3>FPA Worker</h3></th>
             </tr>
             <tr>
                 <td><asp:Label ID="lblWorkerName" runat="server" style="font-weight:700; color:black;">Worker Name <div class="required" style=" display:inline;">*</div></asp:Label></td>
@@ -90,7 +90,7 @@
                 <td>
                     <asp:Label ID="lblProdRejectionQty" runat="server" style="font-weight:700; color:black; text-align:center">Prod Rejection Quantity</asp:Label><br />
                     <asp:GridView ID="prodRejHisGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="prodRejHisGrid_RowCommand" 
-                    OnRowDeleting="prodRejHisGrid_RowDeleting" DataKeyNames="id" ShowFooter="False" CssClass="Table1" Width="30%">
+                    OnRowDeleting="prodRejHisGrid_RowDeleting" DataKeyNames="id" ShowFooter="True" CssClass="Table1" Width="30%">
                         <Columns>
                      <asp:TemplateField HeaderText="REJECTION CODE">
                         <ItemTemplate>

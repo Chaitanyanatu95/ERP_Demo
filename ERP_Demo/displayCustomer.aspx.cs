@@ -126,7 +126,7 @@ namespace ERP_Demo
                     string sql = "SELECT * FROM customer_master";
                     if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
                     {
-                        sql += " WHERE customer_name LIKE @CustName + '%'";
+                        sql += " WHERE customer_name LIKE '%' + @CustName + '%'";
                         cmd.Parameters.AddWithValue("@CustName", searchTextBox.Text.Trim());
                     }
                     cmd.CommandText = sql;
@@ -145,7 +145,7 @@ namespace ERP_Demo
         protected void customerGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             customerGridView.PageIndex = e.NewPageIndex;
-            this.searchCustomer();
+            //this.searchCustomer();
         }
     }
 }

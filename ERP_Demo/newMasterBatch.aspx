@@ -12,7 +12,7 @@
     </script>
         <asp:Table ID="Table1" runat="server" Height="40%" Width="80%" HorizontalAlign="Center" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="7"><h3>MASTERBATCH MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="7"><h3>MASTERBATCH DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" VerticalAlign="Bottom">
             <asp:TableCell runat="server" CssClass="margin">MASTERBATCH NAME <div class="required" style="display:inline">*</div><br />

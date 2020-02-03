@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="col-md-13">
     <div class="jumbotron" style="text-align:center; position:relative; background-image:url(/Images/background.jpg); background-size:cover;">
-        <h1>Welcome to plastic injection molding portal</h1>
+        <div style="font-size:35px; font-weight:500">WELCOME TO PB PLASTICS ERP PORTAL</div> 
         <p class="lead"></p>
     </div>
         </div>

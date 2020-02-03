@@ -117,5 +117,38 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchPA();
+        }
+        protected void searchPA()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM packaging_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE packaging_type LIKE '%' + @type + '%'";
+                        cmd.Parameters.AddWithValue("@type", searchTextBox.Text.Trim());
+                    }
+                    sql += " EXCEPT SELECT * FROM packaging_master WHERE packaging_type = 'N/A' EXCEPT SELECT * FROM packaging_master WHERE id = 1";
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        packagingGridView.DataSource = dt;
+                        packagingGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void packagingGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            packagingGridView.PageIndex = e.NewPageIndex;
+        }
     }
 }

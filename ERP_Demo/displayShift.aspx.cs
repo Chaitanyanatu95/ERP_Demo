@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ERP_Demo
 {
-    public partial class displayShift : System.Web.UI.Page
+    public partial class displayShift : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
@@ -118,6 +115,39 @@ namespace ERP_Demo
                 lblSuccessMessage.Text = "";
                 lblErrorMessage.Text = ex.Message;
             }
+        }
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchShift();
+        }
+        protected void searchShift()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM shift_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE shift_time LIKE '%' + @shiftTime + '%'";
+                        cmd.Parameters.AddWithValue("@shiftTime", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        shiftGridView.DataSource = dt;
+                        shiftGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void shiftGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            shiftGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
         }
     }
 }

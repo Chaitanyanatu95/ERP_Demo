@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
-using System.Security.AccessControl;
 
 namespace ERP_Demo
 {
-    public partial class postOperationsPage : System.Web.UI.Page
+    public partial class postOperationsPage : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
 
@@ -265,10 +262,11 @@ namespace ERP_Demo
             {
                 if (Application["partNo"].ToString() == "" || Application["partName"].ToString() == "" || Application["custName"].ToString() == "" || Application["prodCategory"].ToString() == "" || Application["moldName"].ToString() == "" || Application["moldMfgYear"].ToString() == "" || Application["noOfCavities"].ToString() == "" || Application["unit"].ToString() == "" || Application["partWeight"].ToString() == "" || Application["shotWeight"].ToString() == "" || Application["cycleTime"].ToString() == "" || Application["jigReq"].ToString() == "" || Application["moldProductionCycle"].ToString() == "" || Application["rawMaterial"].ToString() == "")
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Insert Data Properly, Missing Data!')", true);
+                    lblErrorMessage.Text = "Missing Data";
                 }
                 else
                 {
+                    lblErrorMessage.Text = "";
                     Application["postOperationDetailsReq"] = postOperationDropDownList.SelectedItem.Text;
                     Application["packagingDetailsReq"] = packagingDetailsDropDownList.SelectedItem.Text;
 
@@ -290,15 +288,15 @@ namespace ERP_Demo
                     if (Application["editFlag"] is true)
                     {
                         string query = "UPDATE parts_master SET part_name='" + Application["partName"] + "', customer_name='" + Application["custName"] + "', customer_part_no = '" + Application["custPartNo"] + "',product_category='" + Application["prodCategory"] + "',mold_name='" + Application["moldName"] + "',mold_mfg_year='" + Application["moldMfgYear"] + "',mold_life='" + Application["moldLife"] + "',no_of_cavities='" + Application["noOfCavities"] + "',unit_of_measurement = '" + Application["unit"] + "',part_weight = '" + Application["partWeight"] + "',shot_weight='" + Application["shotWeight"] + "',cycle_time='" + Application["cycleTime"] + "'," +
-                            "jig_fixture_req='" + Application["jigReq"] + "',production_in_pcs = '" + Application["moldProductionCycle"] + "',sample_part_no = '" + Application["samplePartNo"] + "',part_photo='" + Application["partPhoto"] + "',mold_spec_sheet='" + Application["moldSpec"] + "',raw_material='" + Application["rawMaterial"] + "',rm_grade='" + Application["rmGrade"] + "',rm_make='" + Application["rmMake"] + "',rm_color='" + Application["rmColor"] + "',masterbatch='" + Application["masterbatch"] + "',alt_raw_material='" + Application["altRawMaterial"] + "',mb_name='" + Application["mbName"] + "',mb_grade='" + Application["mbGrade"] + "',mb_mfg='" + Application["mbMfg"] + "',mb_color='" + Application["mbColor"] + "',mb_color_code='" + Application["mbColorCode"] + "',alt_rm_name='" + Application["altRMName"] + "',alt_rm_grade='" + Application["altRmGrade"] + "'" +
-                            ",alt_rm_make='" + Application["altRmMake"] + "',alt_rm_color='" + Application["altRmColor"] + "',alt_masterbatch='" + Application["altMasterbatch"] + "',alt_mb_name='" + Application["altMasterbatchName"] + "',alt_mb_grade='" + Application["altMasterbatchGrade"] + "',alt_mb_mfg='" + Application["altMasterbatchMfg"] + "',alt_mb_color='" + Application["altMasterbatchColor"] + "',alt_mb_color_code='" + Application["altMasterbatchColorCode"] + "',post_operation_required ='" + postOperationDropDownList.SelectedItem.Text + "' ,packaging_details_required = '" + packagingDetailsDropDownList.SelectedItem.Text + "' WHERE part_no = '" + Application["partNo"] + "'";
+                            "jig_fixture_req='" + Application["jigReq"] + "',production_in_pcs = '" + Application["moldProductionCycle"] + "',sample_part_no = '" + Application["samplePartNo"] + "',part_photo='" + Application["partPhoto"] + "',mold_spec_sheet='" + Application["moldSpec"] + "',raw_material='" + Application["rawMaterial"] + "',rm_grade='" + Application["rmGrade"] + "',rm_make='" + Application["rmMake"] + "',rm_color='" + Application["rmColor"] + "',masterbatch='" + Application["masterbatch"] + "',alt_raw_material='" + Application["altRawMaterial"] + "',mb_name='" + Application["mbName"] + "',mb_grade='" + Application["mbGrade"] + "',mb_mfg='" + Application["mbMfg"] + "',mb_color='" + Application["mbColor"] + "',mb_color_code='" + Application["mbColorCode"] + "',mb_percentage='" + Application["mbPercentage"] + "',alt_rm_name='" + Application["altRMName"] + "',alt_rm_grade='" + Application["altRmGrade"] + "'" +
+                            ",alt_rm_make='" + Application["altRmMake"] + "',alt_rm_color='" + Application["altRmColor"] + "',alt_masterbatch='" + Application["altMasterbatch"] + "',alt_mb_name='" + Application["altMasterbatchName"] + "',alt_mb_grade='" + Application["altMasterbatchGrade"] + "',alt_mb_mfg='" + Application["altMasterbatchMfg"] + "',alt_mb_color='" + Application["altMasterbatchColor"] + "',alt_mb_color_code='" + Application["altMasterbatchColorCode"] + "',alt_mb_percentage='" + Application["altMasterbatchPercentage"] + "',post_operation_required ='" + postOperationDropDownList.SelectedItem.Text + "' ,packaging_details_required = '" + packagingDetailsDropDownList.SelectedItem.Text + "' WHERE part_no = '" + Application["partNo"] + "'";
                         Application["query"] = query;
                     }
                     else
                     {
-                        string query = "INSERT INTO parts_master(part_no,part_name,customer_name,customer_part_no,product_category,mold_name,mold_mfg_year,mold_life,no_of_cavities,unit_of_measurement,part_weight,shot_weight,cycle_time,jig_fixture_req,production_in_pcs,sample_part_no,part_photo,mold_spec_sheet,raw_material,rm_grade,rm_make,rm_color,masterbatch,alt_raw_material,mb_name,mb_grade,mb_mfg,mb_color,mb_color_code,alt_rm_name,alt_rm_grade," +
-                                                    "alt_rm_make,alt_rm_color,alt_masterbatch,alt_mb_name,alt_mb_grade,alt_mb_mfg,alt_mb_color,alt_mb_color_code,post_operation_required,packaging_details_required)VALUES('" + Application["partNo"] + "','" + Application["partName"] + "','" + Application["custName"] + "','" + Application["custPartNo"] + "','" + Application["prodCategory"] + "','" + Application["moldName"] + "','" + Application["moldMfgYear"] + "','" + Application["moldLife"] + "','" + Application["noOfCavities"] + "','" + Application["unit"] + "','" + Application["partWeight"] + "','" + Application["shotWeight"] + "','" + Application["cycleTime"] + "','" + Application["jigReq"] + "','" + Application["moldProductionCycle"] + "','" + Application["samplePartNo"] + "','" + Application["partPhoto"] + "','" + Application["moldSpec"] + "','" + Application["rawMaterial"] + "','" + Application["rmGrade"] + "','" + Application["rmMake"] + "'" +
-                                                    ",'" + Application["rmColor"] + "','" + Application["masterbatch"] + "','" + Application["altRawMaterial"] + "','" + Application["mbName"] + "','" + Application["mbGrade"] + "','" + Application["mbMfg"] + "','" + Application["mbColor"] + "','" + Application["mbColorCode"] + "','" + Application["altRMName"] + "','" + Application["altRmGrade"] + "','" + Application["altRmMake"] + "','" + Application["altRmColor"] + "','" + Application["altMasterbatch"] + "','" + Application["altMasterbatchName"] + "','" + Application["altMasterbatchGrade"] + "','" + Application["altMasterbatchMfg"] + "','" + Application["altMasterbatchColor"] + "','" + Application["altMasterbatchColorCode"] + "','" + postOperationDropDownList.SelectedItem.Text + "','" + packagingDetailsDropDownList.SelectedItem.Text + "')";
+                        string query = "INSERT INTO parts_master(part_no,part_name,customer_name,customer_part_no,product_category,mold_name,mold_mfg_year,mold_life,no_of_cavities,unit_of_measurement,part_weight,shot_weight,cycle_time,jig_fixture_req,production_in_pcs,sample_part_no,part_photo,mold_spec_sheet,raw_material,rm_grade,rm_make,rm_color,masterbatch,alt_raw_material,mb_name,mb_grade,mb_mfg,mb_color,mb_color_code,mb_percentage,alt_rm_name,alt_rm_grade," +
+                                                    "alt_rm_make,alt_rm_color,alt_masterbatch,alt_mb_name,alt_mb_grade,alt_mb_mfg,alt_mb_color,alt_mb_color_code,alt_mb_percentage,post_operation_required,packaging_details_required)VALUES('" + Application["partNo"] + "','" + Application["partName"] + "','" + Application["custName"] + "','" + Application["custPartNo"] + "','" + Application["prodCategory"] + "','" + Application["moldName"] + "','" + Application["moldMfgYear"] + "','" + Application["moldLife"] + "','" + Application["noOfCavities"] + "','" + Application["unit"] + "','" + Application["partWeight"] + "','" + Application["shotWeight"] + "','" + Application["cycleTime"] + "','" + Application["jigReq"] + "','" + Application["moldProductionCycle"] + "','" + Application["samplePartNo"] + "','" + Application["partPhoto"] + "','" + Application["moldSpec"] + "','" + Application["rawMaterial"] + "','" + Application["rmGrade"] + "','" + Application["rmMake"] + "'" +
+                                                    ",'" + Application["rmColor"] + "','" + Application["masterbatch"] + "','" + Application["altRawMaterial"] + "','" + Application["mbName"] + "','" + Application["mbGrade"] + "','" + Application["mbMfg"] + "','" + Application["mbColor"] + "','" + Application["mbColorCode"] + "','"+ Application["mbPercentage"] + "','" + Application["altRMName"] + "','" + Application["altRmGrade"] + "','" + Application["altRmMake"] + "','" + Application["altRmColor"] + "','" + Application["altMasterbatch"] + "','" + Application["altMasterbatchName"] + "','" + Application["altMasterbatchGrade"] + "','" + Application["altMasterbatchMfg"] + "','" + Application["altMasterbatchColor"] + "','" + Application["altMasterbatchColorCode"] + "','"+ Application["altMasterbatchPercentage"] + "','" + postOperationDropDownList.SelectedItem.Text + "','" + packagingDetailsDropDownList.SelectedItem.Text + "')";
                         Application["query"] = query;
                     }
                     SqlCommand cmd = new SqlCommand(Application["query"].ToString(), con);
@@ -455,10 +453,6 @@ namespace ERP_Demo
                         lblSuccessMessage.Text = "Record Added";
                         lblErrorMessage.Text = "";
                     }
-                }
-                else
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "You have selected N/A.", true);
                 }
             }
             catch (Exception ex)

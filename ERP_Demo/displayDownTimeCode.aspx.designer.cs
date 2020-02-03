@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class displayDownTimeCode {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class displayDownTimeCode
+    {
+
         /// <summary>
         /// displayDownTimeCodeTable control.
         /// </summary>
@@ -20,88 +22,79 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table displayDownTimeCodeTable;
-        
+
         /// <summary>
-        /// rowDownTimeCodeDisplay control.
+        /// cellLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowDownTimeCodeDisplay;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellLabel;
+
         /// <summary>
-        /// downTimeCodeCell control.
+        /// customerLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell downTimeCodeCell;
-        
+        protected global::System.Web.UI.WebControls.Label customerLabel;
+
         /// <summary>
-        /// downTimeCodeLabel control.
+        /// cellLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label downTimeCodeLabel;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellLink;
+
         /// <summary>
-        /// rowDownTimeCodeLink control.
+        /// downTimeButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowDownTimeCodeLink;
-        
+        protected global::System.Web.UI.WebControls.Button downTimeButton;
+
         /// <summary>
-        /// cellDownTimeCodeLink control.
+        /// cellList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellDownTimeCodeLink;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellList;
+
         /// <summary>
-        /// customerButton control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button customerButton;
-        
+        protected global::System.Web.UI.WebControls.Label Label1;
+
         /// <summary>
-        /// cellDownTimeCodeSearch control.
+        /// cellSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellDownTimeCodeSearch;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellSearch;
+
         /// <summary>
-        /// searchLabel control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label searchLabel;
-        
-        /// <summary>
-        /// cellDownTimeCodeSearchButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellDownTimeCodeSearchButton;
-        
+        protected global::System.Web.UI.WebControls.Label Label2;
+
         /// <summary>
         /// searchTextBox control.
         /// </summary>
@@ -110,7 +103,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-        
+
+        /// <summary>
+        /// searchButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchButton;
+
         /// <summary>
         /// downtimeGridView control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView downtimeGridView;
-        
+
         /// <summary>
         /// lblDownTimeCodeSuccessMessage control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDownTimeCodeSuccessMessage;
-        
+
         /// <summary>
         /// lblDownTimeCodeErrorMessage control.
         /// </summary>

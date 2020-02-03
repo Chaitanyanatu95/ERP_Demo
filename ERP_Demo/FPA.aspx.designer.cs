@@ -11,422 +11,386 @@ namespace ERP_Demo
 {
 
 
-    public partial class rawMaterialPage
+    public partial class FPA
     {
 
         /// <summary>
-        /// rawMaterialTable control.
+        /// lblWorkerName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table rawMaterialTable;
+        protected global::System.Web.UI.WebControls.Label lblWorkerName;
 
         /// <summary>
-        /// rawMaterialDropDownList control.
+        /// lblShift control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList rawMaterialDropDownList;
+        protected global::System.Web.UI.WebControls.Label lblShift;
 
         /// <summary>
-        /// rmNameLabel control.
+        /// lblDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label rmNameLabel;
+        protected global::System.Web.UI.WebControls.Label lblDate;
 
         /// <summary>
-        /// rmGradeDropDownList control.
+        /// lblPartName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList rmGradeDropDownList;
+        protected global::System.Web.UI.WebControls.Label lblPartName;
 
         /// <summary>
-        /// rmGradeLabel control.
+        /// lblProductionHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label rmGradeLabel;
+        protected global::System.Web.UI.WebControls.Label lblProductionHistory;
 
         /// <summary>
-        /// rmMakeTextBox control.
+        /// workerNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox rmMakeTextBox;
+        protected global::System.Web.UI.WebControls.DropDownList workerNameDropDownList;
 
         /// <summary>
-        /// colourTextBox control.
+        /// workerReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox colourTextBox;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator workerReq;
 
         /// <summary>
-        /// masterbatchDropDownList control.
+        /// workerShiftDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList masterbatchDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList workerShiftDetails;
 
         /// <summary>
-        /// masterBatchReq control.
+        /// RequiredFieldValidator9 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator masterBatchReq;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
 
         /// <summary>
-        /// altRawMaterialDropDownList control.
+        /// dateSelection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList altRawMaterialDropDownList;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection;
 
         /// <summary>
-        /// altRawMaterialReq control.
+        /// dateReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator altRawMaterialReq;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator dateReq;
 
         /// <summary>
-        /// rawMaterialMasterBatchTable control.
+        /// partNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table rawMaterialMasterBatchTable;
+        protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
 
         /// <summary>
-        /// masterBatchHeaderLabel control.
+        /// partNameReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label masterBatchHeaderLabel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator partNameReq;
 
         /// <summary>
-        /// masterBatchLabel control.
+        /// lblShiftDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow masterBatchLabel;
+        protected global::System.Web.UI.WebControls.Label lblShiftDetails;
 
         /// <summary>
-        /// masterBatchTextBox control.
+        /// shiftDetailsDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow masterBatchTextBox;
+        protected global::System.Web.UI.WebControls.DropDownList shiftDetailsDropDownList;
 
         /// <summary>
-        /// mbNameDropDownList control.
+        /// RequiredFieldValidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList mbNameDropDownList;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
-        /// mbNameLabel control.
+        /// lblEmployeeName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label mbNameLabel;
+        protected global::System.Web.UI.WebControls.Label lblEmployeeName;
 
         /// <summary>
-        /// mbGradeDropDownList control.
+        /// operatorNameDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList mbGradeDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList operatorNameDropDownList;
 
         /// <summary>
-        /// mbGradeLabel control.
+        /// RequiredFieldValidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label mbGradeLabel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
 
         /// <summary>
-        /// mbMfgTextBox control.
+        /// lblProductionDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox mbMfgTextBox;
+        protected global::System.Web.UI.WebControls.Label lblProductionDate;
 
         /// <summary>
-        /// mbColorTextBox control.
+        /// dateDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox mbColorTextBox;
+        protected global::System.Web.UI.WebControls.DropDownList dateDropDownList;
 
         /// <summary>
-        /// mbColorCodeTextBox control.
+        /// RequiredFieldValidator3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox mbColorCodeTextBox;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
 
         /// <summary>
-        /// mbPercentageTextBox control.
+        /// lblOperationType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox mbPercentageTextBox;
+        protected global::System.Web.UI.WebControls.Label lblOperationType;
 
         /// <summary>
-        /// altRawMaterialTable control.
+        /// operationTypeList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table altRawMaterialTable;
+        protected global::System.Web.UI.WebControls.DropDownList operationTypeList;
 
         /// <summary>
-        /// altRMDetailsRow control.
+        /// RequiredFieldValidator4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow altRMDetailsRow;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
 
         /// <summary>
-        /// altRMDetailsLabel control.
+        /// lblnoofparts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label altRMDetailsLabel;
+        protected global::System.Web.UI.WebControls.Label lblnoofparts;
 
         /// <summary>
-        /// altRawMaterialLabel control.
+        /// noOfPartsTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow altRawMaterialLabel;
+        protected global::System.Web.UI.WebControls.TextBox noOfPartsTextBox;
 
         /// <summary>
-        /// altRMDropDownList control.
+        /// RequiredFieldValidator5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList altRMDropDownList;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
 
         /// <summary>
-        /// altRMLabel control.
+        /// lblTotalTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label altRMLabel;
+        protected global::System.Web.UI.WebControls.Label lblTotalTime;
 
         /// <summary>
-        /// altRawMaterialGradeDropDownList control.
+        /// timeTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList altRawMaterialGradeDropDownList;
+        protected global::System.Web.UI.WebControls.TextBox timeTextBox;
 
         /// <summary>
-        /// altRMGradeLabel control.
+        /// RequiredFieldValidator6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label altRMGradeLabel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
 
         /// <summary>
-        /// altRawMaterialMakeTextBox control.
+        /// lblAcceptedQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox altRawMaterialMakeTextBox;
+        protected global::System.Web.UI.WebControls.Label lblAcceptedQty;
 
         /// <summary>
-        /// altColourTextBox control.
+        /// actualQtyTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox altColourTextBox;
+        protected global::System.Web.UI.WebControls.TextBox actualQtyTextBox;
 
         /// <summary>
-        /// altRawMaterialMasterBatchDropDownList control.
+        /// RequiredFieldValidator7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList altRawMaterialMasterBatchDropDownList;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
 
         /// <summary>
-        /// altRawMaterialMasterBatchTable control.
+        /// errorLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table altRawMaterialMasterBatchTable;
+        protected global::System.Web.UI.WebControls.Label errorLbl;
 
         /// <summary>
-        /// altRMMasterBatchHeaderLabel control.
+        /// lblProdRejectionQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label altRMMasterBatchHeaderLabel;
+        protected global::System.Web.UI.WebControls.Label lblProdRejectionQty;
 
         /// <summary>
-        /// altRawMaterialMasterBatchLabel control.
+        /// prodRejHisGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow altRawMaterialMasterBatchLabel;
+        protected global::System.Web.UI.WebControls.GridView prodRejHisGrid;
 
         /// <summary>
-        /// altRMBNameDropDownList control.
+        /// lblFpaRejectionQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList altRMBNameDropDownList;
+        protected global::System.Web.UI.WebControls.Label lblFpaRejectionQty;
 
         /// <summary>
-        /// altRMBNameLabel control.
+        /// FpaRejectionQtyTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label altRMBNameLabel;
+        protected global::System.Web.UI.WebControls.TextBox FpaRejectionQtyTextBox;
 
         /// <summary>
-        /// altRMBGradeDropDownList control.
+        /// RequiredFieldValidator8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList altRMBGradeDropDownList;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator8;
 
         /// <summary>
-        /// altRMBGradeLabel control.
+        /// lblEfficiency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label altRMBGradeLabel;
+        protected global::System.Web.UI.WebControls.Label lblEfficiency;
 
         /// <summary>
-        /// altRMBMfgTextBox control.
+        /// efficiencyTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox altRMBMfgTextBox;
-
-        /// <summary>
-        /// altRMBColorTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox altRMBColorTextBox;
-
-        /// <summary>
-        /// altRMBColorCodeTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox altRMBColorCodeTextBox;
-
-        /// <summary>
-        /// altRMBPercentageTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox altRMBPercentageTextBox;
-
-        /// <summary>
-        /// backClick control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button backClick;
+        protected global::System.Web.UI.WebControls.TextBox efficiencyTextBox;
 
         /// <summary>
         /// lblSuccessMessage control.

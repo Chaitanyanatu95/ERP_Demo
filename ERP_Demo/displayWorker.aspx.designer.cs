@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class displayWorker {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class displayWorker
+    {
+
         /// <summary>
         /// displayWorkerTable control.
         /// </summary>
@@ -20,16 +22,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table displayWorkerTable;
-        
+
         /// <summary>
-        /// rowWorkerDisplay control.
+        /// rowCustomerDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowWorkerDisplay;
-        
+        protected global::System.Web.UI.WebControls.TableRow rowCustomerDisplay;
+
         /// <summary>
         /// cellWorker control.
         /// </summary>
@@ -38,25 +40,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellWorker;
-        
+
         /// <summary>
-        /// workerLabel control.
+        /// customerLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label workerLabel;
-        
-        /// <summary>
-        /// rowWorkerLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowWorkerLink;
-        
+        protected global::System.Web.UI.WebControls.Label customerLabel;
+
         /// <summary>
         /// cellWorkerLink control.
         /// </summary>
@@ -65,7 +58,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellWorkerLink;
-        
+
         /// <summary>
         /// workerButton control.
         /// </summary>
@@ -74,7 +67,25 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button workerButton;
-        
+
+        /// <summary>
+        /// cellWorkerList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell cellWorkerList;
+
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
         /// <summary>
         /// cellWorkerSearch control.
         /// </summary>
@@ -83,34 +94,34 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TableCell cellWorkerSearch;
-        
+
         /// <summary>
-        /// searchLabel control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label searchLabel;
-        
+        protected global::System.Web.UI.WebControls.Label Label2;
+
         /// <summary>
-        /// cellWorkerSearchButton control.
+        /// searchWorkerTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellWorkerSearchButton;
-        
+        protected global::System.Web.UI.WebControls.TextBox searchWorkerTextBox;
+
         /// <summary>
-        /// searchTextBox control.
+        /// searchButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-        
+        protected global::System.Web.UI.WebControls.Button searchButton;
+
         /// <summary>
         /// workerGridView control.
         /// </summary>
@@ -119,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView workerGridView;
-        
+
         /// <summary>
         /// lblSuccessMessage control.
         /// </summary>
@@ -128,7 +139,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
-        
+
         /// <summary>
         /// lblErrorMessage control.
         /// </summary>

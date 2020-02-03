@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Collections.Generic;
 
 namespace ERP_Demo
 {
-    public partial class displayWorker : System.Web.UI.Page
+    public partial class displayWorker : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
@@ -117,6 +115,42 @@ namespace ERP_Demo
                 lblSuccessMessage.Text = "";
                 lblErrorMessage.Text = ex.Message;
             }
+        }
+
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchWorker();
+        }
+
+        protected void searchWorker()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM worker_master";
+                    if (!string.IsNullOrEmpty(searchWorkerTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE worker_name LIKE '%' + @WorkerName + '%'";
+                        cmd.Parameters.AddWithValue("@WorkerName", searchWorkerTextBox.Text.Trim());
+                    }
+                    sql += " except select * from worker_master where id=1";
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        workerGridView.DataSource = dt;
+                        workerGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void workerGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            workerGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
         }
     }
 }

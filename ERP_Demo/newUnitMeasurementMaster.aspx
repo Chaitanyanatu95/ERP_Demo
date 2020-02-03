@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" Height="30%" Width="40%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="3"><h3>UOM MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="3"><h3>UOM DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" VerticalAlign="Bottom">
             <asp:TableCell runat="server" CssClass="margin">UNIT OF MEASUREMENT</asp:TableCell>

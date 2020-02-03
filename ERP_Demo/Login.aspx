@@ -9,7 +9,9 @@
                         position: relative;
                     }
                     div.container4 table {
+                        font-family:Helvetica;
                         margin: 0;
+                        border:1px solid black;
                         background: lightgray;
                         position: absolute;
                         font-size: medium;
@@ -52,10 +54,11 @@
         </head>
             <body style="font-family:Raleway;">
                 <div class="main" >
-                    <img src="~/Images/logoc.png" alt="Plastic Injection Molding" height="90" runat="server" style="                            display: inline-block;
+                    <img src="~/Images/logoc.png" alt="Plastic Injection Molding" height="70" runat="server" style="                            display: inline-block;
                             text-align: center;
                             margin-left: auto;
-                            margin-right: 0
+                            margin-right: 0;
+                            margin-top:17px;
                     " />
                     <h1 style="display:inline; margin-left:0; margin-right:auto; margin-top:48px;">PB PLASTICS ERP</h1>
                     </div>

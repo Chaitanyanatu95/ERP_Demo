@@ -12,7 +12,7 @@
     </script>
         <asp:Table ID="Table1" runat="server" Height="28%" Width="70%" HorizontalAlign="Center" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="5"><h3>RAW MATERIAL MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="5"><h3>RAW MATERIAL DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin">MATERIAL NAME</asp:TableCell>

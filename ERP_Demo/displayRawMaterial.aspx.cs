@@ -150,5 +150,39 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchRM();
+        }
+
+        protected void searchRM()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM raw_material_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE material_name LIKE '%' + @rawMName + '%'";
+                        cmd.Parameters.AddWithValue("@rawMName", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        rawMaterialGridView.DataSource = dt;
+                        rawMaterialGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void rawMaterialGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            rawMaterialGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
+        }
     }
 }

@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -10,7 +9,7 @@ using ClosedXML.Excel;
 
 namespace ERP_Demo
 {
-    public partial class dprReports : System.Web.UI.Page
+    public partial class dprReports : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
 
@@ -63,6 +62,15 @@ namespace ERP_Demo
                             reader.Close();
                             partNameDropDownList.Items.Insert(0, new ListItem("Select Part Name", ""));
                         }
+
+                        using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT machine_no FROM machine_master", con))
+                        {
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            machineNoDropDownList.DataSource = reader;
+                            machineNoDropDownList.DataBind();
+                            reader.Close();
+                            machineNoDropDownList.Items.Insert(0, new ListItem("Select Machine No", ""));
+                        }
                         con.Close();
                     }
                 }
@@ -78,7 +86,7 @@ namespace ERP_Demo
         {
             try
             {
-                if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name")
+                if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Select atleast one option to generate report!')", true);
                 }
@@ -88,77 +96,180 @@ namespace ERP_Demo
                     SqlConnection con = new SqlConnection();
                     con.ConnectionString = settings.ToString();
 
-                    if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value =="" && dateSelection2.Value=="")
+                    /*SINGLE SELECTION*/
+
+                    if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
                         string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
                         string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
                         string query = "SELECT * FROM production WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
-                        string query = "SELECT * FROM production WHERE date_dpr BETWEEN ='" + dateSelection.Value+ "' AND '"+dateSelection2.Value+"'";
+                        string query = "SELECT * FROM production WHERE machine_no ='" + machineNoDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production WHERE date_dpr BETWEEN '" + dateSelection.Value+ "' AND '"+dateSelection2.Value+"'";
+                        Application["query"] = query;
+                    }
+
+                    /*DOUBLE SELECTION*/
+                        /*1st Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
                         string query = "SELECT * FROM production WHERE operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
                         string query = "SELECT * FROM production WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE machine_no='" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                        /*2nd Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
                     {
                         string query = "SELECT * FROM production WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND machine_no='" + machineNoDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                        /*3rd Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "' AND machine_no='" + machineNoDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+
+                        /*4th Combination*/
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
                         string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
                         string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
                         string query = "SELECT * FROM production WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production WHERE machine_no ='" + machineNoDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+
+                    /*TRIPLE SELECTION*/
+
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
                         string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details = '"+shiftDropDownList.SelectedItem.Text+"' AND date_dpr BETWEEN '"+dateSelection.Value+"' AND '"+dateSelection2.Value+"'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
                         string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production WHERE operator_name ='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND machine_no = '"+machineNoDropDownList.SelectedItem.Text+"' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
                         string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
                     {
-                        string query = "SELECT part_name,operator_name,material_grade,machine_no,shift_details,exp_qty,date_dpr FROM production where part_name='"+partNameDropDownList.SelectedItem.Text+"' AND operator_name='"+workerNameDropDownList.SelectedItem.Text+"' AND shift_details='"+shiftDropDownList.SelectedItem.Text+"' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND machine_no = '" + machineNoDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
                         Application["query"] = query;
                     }
-                   
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND machine_no = '" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name = '"+workerNameDropDownList.SelectedItem.Text+"'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE part_name ='" + partNameDropDownList.SelectedItem.Text + "' AND machine_no = '" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name = '" + workerNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND operator_name = '" + workerNameDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production WHERE shift_details ='" + shiftDropDownList.SelectedItem.Text + "' AND part_name = '" + partNameDropDownList.SelectedItem.Text + "' AND machine_no = '" + machineNoDropDownList.SelectedItem.Text + "'";
+                        Application["query"] = query;
+                    }
+
+                    /*FOUR SELECTION*/
+
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text == "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production where part_name='"+partNameDropDownList.SelectedItem.Text+"' AND operator_name='"+workerNameDropDownList.SelectedItem.Text+"' AND shift_details='"+shiftDropDownList.SelectedItem.Text+"' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text == "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production where machine_no='" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text == "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production where machine_no='" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text == "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production where machine_no='" + machineNoDropDownList.SelectedItem.Text + "' AND shift_details='" + shiftDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value == "" && dateSelection2.Value == "")
+                    {
+                        string query = "SELECT * FROM production where machine_no='" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details = '"+shiftDropDownList.SelectedItem.Text+"'";
+                        Application["query"] = query;
+                    }
+
+                    /*ALL SELECTED*/
+
+                    else if (workerNameDropDownList.SelectedItem.Text != "Select Worker Name" && shiftDropDownList.SelectedItem.Text != "Select Shift Time" && partNameDropDownList.SelectedItem.Text != "Select Part Name" && machineNoDropDownList.SelectedItem.Text != "Select Machine No" && dateSelection.Value != "" && dateSelection2.Value != "")
+                    {
+                        string query = "SELECT * FROM production where machine_no='" + machineNoDropDownList.SelectedItem.Text + "' AND operator_name='" + workerNameDropDownList.SelectedItem.Text + "' AND part_name='" + partNameDropDownList.SelectedItem.Text + "' AND shift_details = '" + shiftDropDownList.SelectedItem.Text + "' AND date_dpr BETWEEN '" + dateSelection.Value + "' AND '" + dateSelection2.Value + "'";
+                        Application["query"] = query;
+                    }
+                    else
+                    {
+                        lblErrorMessage.Text = "Please select valid entries.";
+                    }
+
+                    /* PROCESS */
                     SqlCommand cmd = new SqlCommand(Application["query"].ToString(),con);
                     da = new SqlDataAdapter(cmd);
                     using (DataTable dt = new DataTable())

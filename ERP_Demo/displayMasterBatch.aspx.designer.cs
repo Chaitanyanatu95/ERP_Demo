@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP_Demo {
-    
-    
-    public partial class displayMasterBatch {
-        
+namespace ERP_Demo
+{
+
+
+    public partial class displayMasterBatch
+    {
+
         /// <summary>
         /// displayMasterbatchTable control.
         /// </summary>
@@ -20,88 +22,79 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table displayMasterbatchTable;
-        
+
         /// <summary>
-        /// rowMasterbatchDisplay control.
+        /// cellLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowMasterbatchDisplay;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellLabel;
+
         /// <summary>
-        /// cellMasterbatch control.
+        /// mbLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellMasterbatch;
-        
+        protected global::System.Web.UI.WebControls.Label mbLabel;
+
         /// <summary>
-        /// masterbatchLabel control.
+        /// cellLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label masterbatchLabel;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellLink;
+
         /// <summary>
-        /// rowMasterbatchLink control.
+        /// mbButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow rowMasterbatchLink;
-        
+        protected global::System.Web.UI.WebControls.Button mbButton;
+
         /// <summary>
-        /// cellMasterbatchLink control.
+        /// cellList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellMasterbatchLink;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellList;
+
         /// <summary>
-        /// masterbatchButton control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button masterbatchButton;
-        
+        protected global::System.Web.UI.WebControls.Label Label1;
+
         /// <summary>
-        /// cellMasterbatchSearch control.
+        /// cellSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellMasterbatchSearch;
-        
+        protected global::System.Web.UI.WebControls.TableCell cellSearch;
+
         /// <summary>
-        /// searchLabel control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label searchLabel;
-        
-        /// <summary>
-        /// cellMasterbatchSearchButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell cellMasterbatchSearchButton;
-        
+        protected global::System.Web.UI.WebControls.Label Label2;
+
         /// <summary>
         /// searchTextBox control.
         /// </summary>
@@ -110,7 +103,16 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox searchTextBox;
-        
+
+        /// <summary>
+        /// searchButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchButton;
+
         /// <summary>
         /// masterbatchGridView control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView masterbatchGridView;
-        
+
         /// <summary>
         /// lblSuccessMessage control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP_Demo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSuccessMessage;
-        
+
         /// <summary>
         /// lblErrorMessage control.
         /// </summary>

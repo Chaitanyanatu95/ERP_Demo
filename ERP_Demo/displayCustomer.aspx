@@ -1,15 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="displayCustomer.aspx.cs" Inherits="ERP_Demo.displayCustomer" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Table ID="displayCustomerTable" runat="server" CssClass="Table1" HorizontalAlign="Center">
-        <asp:TableRow ID="rowCustomerDisplay" runat="server" TableSection="TableHeader">
-            <asp:TableCell ID="cellCustomer"><asp:Label ID="customerLabel" runat="server" ><h5><u>CUSTOMER MASTER</u></h5></asp:Label></asp:TableCell>
+         <asp:TableRow runat="server" TableSection="TableHeader">
+            <asp:TableCell ID="cellLabel"><asp:Label ID="machineLabel" runat="server"><h5><u>CUSTOMER MASTER</u></h5></asp:Label></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell ID="cellCustomerLink" runat="server"><asp:Button ID="customerButton" runat="server" Text="ADD NEW" Font-Size="Small" OnClick="customerButton_Click"></asp:Button></asp:TableCell>
-            <asp:TableCell ID="TableCell1" runat="server" ColumnSpan="1"><asp:Label ID="Label1" runat="server" Font-Size="Small" BackColor="WhiteSmoke" style="padding:0px 870px 0px 870px"><h4><u>CUSTOMER LIST</u></h4></asp:Label></asp:TableCell>
-            <asp:TableCell ID="cellCustomerSearch" runat="server" CssClass="heading"  ><asp:Label ID="searchLabel" runat="server" Font-Size="Small">&nbsp Search:- &nbsp</asp:Label></asp:TableCell>
-            <asp:TableCell ID="cellCustomerSearchText" runat="server"><asp:TextBox ID="searchTextBox" runat="server" Height="18px"></asp:TextBox></asp:TableCell>
-            <asp:TableCell ID="cellCustomerSearchButton" runat="server">&nbsp;&nbsp;<asp:Button ID="searchButton" runat="server" Font-Size="Smaller" OnClick="searchButton_Click" Text="Search" /></asp:TableCell>
+            <asp:TableCell ID="cellLink" runat="server"><asp:Button ID="machineButton" runat="server" Text="ADD NEW" Font-Size="Small" OnClick="customerButton_Click"></asp:Button></asp:TableCell>
+            <asp:TableCell ID="cellList" runat="server" style="padding-left:550px;padding-right:380px;"><asp:Label ID="Label1" runat="server" Font-Size="Small" BackColor="WhiteSmoke"><h5><u>CUSTOMER LIST</u></h5></asp:Label></asp:TableCell>
+            <asp:TableCell ID="cellSearch" runat="server"><asp:Label ID="Label2" runat="server" Font-Size="Small">&nbsp Search:- &nbsp</asp:Label>
+            <asp:TextBox ID="searchTextBox" runat="server" Height="18px"></asp:TextBox>
+            &nbsp;&nbsp;<asp:Button ID="searchButton" runat="server" Font-Size="Smaller" OnClick="searchButton_Click" Text="Search" /></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
      <asp:GridView ID="customerGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
@@ -19,8 +19,9 @@
                 CssClass="Table1" Width="90%" PageSize="15" OnPageIndexChanging="customerGridView_PageIndexChanging">
                 <%-- Theme Properties --%>
                 <HeaderStyle Height="30px" CssClass="CustomerHeader" Font-Bold="false" Font-Size="Small"/>
+                <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <PagerStyle BackColor="White" ForeColor="Blue" HorizontalAlign="center" />
-                <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>
+                <RowStyle Font-Size="Small" ForeColor="Black" BackColor="WhiteSmoke"/>
                 <Columns>
                     <asp:TemplateField HeaderText="CUSTOMER NAME">
                         <ItemTemplate>
@@ -80,12 +81,12 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">
                         <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="20px" Height="20px" OnClientClick="return confirm('Do you want to edit?');"/>
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="15px" Height="15px" OnClientClick="return confirm('Do you want to edit?');"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText ="DELETE" HeaderStyle-Width="75px">
                         <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="DELETE" Width="20px" Height="20px" OnClientClick="return confirm('Do you want to delete?');"/>
+                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="DELETE" Width="17px" Height="17px" OnClientClick="return confirm('Do you want to delete?');"/>
                             </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

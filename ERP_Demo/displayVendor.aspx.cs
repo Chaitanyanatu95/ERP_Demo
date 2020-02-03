@@ -108,6 +108,38 @@ namespace ERP_Demo
         {
             Response.Redirect("~/newVendor.aspx");
         }
-
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchVE();
+        }
+        protected void searchVE()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM vendor_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE vendor_name LIKE '%' + @VName + '%'";
+                        cmd.Parameters.AddWithValue("@VName", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        vendorGridView.DataSource = dt;
+                        vendorGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void vendorGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            vendorGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
+        }
     }
 }

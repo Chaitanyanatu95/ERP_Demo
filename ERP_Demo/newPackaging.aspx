@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" Height="30%" Width="45%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="4"><h3>PACKAGING MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="4"><h3>PACKAGING DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin">PACKAGING TYPE <div class="required" style="display:inline">*</div><br />

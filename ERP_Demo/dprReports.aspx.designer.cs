@@ -60,6 +60,15 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.Label partNameLabel;
 
         /// <summary>
+        /// machineNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label machineNameLabel;
+
+        /// <summary>
         /// generateReportsBtn control.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace ERP_Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList partNameDropDownList;
+
+        /// <summary>
+        /// machineNoDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList machineNoDropDownList;
 
         /// <summary>
         /// lblSuccessMessage control.

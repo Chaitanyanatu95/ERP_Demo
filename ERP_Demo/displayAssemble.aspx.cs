@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ERP_Demo
 {
-    public partial class displayFamily : System.Web.UI.Page
+    public partial class displayAssemble : System.Web.UI.Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
         protected void Page_Load(object sender, EventArgs e)
@@ -30,24 +26,24 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM family_master", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assemble_master", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
                 {
-                    familyGridView.DataSource = dtbl;
-                    familyGridView.DataBind();
+                    assembleGridView.DataSource = dtbl;
+                    assembleGridView.DataBind();
                 }
                 else
                 {
                     dtbl.Rows.Add(dtbl.NewRow());
-                    familyGridView.DataSource = dtbl;
-                    familyGridView.DataBind();
-                    familyGridView.Rows[0].Cells.Clear();
-                    familyGridView.Rows[0].Cells.Add(new TableCell());
-                    familyGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                    familyGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
-                    familyGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                    assembleGridView.DataSource = dtbl;
+                    assembleGridView.DataBind();
+                    assembleGridView.Rows[0].Cells.Clear();
+                    assembleGridView.Rows[0].Cells.Add(new TableCell());
+                    assembleGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    assembleGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    assembleGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
             catch(Exception ex)
@@ -57,30 +53,30 @@ namespace ERP_Demo
             }
         }
 
-        protected void familyGridView_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void assembleGridView_RowEditing(object sender, GridViewEditEventArgs e)
         {
             //string temp;
-            familyGridView.EditIndex = e.NewEditIndex;
+            assembleGridView.EditIndex = e.NewEditIndex;
             //temp = customer.Rows[0].Cells[0].Text;
             PopulateGridview();
         }
 
-        protected void familyGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void assembleGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            familyGridView.EditIndex = -1;
+            assembleGridView.EditIndex = -1;
             PopulateGridview();
         }
 
-        protected void familyGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void assembleGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
             {
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    string query = "DELETE FROM family_master WHERE id = @id";
+                    string query = "DELETE FROM assemble_master WHERE id = @id";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(familyGridView.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assembleGridView.DataKeys[e.RowIndex].Value.ToString()));
                     sqlCmd.ExecuteNonQuery();
                     PopulateGridview();
                     lblFamilySuccessMessage.Text = "Selected Record Deleted";
@@ -94,12 +90,12 @@ namespace ERP_Demo
             }
         }
 
-        protected void familyButton_Click(object sender, EventArgs e)
+        protected void assembleButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/newFamilyMaster.aspx");
+            Response.Redirect("~/newAssembleMaster.aspx");
         }
 
-        protected void familyGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void assembleGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
@@ -122,20 +118,20 @@ namespace ERP_Demo
 
         protected void searchButton_Click(object sender, EventArgs e)
         {
-            this.searchCategory();
+            this.searchAssemble();
         }
 
-        protected void searchCategory()
+        protected void searchAssemble()
         {
             using (SqlConnection con = new SqlConnection(settings.ToString()))
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    string sql = "SELECT * FROM family_master";
+                    string sql = "SELECT * FROM assemble_master";
                     if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
                     {
-                        sql += " WHERE Family LIKE '%' + @Family + '%'";
-                        cmd.Parameters.AddWithValue("@Family", searchTextBox.Text.Trim());
+                        sql += " WHERE child_part LIKE '%' + @ChildPart+ '%'";
+                        cmd.Parameters.AddWithValue("@ChildPart", searchTextBox.Text.Trim());
                     }
                     cmd.CommandText = sql;
                     cmd.Connection = con;
@@ -143,15 +139,15 @@ namespace ERP_Demo
                     {
                         DataTable dt = new DataTable();
                         sda.Fill(dt);
-                        familyGridView.DataSource = dt;
-                        familyGridView.DataBind();
+                        assembleGridView.DataSource = dt;
+                        assembleGridView.DataBind();
                     }
                 }
             }
         }
-        protected void familyGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void assembleGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            familyGridView.PageIndex = e.NewPageIndex;
+            assembleGridView.PageIndex = e.NewPageIndex;
             PopulateGridview();
         }
     }

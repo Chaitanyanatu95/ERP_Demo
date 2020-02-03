@@ -11,7 +11,7 @@ namespace ERP_Demo
 {
 
 
-    public partial class displayFamily
+    public partial class displayAssemble
     {
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.TableCell cellLink;
 
         /// <summary>
-        /// familyButton control.
+        /// assembleButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button familyButton;
+        protected global::System.Web.UI.WebControls.Button assembleButton;
 
         /// <summary>
         /// cellList control.
@@ -114,13 +114,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.Button searchButton;
 
         /// <summary>
-        /// familyGridView control.
+        /// assembleGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView familyGridView;
+        protected global::System.Web.UI.WebControls.GridView assembleGridView;
 
         /// <summary>
         /// lblFamilySuccessMessage control.

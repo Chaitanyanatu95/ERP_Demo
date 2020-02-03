@@ -119,5 +119,40 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchPO();
+        }
+
+        protected void searchPO()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM post_operation_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE type LIKE '%' + @type + '%'";
+                        cmd.Parameters.AddWithValue("@type", searchTextBox.Text.Trim());
+                    }
+                    sql += " EXCEPT SELECT * FROM post_operation_master WHERE type = 'N/A' EXCEPT SELECT * FROM post_operation_master WHERE id = 1";
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        postOperationGridView.DataSource = dt;
+                        postOperationGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void postOperationGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            postOperationGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
+        }
     }
 }

@@ -113,5 +113,41 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
+
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchUOM();
+        }
+
+        protected void searchUOM()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM unit_of_measurement_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE unit_of_measurement LIKE '%' + @UOM + '%'";
+                        cmd.Parameters.AddWithValue("@UOM", searchTextBox.Text.Trim());
+                    }
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        unitOfMeasurementGridView.DataSource = dt;
+                        unitOfMeasurementGridView.DataBind();
+                    }
+                }
+            }
+        }
+
+        protected void unitOfMeasurementGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            unitOfMeasurementGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
+        }
     }
 }

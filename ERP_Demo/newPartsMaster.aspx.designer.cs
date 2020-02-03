@@ -240,24 +240,6 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.RequiredFieldValidator cycleTimeReq;
 
         /// <summary>
-        /// jigReqDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList jigReqDropDownList;
-
-        /// <summary>
-        /// jigFixLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label jigFixLabel;
-
-        /// <summary>
         /// moldProductionCycleTextBox control.
         /// </summary>
         /// <remarks>
@@ -274,6 +256,24 @@ namespace ERP_Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label productionLbl;
+
+        /// <summary>
+        /// jigReqDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList jigReqDropDownList;
+
+        /// <summary>
+        /// jigFixLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label jigFixLabel;
 
         /// <summary>
         /// samplePartNo control.

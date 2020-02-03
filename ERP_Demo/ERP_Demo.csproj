@@ -45,8 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxControlToolkit, Version=19.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\ASUS\Documents\ASP.NET AJAX Control Toolkit\Bin\AjaxControlToolkit.dll</HintPath>
+      <HintPath>..\packages\AjaxControlToolkit.19.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.94.2\lib\net46\ClosedXML.dll</HintPath>
@@ -140,6 +139,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="displayAssemble.aspx" />
     <Content Include="displayPartsWorker.aspx" />
     <Content Include="displayVendor.aspx" />
     <Content Include="displayRejection.aspx" />
@@ -161,6 +161,7 @@
     <Content Include="Images\logoc.png" />
     <Content Include="Images\pdf.png" />
     <Content Include="Images\save.png" />
+    <Content Include="newAssembleMaster.aspx" />
     <Content Include="newVendor.aspx" />
     <Content Include="newRejection.aspx" />
     <Content Include="newPackaging.aspx" />
@@ -200,6 +201,9 @@
     <Content Include="rawMaterialPage.aspx" />
     <Content Include="postOperationsPage.aspx" />
     <Content Include="newPostOperationMaster.aspx" />
+    <Content Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\pbplastics - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\pbplastics - Web Deploy1.pubxml" />
@@ -249,6 +253,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="displayAssemble.aspx.cs">
+      <DependentUpon>displayAssemble.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="displayAssemble.aspx.designer.cs">
+      <DependentUpon>displayAssemble.aspx</DependentUpon>
+    </Compile>
     <Compile Include="displayPartsWorker.aspx.cs">
       <DependentUpon>displayPartsWorker.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -304,6 +315,13 @@
     </Compile>
     <Compile Include="FPAList.aspx.designer.cs">
       <DependentUpon>FPAList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="newAssembleMaster.aspx.cs">
+      <DependentUpon>newAssembleMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="newAssembleMaster.aspx.designer.cs">
+      <DependentUpon>newAssembleMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="newVendor.aspx.cs">
       <DependentUpon>newVendor.aspx</DependentUpon>

@@ -17,8 +17,9 @@
                     <td style="text-align:center;font-weight:700; color:black;"><asp:Label ID="shiftNameLabel" runat="server">SHIFT NAME</asp:Label></td>
                     <td style="text-align:center;font-weight:700; color:black;"><asp:Label ID="dateSelectLabel" runat="server">DATE FROM</asp:Label></td>
                     <td style="text-align:center;font-weight:700; color:black;"><asp:Label ID="dateSelectLabel2" runat="server">DATE TO</asp:Label></td>
+                    <td style="text-align:center;font-weight:700; color:black;"><asp:Label ID="operationTypeLabel" runat="server">OPERATION TYPE</asp:Label></td>
                     <td style="text-align:center;font-weight:700; color:black;"><asp:Label ID="partNameLabel" runat="server">PART NAME</asp:Label></td>
-                    <td rowspan="2" style="text-align:center;"> 
+                    <td rowspan="2" style="text-align:center;"> <br /><br /><br />
                         <asp:Button ID="generateReportsBtn" runat="server" OnClick="generateReportsBtn_Click" Text="GENERATE REPORT"/>
                     </td>
                 </tr>
@@ -27,6 +28,7 @@
                     <td style="text-align:center;"><asp:DropDownList ID="shiftDropDownList" runat="server" DataTextField="shift_time" DataValueField="shift_time"></asp:DropDownList></td>
                     <td style="text-align:center;"><input type="date" ID="dateSelection" runat="server"></td>
                     <td style="text-align:center;"><input type="date" ID="dateSelection2" runat="server"></td>
+                    <td style="text-align:center;"><asp:DropDownList ID="operationTypeDropDownList" runat="server" DataTextField="type" DataValueField="type"></asp:DropDownList></td>
                     <td style="text-align:center;"><asp:DropDownList ID="partNameDropDownList" runat="server" DataTextField="part_name" DataValueField="part_name"></asp:DropDownList></td>
                 </tr>
              </table>

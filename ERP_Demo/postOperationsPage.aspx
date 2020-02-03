@@ -163,7 +163,7 @@
                 }
                 else
                 {
-                    alert("Please fill post operation data");
+                    document.getElementById("<%=postOperationGrid.FooterRow.FindControl("errorType").ClientID %>").innerHTML = "Please Select N/A or Type".fontcolor("red");
                     return false;
                 }
             }
@@ -185,7 +185,7 @@
                 }
                 else
                 {
-                    alert("Please fill packaging details data");
+                    document.getElementById("<%=packagingDetailsGrid.FooterRow.FindControl("errorPackType").ClientID %>").innerHTML = "Please select N/A or Type.".fontcolor("red");
                     return false;
                 }
             }
@@ -198,12 +198,8 @@
          function validationOnDropDown() {
             var postOpnDropDown = $('#<%=postOperationDropDownList.ClientID %> option:selected').text();
             var packagingDropDown = $('#<%=packagingDetailsDropDownList.ClientID %> option:selected').text();
-             if (postOpnDropDown == "SELECT") {
-                 alert("Please select dropdown for post operation");
-                 return false;
-             }
-             else if (packagingDropDown == "SELECT") {
-                 alert("Please select dropdown for packaging");
+             if (postOpnDropDown == "SELECT" || packagingDropDown == "SELECT") {
+                 document.getElementById("<%=lblErrorMessage.ClientID %>").innerHTML = "Please select Post Opn/ Packaging requirement.".fontcolor("red");
                  return false;
              }
              else {

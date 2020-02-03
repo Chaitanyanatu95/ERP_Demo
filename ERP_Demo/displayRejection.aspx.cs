@@ -120,5 +120,39 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            this.searchRE();
+        }
+        protected void searchRE()
+        {
+            using (SqlConnection con = new SqlConnection(settings.ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string sql = "SELECT * FROM rejection_master";
+                    if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
+                    {
+                        sql += " WHERE rejection_type LIKE '%' + @rejType + '%'";
+                        cmd.Parameters.AddWithValue("@rejType", searchTextBox.Text.Trim());
+                    }
+                    sql += " EXCEPT SELECT * FROM rejection_master WHERE code = 'N/A' EXCEPT SELECT * FROM rejection_master WHERE id = 1";
+                    cmd.CommandText = sql;
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        rejectionGridView.DataSource = dt;
+                        rejectionGridView.DataBind();
+                    }
+                }
+            }
+        }
+        protected void rejectionGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            rejectionGridView.PageIndex = e.NewPageIndex;
+            PopulateGridview();
+        }
     }
 }

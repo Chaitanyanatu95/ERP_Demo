@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" Height="20%" Width="60%" CssClass="tableClass">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="5"><h3>REJECTION MASTER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="5"><h3>REJECTION DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin">Rejection type</asp:TableCell>

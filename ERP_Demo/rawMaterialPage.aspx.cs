@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace ERP_Demo
 {
-    public partial class rawMaterialPage : System.Web.UI.Page
+    public partial class rawMaterialPage : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
 
@@ -93,6 +93,7 @@ namespace ERP_Demo
                         mbMfgTextBox.Text = Application["mbMfgSelected"].ToString();
                         mbColorTextBox.Text = Application["mbColorSelected"].ToString();
                         mbColorCodeTextBox.Text = Application["mbColorCodeSelected"].ToString();
+                        mbPercentageTextBox.Text = Application["mbPercentageValue"].ToString();
                     }
                     else
                     {
@@ -194,6 +195,7 @@ namespace ERP_Demo
                         altRMBMfgTextBox.Text = Application["altRMMBMfgSelected"].ToString();
                         altRMBColorTextBox.Text = Application["altRMMBColorSelected"].ToString();
                         altRMBColorCodeTextBox.Text = Application["altRMMBColorCodeSelected"].ToString();
+                        altRMBPercentageTextBox.Text = Application["altRMMBPercentageValue"].ToString();
                     }
                     else
                     {
@@ -292,6 +294,10 @@ namespace ERP_Demo
                             mbGradeDropDownList.Items.Insert(0, new ListItem("Select MasterBatch Grade", ""));
                         }
                     }
+                    mbMfgTextBox.Text = "";
+                    mbColorTextBox.Text = "";
+                    mbColorCodeTextBox.Text = "";
+                    mbPercentageTextBox.Text = "";
                 }
             }
             catch(Exception ex)
@@ -357,6 +363,8 @@ namespace ERP_Demo
                         rmGradeDropDownList.Items.Insert(0, new ListItem("Select Raw Material Grade", ""));
                     }
                 }
+                rmMakeTextBox.Text = "";
+                colourTextBox.Text = "";
             }
             catch(Exception ex)
             {
@@ -420,8 +428,9 @@ namespace ERP_Demo
                             reader.Close();
                             altRawMaterialGradeDropDownList.Items.Insert(0, new ListItem("Select Raw Material Grade", ""));
                         }
-
                     }
+                    altRawMaterialMakeTextBox.Text = "";
+                    altColourTextBox.Text = "";
                 }
             }
             catch(Exception ex)
@@ -471,6 +480,7 @@ namespace ERP_Demo
                     altRMBMfgTextBox.Text = "";
                     altRMBColorTextBox.Text = "";
                     altRMBColorCodeTextBox.Text = "";
+                    altRMBPercentageTextBox.Text = "";
                 }
                 SqlConnection con = new SqlConnection(settings.ToString());
                 using (con)
@@ -485,6 +495,10 @@ namespace ERP_Demo
                         altRMBGradeDropDownList.Items.Insert(0, new ListItem("Select MasterBatch Grade", ""));
                     }
                 }
+                altRMBMfgTextBox.Text = "";
+                altRMBColorTextBox.Text = "";
+                altRMBColorCodeTextBox.Text = "";
+                altRMBPercentageTextBox.Text = "";
             }
             catch(Exception ex)
             {
@@ -546,6 +560,7 @@ namespace ERP_Demo
                     Application["mbMfg"] = mbMfgTextBox.Text;
                     Application["mbColor"] = mbColorTextBox.Text;
                     Application["mbColorCode"] = mbColorCodeTextBox.Text;
+                    Application["mbPercentage"] = mbPercentageTextBox.Text;
 
                     if (Application["mbName"].ToString() != "Select Masterbatch" && Application["mbGrade"].ToString() != "Select MasterBatch Grade" && Application["mbMfg"].ToString() != null && Application["mbColor"].ToString() != null)
                     {
@@ -586,6 +601,7 @@ namespace ERP_Demo
                     Application["altMasterbatchMfg"] = altRMBMfgTextBox.Text;
                     Application["altMasterbatchColor"] = altRMBColorTextBox.Text;
                     Application["altMasterbatchColorCode"] = altRMBColorCodeTextBox.Text;
+                    Application["altMasterbatchPercentage"] = altRMBPercentageTextBox.Text;
 
                     if (Application["altMasterbatchName"].ToString() != "Select Masterbatch" && Application["altMasterbatchGrade"].ToString() != "Select MasterBatch Grade" && Application["altMasterbatchMfg"] != null && Application["altMasterbatchColor"] != null)
                     {

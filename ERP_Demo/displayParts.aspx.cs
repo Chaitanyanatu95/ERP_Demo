@@ -132,7 +132,7 @@ namespace ERP_Demo
                     string sql = "SELECT * FROM parts_master";
                     if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
                     {
-                        sql += " WHERE part_name LIKE @PartName + '%'";
+                        sql += " WHERE part_name LIKE '%' + @PartName + '%'";
                         cmd.Parameters.AddWithValue("@PartName", searchTextBox.Text.Trim());
                     }
                     cmd.CommandText = sql;

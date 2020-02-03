@@ -12,7 +12,7 @@
     </script>
     <asp:Table ID="Table1" runat="server" CssClass="tableClass" Width="65%">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" CssClass="CustomerHeader">
-            <asp:TableCell runat="server" ColumnSpan="3" Font-Bold="true" Font-Names="Verdana"><h3>ADD/EDIT CUSTOMER</h3></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="3" Font-Bold="true" Font-Names="Verdana"><h3>CUSTOMER DETAILS</h3></asp:TableCell>
         </asp:TableRow>
 
         <asp:TableRow runat="server">
