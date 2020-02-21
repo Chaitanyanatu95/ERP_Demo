@@ -234,7 +234,6 @@ namespace ERP_Demo
                         rawMaterialDropDownList.DataBind();
                         rawMaterialDropDownList.Items.Insert(0, new ListItem("Select Raw Material", ""));
                         reader.Close();
-
                     }
                     using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT material_name FROM raw_material_master", con))
                     {

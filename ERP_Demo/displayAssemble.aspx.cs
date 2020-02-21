@@ -26,7 +26,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assemble_master", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT assembly_no,id,assembly_name FROM (SELECT assembly_name, MAX(id) id, MAX(assembly_no) assembly_no FROM assembly_master GROUP BY assembly_name) A ORDER BY id;", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
@@ -74,10 +74,20 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    string query = "DELETE FROM assemble_master WHERE id = @id";
+
+                    string query = "DELETE FROM assembly_master WHERE id = @id";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assembleGridView.DataKeys[e.RowIndex].Value.ToString()));
+
+                    /*string query2 = "DELETE FROM assembly_operation_saved_details WHERE assembly_no = @id";
+                    SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
+                    sqlCmd2.Parameters.AddWithValue("@id", Convert.ToInt32(assembleGridView.DataKeys[e.RowIndex].Values[1].ToString()));
+
+                    sqlCmd2.ExecuteNonQuery();*/
                     sqlCmd.ExecuteNonQuery();
+
+                    sqlCon.Close();
+
                     PopulateGridview();
                     lblFamilySuccessMessage.Text = "Selected Record Deleted";
                     lblFamilyErrorMessage.Text = "";
@@ -103,10 +113,12 @@ namespace ERP_Demo
                 {
                     //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "", true);
                     string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
-                    Application["familyId"] = commandArgs[0];
+                    Application["assemblyId"] = commandArgs[0];
+                    Application["assemblyNo"] = commandArgs[1];
+                    Application["assemblyName"] = commandArgs[2];
                     bool editFlag = true;
                     Application["editFlag"] = editFlag;
-                    Response.Redirect("~/newFamilyMaster.aspx/");
+                    Response.Redirect("~/newAssembleMaster.aspx/");
                 }
             }
             catch(Exception ex)
@@ -127,11 +139,11 @@ namespace ERP_Demo
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    string sql = "SELECT * FROM assemble_master";
+                    string sql = "SELECT * FROM assembly_master";
                     if (!string.IsNullOrEmpty(searchTextBox.Text.Trim()))
                     {
-                        sql += " WHERE child_part LIKE '%' + @ChildPart+ '%'";
-                        cmd.Parameters.AddWithValue("@ChildPart", searchTextBox.Text.Trim());
+                        sql += " WHERE assembly_name LIKE '%' + @assName+ '%'";
+                        cmd.Parameters.AddWithValue("@assName", searchTextBox.Text.Trim());
                     }
                     cmd.CommandText = sql;
                     cmd.Connection = con;

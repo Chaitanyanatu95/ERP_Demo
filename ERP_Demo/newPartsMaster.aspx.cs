@@ -11,7 +11,6 @@ namespace ERP_Demo
     public partial class newPartsMaster : System.Web.UI.Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -119,7 +118,6 @@ namespace ERP_Demo
                 lblErrorMessage.Text = ex.Message;
             }
         }
-
         protected void LoadEditValuesInController()
         {
             try
@@ -181,7 +179,6 @@ namespace ERP_Demo
                             }
 
                             /*** ALt Raw Material Of The Part ***/
-
                             Application["altRawMaterialSelected"] = reader["alt_raw_material"].ToString();
                             if (Application["altRawMaterialSelected"].ToString() == "YES")
                             {
@@ -212,8 +209,7 @@ namespace ERP_Demo
                         jigReqDropDownList.Items.Remove(jigReqDropDownList.Items.FindByValue("NO"));
 
                     jigReqDropDownList.Items.Insert(0, new ListItem(Application["jigFixtureReq"].ToString()));
-
-
+                    
                     using (SqlCommand cmd = new SqlCommand("SELECT Family FROM family_master where Family NOT IN('" + Application["ProdCategory"].ToString() + "')", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();

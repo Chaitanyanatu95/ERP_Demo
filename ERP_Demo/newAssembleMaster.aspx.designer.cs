@@ -15,13 +15,31 @@ namespace ERP_Demo
     {
 
         /// <summary>
-        /// assemblePart control.
+        /// assemblyNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox assemblePart;
+        protected global::System.Web.UI.WebControls.TextBox assemblyNo;
+
+        /// <summary>
+        /// assemblePartName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox assemblePartName;
+
+        /// <summary>
+        /// assPartNameValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator assPartNameValidator;
 
         /// <summary>
         /// uomDropDownList control.
@@ -33,22 +51,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.DropDownList uomDropDownList;
 
         /// <summary>
-        /// countTextBox control.
+        /// uomValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox countTextBox;
-
-        /// <summary>
-        /// countbtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button countbtn;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator uomValidator;
 
         /// <summary>
         /// secondTable control.
@@ -60,22 +69,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.HtmlControls.HtmlTable secondTable;
 
         /// <summary>
-        /// Repeater1 control.
+        /// assemblyGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater1;
-
-        /// <summary>
-        /// calculateBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button calculateBtn;
+        protected global::System.Web.UI.WebControls.GridView assemblyGridView;
 
         /// <summary>
         /// assWt control.
@@ -85,6 +85,87 @@ namespace ERP_Demo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox assWt;
+
+        /// <summary>
+        /// targetQtyTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox targetQtyTextBox;
+
+        /// <summary>
+        /// targetQuantLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label targetQuantLbl;
+
+        /// <summary>
+        /// assemblyFileLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label assemblyFileLabel;
+
+        /// <summary>
+        /// assemblyFileUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload assemblyFileUpload;
+
+        /// <summary>
+        /// lblAssemblySpec control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssemblySpec;
+
+        /// <summary>
+        /// btnAssemblySpecs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnAssemblySpecs;
+
+        /// <summary>
+        /// errorAssemblyFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorAssemblyFile;
+
+        /// <summary>
+        /// saveBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button saveBtn;
+
+        /// <summary>
+        /// cancelBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cancelBtn;
 
         /// <summary>
         /// lblSuccessMessage control.

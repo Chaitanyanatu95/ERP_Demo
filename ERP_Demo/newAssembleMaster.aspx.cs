@@ -2,6 +2,9 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,76 +16,563 @@ namespace ERP_Demo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(settings.ToString());
-            con.Open();
-            using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT unit_of_measurement FROM unit_of_measurement_master;", con))
+            if (!IsPostBack)
             {
-                SqlDataReader reader = cmd.ExecuteReader();
-                uomDropDownList.DataSource = reader;
-                uomDropDownList.DataBind();
-                reader.Close();
-                uomDropDownList.Items.Insert(0, new ListItem("Select Unit"));
-            }
-            con.Close();
-        }
-
-        protected void countbtn_Click(object sender, EventArgs e)
-        {
-            if (countTextBox.Text != "")
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("DropDownList");
                 SqlConnection con = new SqlConnection(settings.ToString());
                 con.Open();
-                int count = Convert.ToInt32(countTextBox.Text);
-                for (int i = 0; i < count; i++)
+
+                PopulateGridview();
+
+                if (Application["editFlag"] is true)
                 {
-                        dt.Rows.Add("");
+                    LoadEditValuesInController();
+                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                    qty.BackColor = Color.WhiteSmoke;
+                    drop.Items.Insert(0, new ListItem("Select Part"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+                    var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                    img.Visible = false;
                 }
-                this.Repeater1.DataSource = dt;
-                this.Repeater1.DataBind();
+                else
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT unit_of_measurement FROM unit_of_measurement_master;", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        uomDropDownList.DataSource = reader;
+                        uomDropDownList.DataBind();
+                        reader.Close();
+                        uomDropDownList.Items.Insert(0, new ListItem("Select Unit"));
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM assembly_master ORDER BY ID DESC", con))
+                    {
+                        // Int32 count = (Int32)cmd.ExecuteScalar();
+                        //System.Diagnostics.Debug.WriteLine(count);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Application["input"] = reader["assembly_no"];
+                        }
+                        reader.Close();
+                        if (Application["input"] == null)
+                            Application["input"] = 0;
+                        int input = int.Parse(Regex.Replace(Application["input"].ToString(), "[^0-9]+", string.Empty));
+                        assemblyNo.Text = "PBPAY#" + (input + 1);
+                    }
+                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                    qty.BackColor = Color.WhiteSmoke;
+                    drop.Items.Insert(0, new ListItem("Select Part"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+                    var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                    img.Visible = false;
+                }
+                con.Close();
             }
-            else
+           
+        }
+
+        void PopulateGridview()
+        {
+            try
             {
-                lblErrorMessage.Text = "Please enter numeric value.";
+                DataTable dtbl = new DataTable();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+                    if (Application["editFlag"] is true)
+                    {
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_saved_details WHERE assembly_id = '"+Application["assemblyNo"].ToString()+"'", sqlCon);
+                        sqlDa.Fill(dtbl);
+                    }
+                    else
+                    {
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_details", sqlCon);
+                        sqlDa.Fill(dtbl);
+                    }
+                }
+                if (dtbl.Rows.Count > 0)
+                {
+                    assemblyGridView.DataSource = dtbl;
+                    assemblyGridView.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    assemblyGridView.DataSource = dtbl;
+                    assemblyGridView.DataBind();
+                    assemblyGridView.Rows[0].Cells.Clear();
+                    assemblyGridView.Rows[0].Cells.Add(new TableCell());
+                    assemblyGridView.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
+                    //assemblyGridView.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    assemblyGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
             }
         }
 
-        protected void calculateBtn_Click(object sender, EventArgs e)
+        protected void LoadValuesInController()
         {
-            assWt.Text = "";
-            int total = 0;
-            SqlConnection con = new SqlConnection(settings.ToString());
-            con.Open();
-            foreach (RepeaterItem i in Repeater1.Items)
+            try
             {
-                DropDownList drop = (DropDownList)i.FindControl("DropDownListField");
-                TextBox txtExample = (TextBox)i.FindControl("qtyTextBox");
-                string txtQty = txtExample.Text;
-                string txtPartWt = "";
-                string query = "SELECT part_weight FROM parts_master WHERE part_name = @PartName";
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@PartName", drop.SelectedItem.Text);
-                SqlDataReader rdr = cmd.ExecuteReader();
-                while(rdr.Read())
+                /************** ASSEMBLY OPERATION ****************/
+                DataTable dtAssembly = new DataTable();
+                dtAssembly.Columns.AddRange(new DataColumn[2] { new DataColumn("PART NAME"), new DataColumn("QTY") });
+                Application["AssemblyOperation"] = dtAssembly;
+                Application["tempAssNo"] = string.Empty;
+                BindPostGrid();
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
-                    txtPartWt = rdr["part_weight"].ToString();
-                }
-                rdr.Close();
-
-                if (txtQty != null && txtPartWt != null)
-                {
-                    if (int.TryParse(txtQty, out int qty) && int.TryParse(txtPartWt, out int wt))
+                    sqlCon.Open();
+                    if (Application["editFlag"] is true)
                     {
-                        total += wt * qty;
-                        assWt.Text = total.ToString();
+                        string query = "SELECT assembly_name FROM assembly_master where Id = '" + Application["assemblyId"].ToString() + "'";
+                        SqlCommand cmd = new SqlCommand(query, sqlCon);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Application["tempAssNo"] = reader["assembly_name"];
+                        }
+                        reader.Close();
+                        if (Application["tempAssNo"].ToString() != "")
+                        {
+                            SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_saved_details where assembly_id = '" + Application["assemblyNo"].ToString() + "'", sqlCon);
+                            Application["tempAssNo"] = null;
+                            sqlDa.Fill(dtAssembly);
+                        }
+                    }
+                    else
+                    {
+                        //SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
+                        string postSelectQuery = "SELECT assembly_id FROM assembly_operation_details where assembly_id= '" + assemblyNo.Text.Trim() + "'";
+                        SqlCommand selCmd = new SqlCommand(postSelectQuery, sqlCon);
+                        Application["assemblySelectData"] = string.Empty;
+                        SqlDataReader selReader = selCmd.ExecuteReader();
+                        while (selReader.Read())
+                        {
+                            if (selReader["assembly_id"].ToString() != "")
+                            {
+                                Application["assemblySelectData"] = selReader["assembly_id"].ToString();
+                            }
+                        }
+                        selReader.Close();
+                        if (Application["assemblySelectData"].ToString() != "" && Application["rowCommand"] is false)
+                        {
+                            string postQuery = "DELETE FROM assembly_operation_details where assembly_id= '" + assemblyNo.Text.Trim() + "'";
+                            SqlCommand cmmd = new SqlCommand(postQuery, sqlCon);
+                            cmmd.ExecuteNonQuery();
+                            Application["assemblySelectData"] = null;
+                        }
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_details where assembly_id = '" + assemblyNo.Text.Trim() + "'", sqlCon);
+                        sqlDa.Fill(dtAssembly);
+
+                        lblErrorMessage.Text = "";
+                    }
+                    
+                }
+
+                if (dtAssembly.Rows.Count > 0)
+                {
+                    BindPostGrid();
+                }
+                else
+                {
+                    dtAssembly.Rows.Add(dtAssembly.NewRow());
+                    BindPostGrid();
+                    assemblyGridView.Rows[0].Cells.Clear();
+                    assemblyGridView.Rows[0].Cells.Add(new TableCell());
+                    assemblyGridView.Rows[0].Cells[0].ColumnSpan = dtAssembly.Columns.Count;
+                    //postOperationGrid.Rows[0].Cells[0].Text = "No Data Found ..!";
+                    assemblyGridView.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
+        }
+
+        protected void LoadEditValuesInController()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(settings.ToString());
+                using (con)
+                {
+                    con.Open();
+
+                    String sqlquery = "SELECT DISTINCT * FROM assembly_master where id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sqlquery, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", (Application["assemblyId"]).ToString().Trim());
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            assemblyNo.Text = reader["assembly_no"].ToString();
+                            assemblePartName.Text = reader["assembly_name"].ToString();
+                            assWt.Text = reader["assembly_weight"].ToString();
+                            lblAssemblySpec.Text = reader["assembly_file_upload"].ToString();
+                            targetQtyTextBox.Text = reader["target_quantity"].ToString();
+                            Application["uom"] = reader["uom"].ToString();
+                        }
+                        reader.Close();
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT unit_of_measurement FROM unit_of_measurement_master where unit_of_measurement NOT IN('" + Application["uom"].ToString() + "')", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        uomDropDownList.DataSource = reader;
+                        uomDropDownList.DataBind();
+                        uomDropDownList.Items.Remove(uomDropDownList.Items.FindByValue(Application["uom"].ToString()));
+                        uomDropDownList.Items.Insert(0, new ListItem(Application["uom"].ToString()));
+                        reader.Close();
+                    }
+
+                    var temp = Server.MapPath("~/UploadedFiles/Assembly/");
+                    if (Directory.Exists(temp))
+                    {
+                        DirectoryInfo di = new DirectoryInfo(temp);
+
+                        FileInfo[] files = di.GetFiles(Application["partNo"] + "_*.*");
+
+                        foreach (FileInfo m in files)
+                        {
+                            assemblyFileLabel.Text += String.Format("<style> display:block; </style><br/> {0}", m.Name.ToString());
+                            //btnAssemblySpecs.ImageUrl = "~/Images/cancel.png";
+                            //"<asp:ImageButton ID = 'btnExtraFile' runat = 'server' ImageUrl = '~/Images/cancel.png' Height = '20' Width = '20' OnClick = 'btnExtraFile_Click' />"
+                        }
+                    }
+                    con.Close();
+                    LoadValuesInController();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
+        }
+
+        protected void btnAssemblySpecs_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(settings.ToString());
+
+                if (lblAssemblySpec.Text != null)
+                {
+                    if (Application["editFlag"] is true)
+                    {
+                        var path = Server.MapPath(lblAssemblySpec.Text);
+                        //System.Diagnostics.Debug.WriteLine(path);
+                        if (File.Exists(path))
+                        {
+                            using (SqlCommand cmd = new SqlCommand("UPDATE assembly_master set assembly_file_upload = '' where Id = '" + Application["assemblyId"] + "'", con))
+                            {
+                                con.Open();
+                                cmd.ExecuteNonQuery();
+                                File.Delete(Server.MapPath(lblAssemblySpec.Text));
+                            }
+                            lblAssemblySpec.Text = "";
+                            con.Close();
+                        }
+                        else
+                        {
+                            lblAssemblySpec.Text = "";
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
+        }
 
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "Hello", true);
+        protected void saveBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var quant = targetQtyTextBox.Text;
+                if (quant != "")
+                {
+                    targetQuantLbl.Text="";
+                   Application["Duplicate"] = false;
+                    if (assemblyFileUpload.HasFile)
+                    {
+                        assemblyFileUpload.SaveAs(Server.MapPath("~/UploadedFiles/Assembly/") + assemblyFileUpload.FileName);
+                    }
 
-            con.Close();
+                    SqlConnection con = new SqlConnection(settings.ToString());
+                    con.Open();
+
+                    //Delete rejection history from master
+                    string query2 = "DELETE FROM assembly_operation_details;";
+                    SqlCommand sqlCmd = new SqlCommand(query2, con);
+                    sqlCmd.ExecuteNonQuery();
+
+                    if (Application["editFlag"] is true)
+                    {
+                        string sqlqueryE = "SELECT assembly_name FROM assembly_master EXCEPT SELECT assembly_name FROM assembly_master where assembly_name = '" + Application["assemblyName"].ToString() + "'";
+                        Application["queryD"] = sqlqueryE;
+                    }
+                    else
+                    {
+                        string sqlqueryN = "SELECT assembly_name FROM assembly_master";
+                        Application["queryD"] = sqlqueryN;
+                    }
+
+                    using (SqlCommand cmmd = new SqlCommand(Application["queryD"].ToString(), con))
+                    {
+                        SqlDataReader reader = cmmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            if (assemblePartName.Text.ToLower().Trim() == reader["assembly_name"].ToString().ToLower().Trim())
+                            {
+                                Application["Duplicate"] = true;
+                                break;
+                            }
+                            else
+                            {
+                                Application["Duplicate"] = false;
+                            }
+                        }
+                        reader.Close();
+                    }
+                    if (Application["Duplicate"] is false && Application["editFlag"] is true)
+                    {
+                        string query = "UPDATE assembly_master SET assembly_no='" + assemblyNo.Text.ToString() + "',assembly_name='" + assemblePartName.Text.ToString() + "',uom = '" + uomDropDownList.SelectedItem.Text + "',assembly_weight = '" + assWt.Text + "',target_quantity = '" + targetQtyTextBox.Text + "',assembly_file_upload='" + assemblyFileUpload.FileName + "' WHERE Id='" + Application["assemblyId"] + "'";
+                        SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                        cmd.ExecuteNonQuery();
+                    }
+                    else if (Application["Duplicate"] is false)
+                    {
+                        string query = "INSERT INTO assembly_master(assembly_no,assembly_name,uom,assembly_weight,target_quantity,assembly_file_upload)VALUES('" + assemblyNo.Text + "','" + assemblePartName.Text + "','" + uomDropDownList.SelectedItem.Text + "','" + assWt.Text + "','" + targetQtyTextBox.Text + "','" + assemblyFileUpload.FileName + "')";
+                        SqlCommand cmd = new SqlCommand(query.ToString(), con);
+                        cmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Assembly name already exists.')", true);
+                    }
+                    con.Close();
+                    if (Application["Duplicate"] is false)
+                    {
+                        Application["Duplicate"] = null;
+                        Application["assemblyId"] = null;
+                        Application["assemblyNo"] = null;
+                        Application["assemblyName"] = null;
+                        Application["editFlag"] = null;
+                        Response.Redirect("~/displayAssemble.aspx");
+                    }
+                }
+                else
+                {
+                    targetQuantLbl.Text = "Please enter target quantity";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
+        }
+
+        protected void cancelBtn_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+            {
+                string query = "";
+                sqlCon.Open();
+                query = "DELETE FROM assembly_operation_details WHERE assembly_id = @assId";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@assId", assemblyNo.Text.ToString());
+                sqlCmd.ExecuteNonQuery();
+
+            }
+                if (Application["editFlag"] is true)
+                   Application["editFlag"] = null;
+
+            Application["assemblyNo"] = null;
+            Application["assemblyId"] = null;
+            Application["assemblyName"] = null;
+            Response.Redirect("~/displayAssemble.aspx");
+        }
+
+        protected void BindPostGrid()
+        {
+            assemblyGridView.DataSource = (DataTable)Application["AssemblyOperation"];
+            assemblyGridView.DataBind();
+        }
+
+        protected void assemblyGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName.Equals("Add"))
+                {
+                    //string partName = Application["partName"].ToString();
+                    GridViewRow row = assemblyGridView.FooterRow;
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "'"+Application["PostOperation"].ToString()+"'", true);
+                    using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                    {
+                        sqlCon.Open();
+                        string query = "INSERT INTO assembly_operation_details (child_part,child_part_qty,assembly_id) VALUES (@partName,@quantity,@assemblyId)";
+                        SqlCommand cmd = new SqlCommand(query, sqlCon);
+                        cmd.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
+                        cmd.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
+                        cmd.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
+                        cmd.ExecuteNonQuery();
+
+                        string query2 = "INSERT INTO assembly_operation_saved_details (child_part,child_part_qty,assembly_id) VALUES (@partName,@quantity,@assemblyId)";
+                        SqlCommand cmd2 = new SqlCommand(query2, sqlCon);
+                        cmd2.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
+                        cmd2.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
+                        cmd2.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
+                        cmd2.ExecuteNonQuery();
+
+                        sqlCon.Close();
+
+                        if (Application["editFlag"] is true)
+                        {
+                            LoadEditValuesInController();
+                            var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                            drop.Items.Insert(0, new ListItem("Select Part"));
+                            drop.Items.Add(new ListItem("N/A", "-1"));
+                            var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                            qty.BackColor = Color.WhiteSmoke;
+                            var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                            img.Visible = false;
+                        }
+                        else
+                        {
+                            Application["rowCommand"] = true;
+                            LoadValuesInController();
+                            var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                            drop.Items.Insert(0, new ListItem("Select Part"));
+                            drop.Items.Add(new ListItem("N/A", "-1"));
+                            var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                            qty.BackColor = Color.WhiteSmoke;
+                            var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                            img.Visible = false;
+                        }
+
+                        lblSuccessMessage.Text = "Record Added";
+                        lblErrorMessage.Text = "";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblSuccessMessage.Text = "";
+                lblErrorMessage.Text = ex.Message;
+            }
+        }
+
+        protected void assemblyGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+            {
+                string query = "";
+                sqlCon.Open();
+                if (Application["editFlag"] is true)
+                {
+                    query = "DELETE FROM assembly_operation_saved_details WHERE id = @id";
+                }
+                else
+                {
+                    query = "DELETE FROM assembly_operation_details WHERE id = @id";
+                }
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
+                sqlCmd.ExecuteNonQuery();
+
+                if (Application["editFlag"] is true)
+                {
+                    LoadEditValuesInController();
+                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                    drop.Items.Insert(0, new ListItem("Select Part"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                    qty.BackColor = Color.WhiteSmoke;
+                }
+                else
+                {
+                    LoadValuesInController();
+                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                    drop.Items.Insert(0, new ListItem("Select Part"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                    qty.BackColor = Color.WhiteSmoke;
+                }
+                lblSuccessMessage.Text = "Selected Record Deleted";
+                lblErrorMessage.Text = "";
+            }
+        }
+
+        protected void partNameDropDownListFooter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+            var T = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+            var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+
+            if (drop.SelectedItem.Text == "N/A")
+            {
+                T.ReadOnly = true;
+                T.Text = "";
+                T.BackColor = Color.WhiteSmoke;
+                img.Visible = false;
+                assWt.Text = "";
+                double total = 0;
+                SqlConnection con = new SqlConnection(settings.ToString());
+                con.Open();
+                foreach (GridViewRow i in assemblyGridView.Rows)
+                {
+                    Label partName = (Label)i.FindControl("partNameLabel");
+                    Label qtyLabel = (Label)i.FindControl("qtyLabel");
+                    string txtQty = qtyLabel.Text;
+                    string txtPartWt = "";
+
+                    string query = "SELECT part_weight FROM parts_master WHERE part_name = @PartName";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@PartName", partName.Text);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        txtPartWt = rdr["part_weight"].ToString();
+                    }
+                    rdr.Close();
+
+                    if (txtQty != null && txtPartWt != null)
+                    {
+                        if (int.TryParse(txtQty, out int qty) && double.TryParse(txtPartWt, out double wt))
+                        {
+                            total += wt * qty;
+                            assWt.Text = total.ToString();
+                        }
+                    }
+                }
+                con.Close();
+            }
+            else if(drop.SelectedItem.Text == "Select Part")
+            {
+                T.ReadOnly = true;
+                T.BackColor = Color.WhiteSmoke;
+                img.Visible = false;
+            }
+            else
+            {
+                T.ReadOnly = false;
+                T.BackColor = Color.White;
+                img.Visible = true;
+            }
         }
     }
 }

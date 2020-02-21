@@ -187,3 +187,7 @@
 .linebreak{
     display: block;
 }
+
+.colSpan{
+    column-span:all;
+}

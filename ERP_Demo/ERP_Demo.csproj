@@ -242,6 +242,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="viewDetailsAssembly.aspx" />
     <Content Include="viewDetails.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
@@ -410,6 +411,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="viewDetailsAssembly.aspx.cs">
+      <DependentUpon>viewDetailsAssembly.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewDetailsAssembly.aspx.designer.cs">
+      <DependentUpon>viewDetailsAssembly.aspx</DependentUpon>
     </Compile>
     <Compile Include="viewDetails.aspx.cs">
       <DependentUpon>viewDetails.aspx</DependentUpon>
@@ -583,6 +591,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="fonts\" />
+    <Folder Include="UploadedFiles\Assembly\" />
     <Folder Include="UploadedFiles\Machine\" />
     <Folder Include="UploadedFiles\Packaging\" />
     <Folder Include="UploadedFiles\Parts\" />

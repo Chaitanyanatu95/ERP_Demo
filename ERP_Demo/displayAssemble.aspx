@@ -2,11 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Table ID="displayFamilyTable" runat="server" HorizontalAlign="Center" CssClass="Table1">
         <asp:TableRow runat="server" TableSection="TableHeader">
-            <asp:TableCell ID="cellLabel"><asp:Label ID="customerLabel" runat="server" ><h5><u>ASSEMBLE MASTER</u></h5></asp:Label></asp:TableCell>
+            <asp:TableCell ID="cellLabel"><asp:Label ID="customerLabel" runat="server" ><h5><u>ASSEMBLY MASTER</u></h5></asp:Label></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell ID="cellLink" runat="server"><asp:Button ID="assembleButton" runat="server" Text="ADD NEW" Font-Size="Small" OnClick="assembleButton_Click"></asp:Button></asp:TableCell>
-            <asp:TableCell ID="cellList" runat="server" style="padding-left:440px;padding-right:290px;"><asp:Label ID="Label1" runat="server" Font-Size="Small" BackColor="WhiteSmoke" ><h5><u>ASSEMBLE LIST</u></h5></asp:Label></asp:TableCell>
+            <asp:TableCell ID="cellList" runat="server" style="padding-left:440px;padding-right:290px;"><asp:Label ID="Label1" runat="server" Font-Size="Small" BackColor="WhiteSmoke" ><h5><u>ASSEMBLY PART LIST</u></h5></asp:Label></asp:TableCell>
             <asp:TableCell ID="cellSearch" runat="server"><asp:Label ID="Label2" runat="server" Font-Size="Small">&nbsp Search:- &nbsp</asp:Label>
             <asp:TextBox ID="searchTextBox" runat="server" Height="18px"></asp:TextBox>
             &nbsp;&nbsp;<asp:Button ID="searchButton" runat="server" Font-Size="Smaller" OnClick="searchButton_Click" Text="Search" /></asp:TableCell>
@@ -23,17 +23,19 @@
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>   
                 <Columns>
+                    <asp:TemplateField HeaderText="ASSEMBLE PART NO">
+                        <ItemTemplate>
+                            <asp:Label ID="assembleNo" Text='<%# Eval("assembly_no") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="ASSEMBLE PART">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("assemble_part") %>' runat="server" />
+                            <asp:Label ID="assemblePartName" Text='<%# Eval("assembly_name") %>' runat="server" />
                         </ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:TextBox ID="txtfamily" Text='<%# Eval("assemble_part") %>' runat="server" />
-                        </EditItemTemplate>
-                        </asp:TemplateField>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">
                         <ItemTemplate>
-                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") %>' Width="15px" Height="15px" OnClientClick="return confirm('Do you want to edit?');"/>
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") +","+ Eval("assembly_no")+","+ Eval("assembly_name") %>' Width="15px" Height="15px" OnClientClick="return confirm('Do you want to edit?');"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText ="DELETE" HeaderStyle-Width="75px">

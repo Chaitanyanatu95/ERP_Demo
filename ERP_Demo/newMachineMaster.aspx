@@ -9,12 +9,6 @@
                 document.getElementById('<%= btnMachineSpecs.ClientID %>').style.display = "none";
             }
         }
-        function machineSpecValue() {
-            var machineSpecFile = document.getElementById('<%= machineFileUpload.ClientID %>');
-            if (machineSpecFile.value != null) {
-                document.getElementById('<%= btnMachineSpecs.ClientID %>').style.display = "inline";
-            }
-        }
 
         function machineSpecFileValidation() {
             var fileInput = document.getElementById('<%= machineFileUpload.ClientID %>');
@@ -55,7 +49,7 @@
             <asp:TableCell runat="server" ColumnSpan="5" CssClass="CustomerHeader"><h3>MACHINE DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell runat="server" CssClass="margin">M/C NO <div class="required" style="display:inline">*</div><br />
+            <asp:TableCell runat="server" CssClass="margin">M/C NO<div class="required" style="display:inline">*</div><br />
                 <asp:TextBox ID="machineNoTextBox" runat="server"></asp:TextBox>
                 <br /><asp:RequiredFieldValidator ID="machineNoReq" CssClass="required" runat="server" ErrorMessage="please enter machine no" ControlToValidate="machineNoTextBox"></asp:RequiredFieldValidator>
             </asp:TableCell>
@@ -63,7 +57,7 @@
                     <asp:TextBox ID="machineNameTextBox" runat="server"></asp:TextBox>
                     <br /><asp:RequiredFieldValidator ID="machineNameReq" CssClass="required" runat="server" ErrorMessage="please enter machine name" ControlToValidate="machineNameTextBox"></asp:RequiredFieldValidator>
             </asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin">M/C SPECS <br /> Supported Formats: xls,xlsx,pdf <br />
+            <asp:TableCell runat="server" CssClass="margin">M/C SPECS<br /> Supported Formats: xls,xlsx,pdf <br />
                     <asp:FileUpload runat="server" ID="machineFileUpload" onchange="return machineSpecFileValidation();"/>
                     <asp:Label ID="lblMachineSpec" runat="server" style="display:inline; color:blue;"></asp:Label>
                     <asp:ImageButton ID="btnMachineSpecs" runat="server" ImageUrl="~/Images/cancel.png" Height="20" Width="20" OnClick="btnMachineSpecs_Click" OnClientClick="return confirm('Do you want to delete?');"/><br />
