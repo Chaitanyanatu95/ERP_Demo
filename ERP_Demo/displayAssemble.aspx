@@ -16,12 +16,12 @@
                 ShowHeaderWhenEmpty="True"
                 OnRowCommand="assembleGridView_RowCommand" OnRowCancelingEdit="assembleGridView_RowCancelingEdit"
                 OnRowDeleting="assembleGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CssClass="Table1" Width="20%" PageSize="15" AllowPaging="true" OnPageIndexChanging="assembleGridView_PageIndexChanging">
+                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CssClass="Table1" Width="40%" PageSize="15" AllowPaging="true" OnPageIndexChanging="assembleGridView_PageIndexChanging">
                 <%-- Theme Properties --%>
-                <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
+                <HeaderStyle CssClass="CustomerHeader" Height="15px" ForeColor="black" Font-Size="Small" />
                 <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
-                <RowStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>   
+                <RowStyle Font-Size="Smaller" ForeColor="black" BackColor="WhiteSmoke"/>   
                 <Columns>
                     <asp:TemplateField HeaderText="ASSEMBLE PART NO">
                         <ItemTemplate>
@@ -33,6 +33,11 @@
                             <asp:Label ID="assemblePartName" Text='<%# Eval("assembly_name") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="MORE DETAILS" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="170">
+                       <ItemTemplate>
+                           <asp:Button CssClass="nextPage" ID="viewDetailsButton" Text="Details" runat="server" CommandArgument='<%# Eval("id") %>' CommandName="viewDetails"/>
+                       </ItemTemplate>
+                   </asp:TemplateField>
                     <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">
                         <ItemTemplate>
                             <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" CommandArgument='<%#Eval("id") +","+ Eval("assembly_no")+","+ Eval("assembly_name") %>' Width="15px" Height="15px" OnClientClick="return confirm('Do you want to edit?');"/>
@@ -46,8 +51,8 @@
                 </Columns>
     </asp:GridView>
         <center>
-            <asp:Label ID="lblFamilySuccessMessage" Text="" runat="server" ForeColor="Green" />
+            <asp:Label ID="lblAssemblySuccessMessage" Text="" runat="server" ForeColor="Green" />
             <br />
-            <asp:Label ID="lblFamilyErrorMessage" Text="" runat="server" ForeColor="Red" />
+            <asp:Label ID="lblAssemblyErrorMessage" Text="" runat="server" ForeColor="Red" />
         </center>
 </asp:Content>

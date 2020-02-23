@@ -22,49 +22,18 @@ namespace ERP_Demo
             using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
                 sqlCon.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM parts_master where id='" + Application["viewDetailsId"] + "'", sqlCon);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM assembly_master where id='" + Application["viewDetailsId"] + "'", sqlCon);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while(reader.Read())
                 {
-                    partNameLabel.Text = reader["part_name"].ToString().ToUpper();
-                    partPhoto.ImageUrl = reader["part_photo"].ToString();
-                    textPartNo.Text = reader["part_no"].ToString();
-                    textCustomerName.Text = reader["customer_name"].ToString();
-                    textCustomerPartNo.Text = reader["customer_part_no"].ToString();
-                    textProductCategory.Text = reader["product_category"].ToString();
-                    textMoldName.Text = reader["mold_name"].ToString();
-                    textMoldMfgYear.Text = reader["mold_mfg_year"].ToString();
-                    textMoldLife.Text = reader["mold_life"].ToString();
-                    textNoOfCavities.Text = reader["no_of_cavities"].ToString();
+                    assNameLabel.Text = reader["assembly_name"].ToString().ToUpper();
+                    textPartNo.Text = reader["assembly_no"].ToString();
                     textUOM.Text = reader["unit_of_measurement"].ToString();
-                    textPartWeight.Text = reader["part_weight"].ToString();
-                    textShotWeight.Text = reader["shot_weight"].ToString();
-                    textProductionInPcs.Text = reader["production_in_pcs"].ToString();
-                    textCycleTime.Text = reader["cycle_time"].ToString();
-                    textJigFixReq.Text = reader["jig_fixture_req"].ToString();
-                    dataRawMaterial.Text = reader["raw_material"].ToString();
-                    dataRawMaterialGrade.Text = reader["rm_grade"].ToString();
-                    dataRawMaterialColor.Text = reader["rm_color"].ToString();
-                    dataRawMaterialMake.Text = reader["rm_make"].ToString();
-                    dataMasterbatch.Text = reader["masterbatch"].ToString();
-                    dataMasterbatchName.Text = reader["mb_name"].ToString();
-                    dataMasterbatchGrade.Text = reader["mb_grade"].ToString();
-                    dataMasterbatchMfg.Text = reader["mb_mfg"].ToString();
-                    dataMasterbatchColor.Text = reader["mb_color"].ToString();
-                    dataMasterbatchColorCode.Text = reader["mb_color_code"].ToString();
-                    dataAltRawMaterial.Text = reader["alt_raw_material"].ToString();
-                    dataAltRawMaterialName.Text = reader["alt_rm_name"].ToString();
-                    dataAltRawMaterialGrade.Text = reader["alt_rm_grade"].ToString();
-                    dataAltRawMaterialColor.Text = reader["alt_rm_color"].ToString();
-                    dataAltRawMaterialMake.Text = reader["alt_rm_make"].ToString();
-                    dataAltMasterbatch.Text = reader["alt_masterbatch"].ToString();
-                    dataAltMasterbatchName.Text = reader["alt_mb_name"].ToString();
-                    dataAltMasterbatchGrade.Text = reader["alt_mb_grade"].ToString();
-                    dataAltMasterbatchMfg.Text = reader["alt_mb_mfg"].ToString();
-                    dataAltMasterbatchColor.Text = reader["alt_mb_color"].ToString();
-                    dataAltMasterbatchColorCode.Text = reader["alt_mb_color_code"].ToString();
-                    dataPostOperation.Text = reader["post_operation_required"].ToString();
-                    dataPackagingDetails.Text = reader["packaging_details_required"].ToString();
+                    textAssWeight.Text = reader["assembly_weight"].ToString();
+                    textTargetQuant.Text = reader["target_quantity"].ToString();
+                    
+                    dataChildPart.Text = reader["child_part"].ToString();
+                    dataChildPartQty.Text = reader["child_part_qty"].ToString();
                 }
             }
         }

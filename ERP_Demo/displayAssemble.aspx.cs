@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ERP_Demo
@@ -48,8 +49,8 @@ namespace ERP_Demo
             }
             catch(Exception ex)
             {
-                lblFamilySuccessMessage.Text = "";
-                lblFamilyErrorMessage.Text = ex.Message;
+                lblAssemblySuccessMessage.Text = "";
+                lblAssemblyErrorMessage.Text = ex.Message;
             }
         }
 
@@ -75,28 +76,32 @@ namespace ERP_Demo
                 {
                     sqlCon.Open();
 
+                    GridViewRow row = assembleGridView.Rows[e.RowIndex];
+                    Label assNo = (Label)row.FindControl("assembleNo");
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ assNo.Text.ToString()+"');", true);
+                    //int rowIndex = ((sender as Button).NamingContainer as GridViewRow).RowIndex;
+                    
+                    string query2 = "DELETE FROM assembly_operation_saved_details WHERE assembly_id = @assNo";
+                    SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
+                    sqlCmd2.Parameters.AddWithValue("@assNo", assNo.Text.ToString());
+                    sqlCmd2.ExecuteNonQuery();
+
                     string query = "DELETE FROM assembly_master WHERE id = @id";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assembleGridView.DataKeys[e.RowIndex].Value.ToString()));
-
-                    /*string query2 = "DELETE FROM assembly_operation_saved_details WHERE assembly_no = @id";
-                    SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
-                    sqlCmd2.Parameters.AddWithValue("@id", Convert.ToInt32(assembleGridView.DataKeys[e.RowIndex].Values[1].ToString()));
-
-                    sqlCmd2.ExecuteNonQuery();*/
                     sqlCmd.ExecuteNonQuery();
-
+                    
                     sqlCon.Close();
 
                     PopulateGridview();
-                    lblFamilySuccessMessage.Text = "Selected Record Deleted";
-                    lblFamilyErrorMessage.Text = "";
+                    lblAssemblySuccessMessage.Text = "Selected Record Deleted";
+                    lblAssemblyErrorMessage.Text = "";
                 }
             }
             catch (Exception ex)
             {
-                lblFamilySuccessMessage.Text = "";
-                lblFamilyErrorMessage.Text = ex.Message;
+                lblAssemblySuccessMessage.Text = "";
+                lblAssemblyErrorMessage.Text = ex.Message;
             }
         }
 
@@ -120,11 +125,16 @@ namespace ERP_Demo
                     Application["editFlag"] = editFlag;
                     Response.Redirect("~/newAssembleMaster.aspx/");
                 }
+                if (e.CommandName == "viewDetails")
+                {
+                    Application["viewDetailsId"] = e.CommandArgument.ToString();
+                    Response.Redirect("viewDetailsAssembly.aspx");
+                }
             }
             catch(Exception ex)
             {
-                lblFamilySuccessMessage.Text = "";
-                lblFamilyErrorMessage.Text = ex.Message;
+                lblAssemblySuccessMessage.Text = "";
+                lblAssemblyErrorMessage.Text = ex.Message;
             }
         }
 

@@ -301,7 +301,7 @@ namespace ERP_Demo
             try
             {
                 var quant = targetQtyTextBox.Text;
-                if (quant != "")
+                if (quant != "" )
                 {
                     targetQuantLbl.Text="";
                    Application["Duplicate"] = false;
@@ -418,54 +418,67 @@ namespace ERP_Demo
             {
                 if (e.CommandName.Equals("Add"))
                 {
-                    //string partName = Application["partName"].ToString();
-                    GridViewRow row = assemblyGridView.FooterRow;
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "'"+Application["PostOperation"].ToString()+"'", true);
-                    using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                    var uom = uomDropDownList.SelectedItem.Text;
+                    if (uom != "Select Unit")
                     {
-                        sqlCon.Open();
-                        string query = "INSERT INTO assembly_operation_details (child_part,child_part_qty,assembly_id) VALUES (@partName,@quantity,@assemblyId)";
-                        SqlCommand cmd = new SqlCommand(query, sqlCon);
-                        cmd.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
-                        cmd.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
-                        cmd.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
-                        cmd.ExecuteNonQuery();
-
-                        string query2 = "INSERT INTO assembly_operation_saved_details (child_part,child_part_qty,assembly_id) VALUES (@partName,@quantity,@assemblyId)";
-                        SqlCommand cmd2 = new SqlCommand(query2, sqlCon);
-                        cmd2.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
-                        cmd2.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
-                        cmd2.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
-                        cmd2.ExecuteNonQuery();
-
-                        sqlCon.Close();
-
-                        if (Application["editFlag"] is true)
+                        uomValidator.Text = "";
+                        //string partName = Application["partName"].ToString();
+                        GridViewRow row = assemblyGridView.FooterRow;
+                        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "'"+Application["PostOperation"].ToString()+"'", true);
+                        using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                         {
-                            LoadEditValuesInController();
-                            var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                            drop.Items.Insert(0, new ListItem("Select Part"));
-                            drop.Items.Add(new ListItem("N/A", "-1"));
-                            var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                            qty.BackColor = Color.WhiteSmoke;
-                            var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
-                            img.Visible = false;
-                        }
-                        else
-                        {
-                            Application["rowCommand"] = true;
-                            LoadValuesInController();
-                            var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                            drop.Items.Insert(0, new ListItem("Select Part"));
-                            drop.Items.Add(new ListItem("N/A", "-1"));
-                            var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                            qty.BackColor = Color.WhiteSmoke;
-                            var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
-                            img.Visible = false;
-                        }
+                            sqlCon.Open();
+                            string query = "INSERT INTO assembly_operation_details (child_part,child_part_qty,assembly_id) OUTPUT INSERTED.Id VALUES (@partName,@quantity,@assemblyId)";
+                            SqlCommand cmd = new SqlCommand(query, sqlCon);
 
-                        lblSuccessMessage.Text = "Record Added";
-                        lblErrorMessage.Text = "";
+                            cmd.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
+                            cmd.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
+                            cmd.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
+                            //cmd.ExecuteNonQuery();
+
+                            var reservationId = (int)cmd.ExecuteScalar();
+
+                            string query2 = "INSERT INTO assembly_operation_saved_details (child_part,child_part_qty,assembly_id,operation_id) VALUES (@partName,@quantity,@assemblyId,@operationId)";
+                            SqlCommand cmd2 = new SqlCommand(query2, sqlCon);
+                            cmd2.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
+                            cmd2.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
+                            cmd2.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
+                            cmd2.Parameters.AddWithValue("@operationId", reservationId);
+                            cmd2.ExecuteNonQuery();
+
+                            sqlCon.Close();
+
+                            if (Application["editFlag"] is true)
+                            {
+                                LoadEditValuesInController();
+                                var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                                drop.Items.Insert(0, new ListItem("Select Part"));
+                                drop.Items.Add(new ListItem("N/A", "-1"));
+                                var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                                qty.BackColor = Color.WhiteSmoke;
+                                var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                                img.Visible = false;
+                            }
+                            else
+                            {
+                                Application["rowCommand"] = true;
+                                LoadValuesInController();
+                                var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                                drop.Items.Insert(0, new ListItem("Select Part"));
+                                drop.Items.Add(new ListItem("N/A", "-1"));
+                                var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                                qty.BackColor = Color.WhiteSmoke;
+                                var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                                img.Visible = false;
+                            }
+
+                            lblSuccessMessage.Text = "Record Added";
+                            lblErrorMessage.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        uomValidator.Text = "Please select UOM";
                     }
                 }
             }
@@ -480,19 +493,29 @@ namespace ERP_Demo
         {
             using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
-                string query = "";
                 sqlCon.Open();
-                if (Application["editFlag"] is true)
+
+                GridViewRow row = assemblyGridView.Rows[e.RowIndex];
+                Label assName = (Label)row.FindControl("partNameLabel");
+
+               // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ assemblyGridView.DataKeys[e.RowIndex].Value.ToString() + "')", true);
+
+                if(Application["editFlag"] is true)
                 {
-                    query = "DELETE FROM assembly_operation_saved_details WHERE id = @id";
+                    string query = "DELETE FROM assembly_operation_saved_details WHERE id = @id";
+                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.ExecuteNonQuery();
                 }
-                else
-                {
-                    query = "DELETE FROM assembly_operation_details WHERE id = @id";
-                }
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
-                sqlCmd.ExecuteNonQuery();
+                string query2 = "DELETE FROM assembly_operation_saved_details WHERE operation_id = @id";
+                SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
+                sqlCmd2.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
+                sqlCmd2.ExecuteNonQuery();
+
+                string query3 = "DELETE FROM assembly_operation_details WHERE id = @id";
+                SqlCommand sqlCmd3 = new SqlCommand(query3, sqlCon);
+                sqlCmd3.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
+                sqlCmd3.ExecuteNonQuery();
 
                 if (Application["editFlag"] is true)
                 {

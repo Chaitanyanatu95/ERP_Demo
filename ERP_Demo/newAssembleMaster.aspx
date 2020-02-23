@@ -128,7 +128,7 @@
         <tr>
             <td>UOM:</td>
             <td><asp:DropDownList ID="uomDropDownList" runat="server" DataTextField="unit_of_measurement" DataValueField="unit_of_measurement"></asp:DropDownList><br />
-                <asp:RequiredFieldValidator ID="uomValidator" runat="server" CssClass="required" ErrorMessage="Please select UOM" ControlToValidate="uomDropDownList" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                <asp:Label ID="uomValidator" runat="server" CssClass="required"></asp:Label>
             </td>
         </tr>
         </table>
