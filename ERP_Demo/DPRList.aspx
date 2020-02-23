@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPRList.aspx.cs" Inherits="ERP_Demo.DPRList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="productionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
-                ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="90%" OnPageIndexChanging="productionGridView_PageIndexChanging" AllowPaging="true" PageSize="10">
+    <asp:GridView ID="productionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id" OnRowDeleting="productionGridView_RowDeleting"
+        ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="90%" OnPageIndexChanging="productionGridView_PageIndexChanging" AllowPaging="true" PageSize="10">
                 <%-- Theme Properties --%>
                 <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" />
                 <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
@@ -81,12 +81,17 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText=" DPR STATUS">
                         <ItemTemplate>
-                             <asp:Label Text='<%# Eval("post_opr_req") %>' runat="server" />
+                             <asp:Label ID="postStatusFlag" Text='<%# Eval("post_opr_req") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText=" FPA STATUS">
                         <ItemTemplate>
-                             <asp:Label Text='<%# Eval("fpa_status") %>' runat="server" />
+                             <asp:Label ID="fpaStatusFlag" Text='<%# Eval("fpa_status") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                     <asp:TemplateField HeaderText ="DELETE" HeaderStyle-Width="75px">
+                        <ItemTemplate>
+                            <asp:ImageButton ImageUrl="~/Images/delete.png" runat="server" CommandName="Delete" ToolTip="DELETE" Width="17px" Height="17px" OnClientClick="return confirm('Do you want to delete?');"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

@@ -35,7 +35,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="MORE DETAILS" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="170">
                        <ItemTemplate>
-                           <asp:Button CssClass="nextPage" ID="viewDetailsButton" Text="Details" runat="server" CommandArgument='<%# Eval("id") %>' CommandName="viewDetails"/>
+                           <asp:Button CssClass="nextPage" ID="viewDetailsButton" Text="Details" runat="server" CommandArgument='<%# Eval("id") +","+ Eval("assembly_no") %>' CommandName="viewDetails"/>
                        </ItemTemplate>
                    </asp:TemplateField>
                     <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">

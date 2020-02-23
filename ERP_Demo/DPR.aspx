@@ -1,5 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPR.aspx.cs" Inherits="ERP_Demo.DPR" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript">
+        function validationOnThisPage() 
+        {
+            if (Page_ClientValidate())
+            {
+                return confirm('Do you want to save?');
+            }
+            else
+            {
+                return false;
+            }
+        }
+    </script>
     <asp:Table ID="Table1" runat="server" CssClass="tableClass" Width="85%" Height="70%" style="padding-top:70px;">
         <asp:TableRow runat="server" TableSection="TableHeader" HorizontalAlign="Center" BackColor="SkyBlue">
             <asp:TableCell runat="server" ColumnSpan="6"><h3>DPR OPERATOR</h3></asp:TableCell>
@@ -65,7 +78,7 @@
             <asp:TableCell runat="server" style="padding-bottom:40px;"><div style="font-weight:700; color:black">EFFICIENCY <div class="required" style="display:inline;">*</div></div><br />
                 <asp:TextBox ID="efficiencyTextBox" runat="server" ReadOnly="true" style="font-weight:700; color:black"></asp:TextBox>
             </asp:TableCell>
-            <asp:TableCell runat="server" ColumnSpan="2"><asp:Button runat="server" Text="SAVE DETAILS" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="confirm('Do you want to save?');"/> &nbsp;&nbsp;&nbsp; <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
+            <asp:TableCell runat="server" ColumnSpan="2"><asp:Button runat="server" Text="SAVE DETAILS" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="return validationOnThisPage();"/> &nbsp;&nbsp;&nbsp; <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
         </asp:TableRow>
     </asp:Table>
     <center>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 
@@ -11,7 +12,7 @@ namespace ERP_Demo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
                 LoadValuesInController();
             }
@@ -24,16 +25,13 @@ namespace ERP_Demo
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand("SELECT * FROM assembly_master where id='" + Application["viewDetailsId"] + "'", sqlCon);
                 SqlDataReader reader = cmd.ExecuteReader();
-                while(reader.Read())
+                while (reader.Read())
                 {
                     assNameLabel.Text = reader["assembly_name"].ToString().ToUpper();
                     textPartNo.Text = reader["assembly_no"].ToString();
-                    textUOM.Text = reader["unit_of_measurement"].ToString();
+                    textUOM.Text = reader["uom"].ToString();
                     textAssWeight.Text = reader["assembly_weight"].ToString();
                     textTargetQuant.Text = reader["target_quantity"].ToString();
-                    
-                    dataChildPart.Text = reader["child_part"].ToString();
-                    dataChildPartQty.Text = reader["child_part_qty"].ToString();
                 }
             }
         }
@@ -43,13 +41,13 @@ namespace ERP_Demo
             using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
                 sqlCon.Open();
-                SqlCommand cmd = new SqlCommand("SELECT mold_spec_sheet FROM parts_master where id='" + Application["viewDetailsId"] + "'", sqlCon);
+                SqlCommand cmd = new SqlCommand("SELECT assembly_file_upload FROM assembly_master where id='" + Application["viewDetailsId"] + "'", sqlCon);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     System.Diagnostics.Process objDocProcess = new System.Diagnostics.Process();
                     objDocProcess.EnableRaisingEvents = false;
-                    objDocProcess.StartInfo.FileName = @""+Server.MapPath(reader["mold_spec_sheet"].ToString())+"";
+                    objDocProcess.StartInfo.FileName = @"" + Server.MapPath(reader["assembly_file_upload"].ToString()) + "";
                     objDocProcess.Start();
                 }
             }
@@ -57,7 +55,7 @@ namespace ERP_Demo
 
         protected void back_Click(object sender, EventArgs e)
         {
-            if(Session["roleTransactions"].ToString() == "YES")
+            /*if(Session["roleTransactions"].ToString() == "YES")
             {
                 Response.Redirect("~/displayPartsWorker.aspx");
             }
@@ -66,8 +64,31 @@ namespace ERP_Demo
                 Response.Redirect("~/displayPartsWorker.aspx");
             }
             else
+            {*/
+            Application["assemblyNo"] = null;
+            Application["viewDetailsId"] = null;
+            Response.Redirect("~/displayAssemble.aspx");
+            //}
+        }
+
+        protected void childPartDataGrid_Load(object sender, EventArgs e)
+        {
+            DataTable dtbl = new DataTable();
+            using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
-                Response.Redirect("~/displayParts.aspx");
+                sqlCon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_saved_details where assembly_id='" + Application["assemblyNo"] + "'", sqlCon);
+                sqlDa.Fill(dtbl);
+            }
+            if (dtbl.Rows.Count > 0)
+            {
+                childPartGridView.Visible = true;
+                childPartGridView.DataSource = dtbl;
+                childPartGridView.DataBind();
+            }
+            else
+            {
+                childPartGridView.Visible = false;
             }
         }
     }

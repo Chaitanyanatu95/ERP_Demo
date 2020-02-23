@@ -132,49 +132,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.Literal ltEmbed;
 
         /// <summary>
-        /// pnlGridView1 control.
+        /// childPartGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable pnlGridView1;
-
-        /// <summary>
-        /// lblChildPart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChildPart;
-
-        /// <summary>
-        /// lblChildPartQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChildPartQty;
-
-        /// <summary>
-        /// dataChildPart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label dataChildPart;
-
-        /// <summary>
-        /// dataChildPartQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label dataChildPartQty;
+        protected global::System.Web.UI.WebControls.GridView childPartGridView;
 
         /// <summary>
         /// print control.

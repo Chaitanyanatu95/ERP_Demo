@@ -127,7 +127,9 @@ namespace ERP_Demo
                 }
                 if (e.CommandName == "viewDetails")
                 {
-                    Application["viewDetailsId"] = e.CommandArgument.ToString();
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["viewDetailsId"] = commandArgs[0];
+                    Application["assemblyNo"] = commandArgs[1];
                     Response.Redirect("viewDetailsAssembly.aspx");
                 }
             }

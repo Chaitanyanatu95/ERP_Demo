@@ -62,5 +62,44 @@ namespace ERP_Demo
             productionGridView.PageIndex = e.NewPageIndex;
             PopulateGridview();
         }
+
+        protected void productionGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                GridViewRow row = productionGridView.Rows[e.RowIndex];
+                Label dprFlag = (Label)row.FindControl("postStatusFlag");
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ dprFlag.Text.ToString()+"');", true);
+
+                if (dprFlag.Text.ToString().Trim() != "OPEN")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('In');", true);
+
+                    lblErrorMessage.Text = "";
+                    using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                    {
+                        sqlCon.Open();
+
+                        string query = "DELETE FROM production WHERE id = @id";
+                        SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                        sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(productionGridView.DataKeys[e.RowIndex].Value.ToString()));
+                        sqlCmd.ExecuteNonQuery();
+
+                        sqlCon.Close();
+                    }
+                    PopulateGridview();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Out');", true);
+                    lblErrorMessage.Text = "Cannot delete the selected entry as it is used for FPA";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblErrorMessage.Text = ex.Message;
+                lblSuccessMessage.Text = "";
+            }
+        }
     }
 }

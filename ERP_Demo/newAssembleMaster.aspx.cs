@@ -301,10 +301,11 @@ namespace ERP_Demo
             try
             {
                 var quant = targetQtyTextBox.Text;
-                if (quant != "" )
+                var uom = uomDropDownList.SelectedItem.Text;
+                if (quant != "" && int.Parse(quant) > 0 && uom != "Select Unit")
                 {
                     targetQuantLbl.Text="";
-                   Application["Duplicate"] = false;
+                    Application["Duplicate"] = false;
                     if (assemblyFileUpload.HasFile)
                     {
                         assemblyFileUpload.SaveAs(Server.MapPath("~/UploadedFiles/Assembly/") + assemblyFileUpload.FileName);
@@ -375,7 +376,7 @@ namespace ERP_Demo
                 }
                 else
                 {
-                    targetQuantLbl.Text = "Please enter target quantity";
+                    targetQuantLbl.Text = "Please enter valid target quantity";
                 }
             }
             catch (Exception ex)

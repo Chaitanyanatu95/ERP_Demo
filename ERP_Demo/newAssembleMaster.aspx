@@ -187,7 +187,7 @@
                     <asp:Label Text="ASSEMBLY TARGET <br>QUANTITY / HR" runat="server"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="targetQtyTextBox" runat="server" Width="70px"></asp:TextBox><br />
+                    <asp:TextBox ID="targetQtyTextBox" runat="server" Width="70px"></asp:TextBox><br/>
                      <asp:Label ID="targetQuantLbl" runat="server" CssClass="required"></asp:Label>
                 </td>
             </tr>

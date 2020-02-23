@@ -337,7 +337,7 @@ namespace ERP_Demo
             {
                 if (noShotsStartTextBox.Text != "" && noShotsEndTextBox.Text != "")
                 {
-                    if (int.Parse(noShotsStartTextBox.Text.ToString().Trim()) > int.Parse(noShotsEndTextBox.Text.ToString().Trim()) || int.Parse(noShotsEndTextBox.Text.ToString().Trim()) == '0' || int.Parse(noShotsStartTextBox.Text.ToString().Trim()) == '0')
+                    if (int.Parse(noShotsStartTextBox.Text.ToString().Trim()) > int.Parse(noShotsEndTextBox.Text.ToString().Trim()) || int.Parse(noShotsEndTextBox.Text.ToString().Trim()) == 0 || int.Parse(noShotsStartTextBox.Text.ToString().Trim()) == int.Parse(noShotsEndTextBox.Text.ToString().Trim()))
                     {
                         noShotsEndTextBox.Text = string.Empty;
                         noShotsTextBox.Text = string.Empty;
@@ -348,15 +348,15 @@ namespace ERP_Demo
                         noShotsTextBox.Text = (int.Parse(noShotsEndTextBox.Text.ToString().Trim()) - int.Parse(noShotsStartTextBox.Text.ToString().Trim())).ToString();
                         validationShots.Text = string.Empty;
                         rejectionPCSTextBox.ReadOnly = false;
-                        rejectionPCSTextBox.Text = "";
-                        actQuantityTextBox.Text = "";
+                        rejectionPCSTextBox.Text = string.Empty;
+                        actQuantityTextBox.Text = string.Empty;
                     }
                 }
                 else
                 {
-                    noShotsTextBox.Text = "";
-                    rejectionPCSTextBox.Text = "";
-                    actQuantityTextBox.Text = "";
+                    noShotsTextBox.Text = string.Empty;
+                    rejectionPCSTextBox.Text = string.Empty;
+                    actQuantityTextBox.Text = string.Empty;
                     rejectionPCSTextBox.ReadOnly = true;
                 }
             }
