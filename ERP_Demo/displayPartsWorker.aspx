@@ -16,10 +16,10 @@
      <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True" OnPageIndexChanging="partsGridView_PageIndexChanging"
                 OnRowCommand="parts_RowCommand" OnRowCancelingEdit="parts_RowCancelingEdit"
-                CssClass="Table1" AllowPaging="True" PageSize="15" HorizontalAlign="Center">
+                CssClass="Table1" AllowPaging="True" PageSize="25" HorizontalAlign="Center">
                 <%-- Theme Properties --%>
                 <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" />
-                <HeaderStyle CssClass="CustomerHeader" Height="50px"  ForeColor="black" Font-Size="Small" />
+                <HeaderStyle CssClass="CustomerHeader" Height="5px"  ForeColor="black" Font-Size="Small" />
                 <PagerStyle BackColor="White" ForeColor="blue" HorizontalAlign="center" />
                 <RowStyle ForeColor="black" Font-Size="Small" BackColor="WhiteSmoke"/>
                 <Columns>

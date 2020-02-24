@@ -16,9 +16,9 @@
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="postOperationGridView_RowEditing" OnRowCancelingEdit="postOperationGridView_RowCancelingEdit"
                 OnRowCommand="postOperationGridView_RowCommand" OnRowDeleting="postOperationGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="20%" AllowPaging="true" PageSize="15" OnPageIndexChanging="postOperationGridView_PageIndexChanging">
+                BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="20%" AllowPaging="true" PageSize="25" OnPageIndexChanging="postOperationGridView_PageIndexChanging">
                 <%-- Theme Properties --%>
-                <HeaderStyle CssClass="CustomerHeader" Height="50px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
+                <HeaderStyle CssClass="CustomerHeader" Height="5px" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle ForeColor="black" Font-Size="Small" BackColor="WhiteSmoke"/>

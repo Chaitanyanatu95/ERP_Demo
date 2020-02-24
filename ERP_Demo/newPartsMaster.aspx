@@ -157,7 +157,7 @@
                 <asp:RequiredFieldValidator runat="server" ID="cycleTimeReq" ControlToValidate="cycleTimeTextBox" ErrorMessage="Please enter cycle time!" CssClass="required" SetFocusOnError="true" />
             </asp:TableCell>
              <asp:TableCell runat="server"  CssClass="margin">PRODUCTION PER HOUR IN NOS.<br />
-                <asp:TextBox ID="moldProductionCycleTextBox" runat="server" ReadOnly="true"></asp:TextBox><br />
+                <asp:TextBox ID="moldProductionCycleTextBox" runat="server" BackColor="WhiteSmoke" ReadOnly="true"></asp:TextBox><br />
                 <asp:Label ID="productionLbl" runat="server"></asp:Label>
             </asp:TableCell>
             <asp:TableCell runat="server" CssClass="margin">JIG/FIXTURE (REQ) <div class="required" style="display:inline">*</div><br />

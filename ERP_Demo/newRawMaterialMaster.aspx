@@ -25,8 +25,9 @@
             <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmGrade" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmGradeReq" CssClass="required" runat="server" ControlToValidate="rmGrade" ErrorMessage="please enter raw material grade"></asp:RequiredFieldValidator></asp:TableCell>
             <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmColor" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmColorReq" CssClass="required" runat="server" ControlToValidate="rmColor" ErrorMessage="please enter raw material color"></asp:RequiredFieldValidator></asp:TableCell>
             <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="rmMake" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="rmMakeReq" CssClass="required" runat="server" ControlToValidate="rmMake" ErrorMessage="please enter raw material make"></asp:RequiredFieldValidator></asp:TableCell>
-            <asp:TableCell runat="server"><asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="return validatePage()"/>
-            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
+            <asp:TableCell runat="server" RowSpan="2">
+                <asp:Button runat="server" Text="SAVE" OnClick="SaveBtn_Click" CssClass="nextPage" OnClientClick="return validatePage()"/>
+                <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>

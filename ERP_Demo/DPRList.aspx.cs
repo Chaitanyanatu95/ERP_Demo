@@ -92,7 +92,7 @@ namespace ERP_Demo
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Out');", true);
-                    lblErrorMessage.Text = "Cannot delete the selected entry as it is used for FPA";
+                    lblErrorMessage.Text = "Cannot delete the entry as it is used for FPA";
                 }
             }
             catch (Exception ex)

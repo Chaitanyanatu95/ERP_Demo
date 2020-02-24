@@ -39,7 +39,7 @@
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
             <asp:TableCell runat="server" style="padding-bottom:40px;"><div style="font-weight:700; color:black">EXP. QTY. (PCS) <div class="required" style="display:inline">*</div></div><br />
-                <asp:TextBox ID="expQuantityTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+                <asp:TextBox ID="expQuantityTextBox" BackColor="WhiteSmoke" runat="server" ReadOnly="true"></asp:TextBox>
             </asp:TableCell>
             <asp:TableCell runat="server"><div style="font-weight:700; color:black">No. of Shots (Start Counter) <div class="required" style="display:inline">*</div></div><br />
                 <asp:TextBox ID="noShotsStartTextBox" runat="server" AutoPostBack="true" OnTextChanged="noShotsStartTextBox_TextChanged" ReadOnly="true"></asp:TextBox>
@@ -51,7 +51,7 @@
                 <br /><asp:Label ID="validationShots" runat="server" CssClass="required"></asp:Label>
             </asp:TableCell>
             <asp:TableCell runat="server" style="padding-bottom:40px;"><div style="font-weight:700; color:black">Total No. of Shots <div class="required" style="display:inline">*</div></div><br />
-                <asp:TextBox ID="noShotsTextBox" runat="server" ReadOnly="true" OnTextChanged="noShotsEndTextBox_TextChanged"></asp:TextBox>
+                <asp:TextBox ID="noShotsTextBox"  runat="server" BackColor="WhiteSmoke" ReadOnly="true" OnTextChanged="noShotsEndTextBox_TextChanged"></asp:TextBox>
                 <br />
             </asp:TableCell>
             <asp:TableCell runat="server"><div style="font-weight:700; color:black">Rejection (PCS) <div class="required" style="display:inline">*</div></div><br />
@@ -64,7 +64,7 @@
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom">
             <asp:TableCell runat="server" style="padding-bottom:40px;"><div style="font-weight:700; color:black">ACT. QTY. (PCS) <div class="required" style="display:inline;">*</div></div><br />
-                <asp:TextBox ID="actQuantityTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+                <asp:TextBox ID="actQuantityTextBox" BackColor="WhiteSmoke" runat="server" ReadOnly="true"></asp:TextBox>
             </asp:TableCell>
             <asp:TableCell runat="server" ><div style="font-weight:700; color:black">Down Time Code <div class="required" style="display:inline;">*</div></div><br />
                 <asp:DropDownList ID="downTimeCodeDropDownList" DataTextField="down_time_type" DataValueField="down_time_type" onselectedindexchanged="downTimeCodeDropDownList_SelectedIndexChanged" runat="server" AutoPostBack="true">
@@ -76,7 +76,7 @@
                 <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="downTimeTextBox" CssClass="required" ErrorMessage="Please enter down time."></asp:RequiredFieldValidator>
             </asp:TableCell>
             <asp:TableCell runat="server" style="padding-bottom:40px;"><div style="font-weight:700; color:black">EFFICIENCY <div class="required" style="display:inline;">*</div></div><br />
-                <asp:TextBox ID="efficiencyTextBox" runat="server" ReadOnly="true" style="font-weight:700; color:black"></asp:TextBox>
+                <asp:TextBox ID="efficiencyTextBox" BackColor="WhiteSmoke" runat="server" ReadOnly="true" style="font-weight:700; color:black"></asp:TextBox>
             </asp:TableCell>
             <asp:TableCell runat="server" ColumnSpan="2"><asp:Button runat="server" Text="SAVE DETAILS" OnClick="SaveBtn_Click"  CssClass="nextPage" OnClientClick="return validationOnThisPage();"/> &nbsp;&nbsp;&nbsp; <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/></asp:TableCell>
         </asp:TableRow>

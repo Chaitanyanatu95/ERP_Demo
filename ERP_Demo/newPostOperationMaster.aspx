@@ -15,13 +15,19 @@
             <asp:TableCell runat="server" ColumnSpan="2" HorizontalAlign="Center"><h3>POST OPERATION DETAILS</h3></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell runat="server"  CssClass="margin">POST OPERATION TYPE</asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin">POST OPERATION TYPE</asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
-            <asp:TableCell runat="server"  CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="postOperationTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="postOpnReq" CssClass="required" runat="server" ControlToValidate="postOperationTextBox" ErrorMessage="please enter post operation type"></asp:RequiredFieldValidator></asp:TableCell>
-            <asp:TableCell runat="server" HorizontalAlign="Center"  CssClass="margin"><asp:Button runat="server" CssClass="nextPage" Text="SAVE" OnClick="SaveBtn_Click" OnClientClick="return validatePage()"/>
-            <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
-            </asp:TableCell></asp:TableRow>
+            <asp:TableCell runat="server" CssClass="margin">
+                <div class="required" style="padding-left:12em">*</div>
+                <asp:TextBox ID="postOperationTextBox" runat="server"></asp:TextBox><br />
+                <asp:RequiredFieldValidator ID="postOpnReq" CssClass="required" runat="server" ControlToValidate="postOperationTextBox" ErrorMessage="please enter post operation type"></asp:RequiredFieldValidator>
+            </asp:TableCell>
+            <asp:TableCell  RowSpan="2" runat="server" HorizontalAlign="Center"  CssClass="margin">
+                <asp:Button runat="server" CssClass="nextPage" Text="SAVE" OnClick="SaveBtn_Click" OnClientClick="return validatePage()"/>
+                <asp:Button Text="CANCEL" runat="server" CssClass="nextPage" OnClick="Cancel_Click" CausesValidation="false" OnClientClick="return confirm('Do you want to cancel?');"/>
+            </asp:TableCell>
+        </asp:TableRow>
     </asp:Table>
     <center>
             <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />

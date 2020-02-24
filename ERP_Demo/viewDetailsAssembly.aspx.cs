@@ -55,20 +55,9 @@ namespace ERP_Demo
 
         protected void back_Click(object sender, EventArgs e)
         {
-            /*if(Session["roleTransactions"].ToString() == "YES")
-            {
-                Response.Redirect("~/displayPartsWorker.aspx");
-            }
-            else if(Session["roleReports"].ToString() == "YES")
-            {
-                Response.Redirect("~/displayPartsWorker.aspx");
-            }
-            else
-            {*/
             Application["assemblyNo"] = null;
             Application["viewDetailsId"] = null;
             Response.Redirect("~/displayAssemble.aspx");
-            //}
         }
 
         protected void childPartDataGrid_Load(object sender, EventArgs e)

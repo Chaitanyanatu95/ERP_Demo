@@ -108,7 +108,7 @@
 
     .tableClass td {
         border: 1px solid #808080;
-        padding: 10px 8px 10px 8px;
+        padding: 7px 9px 7px 20px;
     }
 
 .CustomerHeader {
@@ -124,7 +124,6 @@
     background-color: floralwhite;
     border: 1px groove black;
     margin: 10px auto 10px 40px;
-    padding: 4px 7px 2px 4px;
 }
 
     .custButtonCss:hover {

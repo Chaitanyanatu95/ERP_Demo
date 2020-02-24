@@ -16,7 +16,7 @@
      <asp:GridView ID="partsGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
                 ShowHeaderWhenEmpty="True" OnPageIndexChanging="partsGridView_PageIndexChanging"
                 OnRowCommand="parts_RowCommand" OnRowCancelingEdit="parts_RowCancelingEdit" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px"
-                OnRowDeleting="parts_RowDeleting" CssClass="Table1" AllowPaging="True" PageSize="15" HorizontalAlign="Center" Width="50%">
+                OnRowDeleting="parts_RowDeleting" CssClass="Table1" AllowPaging="True" PageSize="25" HorizontalAlign="Center" Width="50%">
                 <%-- Theme Properties --%>
                 <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <HeaderStyle CssClass="CustomerHeader" Height="15px" ForeColor="black" Font-Size="Small" />

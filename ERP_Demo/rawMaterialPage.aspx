@@ -171,9 +171,9 @@
                     <asp:Label ID="rmGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell runat="server" >
-                    <asp:TextBox ID="rmMakeTextBox" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true" ></asp:TextBox>
+                    <asp:TextBox ID="rmMakeTextBox" BackColor="WhiteSmoke" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true" ></asp:TextBox>
                 </asp:TableCell>
-                <asp:TableCell runat="server" ><asp:TextBox ID="colourTextBox" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true" ></asp:TextBox>
+                <asp:TableCell runat="server" ><asp:TextBox ID="colourTextBox" BackColor="WhiteSmoke" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true" ></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
                     <asp:DropDownList ID="masterbatchDropDownList" runat="server" onchange="onMasterBatchSelected()">
@@ -218,13 +218,13 @@
                     <asp:Label ID="mbGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
-                    <asp:TextBox ID="mbMfgTextBox" DataTextField="mb_mfg" DataValueField="mb_mfg" runat="server" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="mbMfgTextBox" BackColor="WhiteSmoke" DataTextField="mb_mfg" DataValueField="mb_mfg" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
-                    <asp:TextBox ID="mbColorTextBox" DataTextField="mb_color" DataValueField="mb_color" runat="server" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="mbColorTextBox" BackColor="WhiteSmoke" DataTextField="mb_color" DataValueField="mb_color" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
-                    <asp:TextBox ID="mbColorCodeTextBox" DataTextField="mb_color_code" DataValueField="mb_color_code" runat="server" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="mbColorCodeTextBox" BackColor="WhiteSmoke" DataTextField="mb_color_code" DataValueField="mb_color_code" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
                     <asp:TextBox ID="mbPercentageTextBox" runat="server" ReadOnly="false"></asp:TextBox>
@@ -256,10 +256,10 @@
                         <asp:Label ID="altRMGradeLabel" runat="server"></asp:Label>
                     </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="altRawMaterialMakeTextBox" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true"></asp:TextBox>
+                        <asp:TextBox ID="altRawMaterialMakeTextBox" BackColor="WhiteSmoke" DataTextField="material_make" DataValueField="material_make" runat="server" ReadOnly="true"></asp:TextBox>
                     </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="altColourTextBox" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true"></asp:TextBox>
+                        <asp:TextBox ID="altColourTextBox" BackColor="WhiteSmoke" DataTextField="material_color" DataValueField="material_color" runat="server" ReadOnly="true"></asp:TextBox>
                     </asp:TableCell>
                     <asp:TableCell runat="server">
                         <asp:DropDownList ID="altRawMaterialMasterBatchDropDownList" runat="server" onchange="onAltRMMasterBatchSelected()">
@@ -294,13 +294,13 @@
                     <asp:Label ID="altRMBGradeLabel" runat="server"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
-                    <asp:TextBox ID="altRMBMfgTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="altRMBMfgTextBox" BackColor="WhiteSmoke" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
-                    <asp:TextBox ID="altRMBColorTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="altRMBColorTextBox" BackColor="WhiteSmoke" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
-                    <asp:TextBox ID="altRMBColorCodeTextBox" runat="server" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="altRMBColorCodeTextBox" BackColor="WhiteSmoke" runat="server" ReadOnly="true"></asp:TextBox>
                 </asp:TableCell>
                 <asp:TableCell runat="server">
                     <asp:TextBox ID="altRMBPercentageTextBox" runat="server" ReadOnly="False"></asp:TextBox>
@@ -320,7 +320,7 @@
         </asp:Table>
         <center>
             <asp:Label ID="lblSuccessMessage" Text="" runat="server" ForeColor="Green" />
-            <br />
+            <br/>
             <asp:Label ID="lblErrorMessage" Text="" runat="server" ForeColor="Red" />
         </center>
     </asp:Content>

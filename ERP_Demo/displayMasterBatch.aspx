@@ -16,9 +16,9 @@
                 ShowHeaderWhenEmpty="True"
                 OnRowEditing="masterbatchGridView_RowEditing" OnRowCancelingEdit="masterbatchGridView_RowCancelingEdit"
                 OnRowCommand="masterbatchGridView_RowCommand" OnRowDeleting="masterbatchGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CellPadding="4" CssClass="Table1" Width="70%" AllowPaging="true" PageSize="15" OnPageIndexChanging="masterbatchGridView_PageIndexChanging">
+                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CellPadding="4" CssClass="Table1" Width="70%" AllowPaging="true" PageSize="25" OnPageIndexChanging="masterbatchGridView_PageIndexChanging">
                 <%-- Theme Properties --%>
-                <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
+                <HeaderStyle Height="5px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                 <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle ForeColor="black" Font-Size="Small" BackColor="WhiteSmoke"/>   

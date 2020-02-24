@@ -111,13 +111,13 @@
     <body>
     <table runat="server" class="tableClass">
         <tr>
-            <th colspan="2" style="text-align:center; background-color: SkyBlue;">
+            <th colspan="2" style="text-align:center; background-color: SkyBlue; border:1px solid black">
                 <h3>ASSEMBLY DETAILS</h3>
             </th>
         </tr>
         <tr>
             <td>ASSEMBLY NO:</td> 
-            <td><asp:TextBox ID="assemblyNo" runat="server" ReadOnly="true" BackColor="WhiteSmoke"></asp:TextBox></td> 
+            <td><asp:TextBox ID="assemblyNo" runat="server" ReadOnly="true" BackColor="WhiteSmoke" Width="100"></asp:TextBox></td> 
         </tr>
         <tr>
             <td>ASSEMBLY NAME:</td> 
@@ -131,14 +131,12 @@
                 <asp:Label ID="uomValidator" runat="server" CssClass="required"></asp:Label>
             </td>
         </tr>
-        </table>
-        <table id="secondTable" runat="server" class="tableClass" >
-            <tr>
-                <td colspan="2" style="border:0;">
-                    <asp:GridView ID="assemblyGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
+              <tr>
+                  <td colspan="2"  style="border:0">
+                      <asp:GridView ID="assemblyGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id"
                     ShowHeaderWhenEmpty="True" OnRowCommand="assemblyGridView_RowCommand" OnRowDeleting="assemblyGridView_RowDeleting"
-                    BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CellPadding="4" CssClass="Table1" Width="70%" HorizontalAlign="Center">
-                        <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
+                    BackColor="#DFDDDD" CellPadding="4" Width="10%" HorizontalAlign="Center" CssClass="Table1">
+                        <HeaderStyle Height="5px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />
                         <RowStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>   
                         <FooterStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>
                         <Columns>
@@ -172,13 +170,13 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                </td>
-            </tr>
+                    </td>
+                </tr>
             <tr>
-                 <td style="border:0; text-align:center" colspan="2">
-                            TOTAL ASSEMBLY WT. (g)
-                     <asp:TextBox ID="assWt" runat="server" Width="70px" ReadOnly="true"></asp:TextBox>
-                 </td>
+                <td colspan="2" style="border:0; text-align:center">
+                    <asp:Label Text="TOTAL ASSEMBLY WT. (g)" runat="server"></asp:Label>
+                     <asp:TextBox ID="assWt" runat="server" Width="60px" ReadOnly="true"></asp:TextBox>
+                </td>
             </tr>
         </table>
         <table runat="server" class="tableClass">
@@ -187,7 +185,7 @@
                     <asp:Label Text="ASSEMBLY TARGET <br>QUANTITY / HR" runat="server"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="targetQtyTextBox" runat="server" Width="70px"></asp:TextBox><br/>
+                    <asp:TextBox ID="targetQtyTextBox" runat="server" Width="60px"></asp:TextBox><br/>
                      <asp:Label ID="targetQuantLbl" runat="server" CssClass="required"></asp:Label>
                 </td>
             </tr>

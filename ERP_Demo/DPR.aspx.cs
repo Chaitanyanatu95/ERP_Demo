@@ -342,6 +342,7 @@ namespace ERP_Demo
                         noShotsEndTextBox.Text = string.Empty;
                         noShotsTextBox.Text = string.Empty;
                         validationShots.Text = "Value cannot be 0 or less than starting value of shots";
+                        validationShots.Font.Size = 8;
                     }
                     else
                     {

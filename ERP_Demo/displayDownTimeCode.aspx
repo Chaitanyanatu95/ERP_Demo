@@ -17,14 +17,14 @@
                 OnRowCommand="downtimeGridView_RowCommand"
                 OnRowCancelingEdit="downtimeGridView_RowCancelingEdit"
                 OnRowDeleting="downtimeGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px"  CssClass="Table1" Width="30%" AllowPaging="true" PageSize="15" OnPageIndexChanging="downtimeGridView_PageIndexChanging">
+                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px"  CssClass="Table1" Width="30%" AllowPaging="true" PageSize="25" OnPageIndexChanging="downtimeGridView_PageIndexChanging">
                 <%-- Theme Properties --%>
-                <HeaderStyle Height="50px" CssClass="CustomerHeader" Font-Bold="false" Font-Size="Small"/>
+                <HeaderStyle Height="5px" CssClass="CustomerHeader" Font-Bold="false" Font-Size="Small"/>
                 <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center"/>
                 <RowStyle Font-Size="Small" ForeColor="Black" BackColor="WhiteSmoke"/>
                 <Columns>
-                    <asp:TemplateField HeaderText="DOWN TIME CODE" HeaderStyle-Width="100">
+                    <asp:TemplateField HeaderText="DOWN TIME CODE" HeaderStyle-Width="200">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("down_time_code") %>' runat="server" />
                         </ItemTemplate>

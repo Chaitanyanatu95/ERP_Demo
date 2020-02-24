@@ -16,9 +16,9 @@
                 ShowHeaderWhenEmpty="True"
                 OnRowCommand="assembleGridView_RowCommand" OnRowCancelingEdit="assembleGridView_RowCancelingEdit"
                 OnRowDeleting="assembleGridView_RowDeleting"
-                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CssClass="Table1" Width="40%" PageSize="15" AllowPaging="true" OnPageIndexChanging="assembleGridView_PageIndexChanging">
+                BackColor="#DFDDDD" BorderColor="black" BorderStyle="solid" BorderWidth="1px" CssClass="Table1" Width="40%" PageSize="25" AllowPaging="true" OnPageIndexChanging="assembleGridView_PageIndexChanging">
                 <%-- Theme Properties --%>
-                <HeaderStyle CssClass="CustomerHeader" Height="15px" ForeColor="black" Font-Size="Small" />
+                <HeaderStyle CssClass="CustomerHeader" Height="5px" ForeColor="black" Font-Size="Small" />
                 <PagerSettings Mode="NextPreviousFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="&nbsp;&nbsp;Last" NextPageText="Next" PreviousPageText="&nbsp;&nbsp;Previous"/>
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle Font-Size="Smaller" ForeColor="black" BackColor="WhiteSmoke"/>   

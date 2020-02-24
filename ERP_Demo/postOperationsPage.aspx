@@ -251,8 +251,11 @@
     </asp:table>
     <asp:GridView ID="postOperationGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="postOperationGrid_RowCommand" ShowFooter="true"
         OnRowDeleting="postOperationGrid_RowDeleting" CssClass="tableClass" DataKeyNames="id" headerstyle-backcolor="SkyBlue" HorizontalAlign="Center">
-           <Columns>
-                <asp:TemplateField HeaderText="TYPE" HeaderStyle-HorizontalAlign="Center">
+            <HeaderStyle Height="5px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />  
+            <RowStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>   
+            <FooterStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>
+        <Columns>
+                <asp:TemplateField HeaderText="TYPE" >
                     <ItemTemplate>
                         <asp:Label ID="postOpnTypeLabel" Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
@@ -263,7 +266,7 @@
                         <br /><asp:Label ID="errorType" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="TARGET QUANTITY / HR" HeaderStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="TARGET QUANTITY / HR">
                     <ItemTemplate>
                         <asp:Label ID="targetQuantityLabel" Text='<%# Eval("target_quantity") %>' runat="server" />
                     </ItemTemplate>
@@ -272,7 +275,7 @@
                         <br /><asp:Label ID="errorTarget" runat="server"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="PROCESS DESCRIPTION" HeaderStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="PROCESS DESCRIPTION">
                     <ItemTemplate>
                         <asp:Label ID="processDescLabel" Text='<%# Eval("process_description") %>' runat="server" />
                     </ItemTemplate>
@@ -280,7 +283,7 @@
                         <asp:TextBox ID="txtProcessDescriptionFooter" runat="server"/>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="PHOTO <br/> Supported Formats: .jpeg, .png, .gif" HeaderStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="PHOTO <br/> Supported Formats: .jpeg, .png, .gif">
                     <ItemTemplate>
                         <asp:Label Text='<%# Eval("photo") %>' runat="server" />
                     </ItemTemplate>
@@ -316,8 +319,11 @@
              </asp:TableRow>
         </asp:Table>
     <asp:GridView ID="packagingDetailsGrid" runat="server" AutoGenerateColumns="false" OnRowCommand="packagingDetailsGrid_RowCommand" OnRowDeleting="packagingDetailsGrid_RowDeleting" CssClass="tableClass" ShowFooter="true" DataKeyNames="id" headerstyle-backcolor="SkyBlue" HorizontalAlign="Center">
+        <HeaderStyle Height="5px" CssClass="CustomerHeader" Font-Bold="True" ForeColor="black" Font-Size="Small" />  
+        <RowStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>   
+        <FooterStyle Font-Size="Small" ForeColor="black" BackColor="WhiteSmoke"/>
             <Columns>
-                <asp:TemplateField HeaderText="PACKAGING TYPE" HeaderStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="PACKAGING TYPE" >
                     <ItemTemplate>
                         <asp:Label ID="packTypeLabel" Text='<%# Eval("type") %>' runat="server" />
                     </ItemTemplate>
@@ -327,15 +333,15 @@
                         <br /><asp:Label ID="errorPackType" runat="server"></asp:Label>
                         </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="SIZE" HeaderStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="SIZE" >
                     <ItemTemplate>
                         <asp:Label ID="packSizeLabel" Text='<%# Eval("size") %>' runat="server" />
                     </ItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="txtPostSizeFooter" DataTextField="size" DataValueField="size" runat="server" ReadOnly="true"/>
+                        <asp:TextBox ID="txtPostSizeFooter" BackColor="WhiteSmoke" DataTextField="size" DataValueField="size" runat="server" ReadOnly="true"/>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="QTY PER PACKAGE (NOS)" HeaderStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="QTY PER PACKAGE (NOS)" >
                     <ItemTemplate>
                         <asp:Label Text='<%# Eval("qty_per_package") %>' runat="server" />
                     </ItemTemplate>
