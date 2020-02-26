@@ -34,7 +34,7 @@ namespace ERP_Demo
             using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
             {
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM parts_master", sqlCon);
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM parts_master ORDER BY part_no", sqlCon);
                 sqlDa.Fill(dtbl);
             }
             if (dtbl.Rows.Count > 0)

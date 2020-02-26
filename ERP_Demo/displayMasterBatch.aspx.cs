@@ -30,7 +30,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM masterbatch_master", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM masterbatch_master ORDER BY mb_name", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)

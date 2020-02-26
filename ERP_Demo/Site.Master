@@ -42,34 +42,33 @@
             <asp:Menu ID="Menu1" runat="server" OnMenuItemClick="Menu1_MenuItemClick" CssClass="MYMenuClass" Orientation="Horizontal">
                 <Items>
                     <asp:MenuItem Text="HOME" Value="Home" NavigateUrl="/Default.aspx"></asp:MenuItem>
-                    <asp:MenuItem Text="MASTERS" Value="Masters">
-                        <asp:MenuItem Text="PRODUCT CATEGORY" Value="Product Category" NavigateUrl="/displayFamily.aspx"></asp:MenuItem>
+                    <asp:MenuItem Text="MASTERS" Value="MASTERS">
+                        <asp:MenuItem Text="PRODUCT CATEGORY" Value="PRODUCT CATEGORY" NavigateUrl="/displayFamily.aspx"></asp:MenuItem>
                         <asp:MenuItem Text="UOM" Value="UOM" NavigateUrl="/displayUnitOfMeasurement.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="RAW MATERIAL" Value="Raw Material" NavigateUrl="/displayRawMaterial.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="MASTERBATCH" Value="Masterbatch" NavigateUrl="/displayMasterBatch.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="POST OPERATION" Value="Post Operation"  NavigateUrl="/displayPostOperation.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="PACKAGING" Value="Packaging"  NavigateUrl="/displayPackaging.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="REJECTION" Value="Rejection"  NavigateUrl="/displayRejection.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="SHIFT" Value="Shift" NavigateUrl="/displayShift.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="ASSEMBLY" Value="Assembly" NavigateUrl="/displayAssemble.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="MACHINE" Value="Machine"  NavigateUrl="/displayMachine.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="DOWN TIME CODE" Value="Down Time Code"  NavigateUrl="/displayDownTimeCode.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="CUSTOMER" Value="Customer" NavigateUrl="/displayCustomer.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="WORKER" Value="Worker" NavigateUrl="/displayWorker.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="VENDOR" Value="Vendor" NavigateUrl="/displayVendor.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="PARTS" Value="Parts" NavigateUrl="/displayParts.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="RAW MATERIAL" Value="RAW MATERIAL" NavigateUrl="/displayRawMaterial.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="MASTERBATCH" Value="MASTERBATCH" NavigateUrl="/displayMasterBatch.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="POST OPERATION" Value="POST OPERATION"  NavigateUrl="/displayPostOperation.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="PACKAGING" Value="PACKAGING"  NavigateUrl="/displayPackaging.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="REJECTION" Value="REJECTION"  NavigateUrl="/displayRejection.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="SHIFT" Value="SHIFT" NavigateUrl="/displayShift.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="ASSEMBLY" Value="ASSEMBLY" NavigateUrl="/displayAssemble.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="MACHINE" Value="MACHINE"  NavigateUrl="/displayMachine.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="DOWN TIME CODE" Value="DOWN TIME CODE"  NavigateUrl="/displayDownTimeCode.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="CUSTOMER" Value="CUSTOMER" NavigateUrl="/displayCustomer.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="WORKER" Value="WORKER" NavigateUrl="/displayWorker.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="VENDOR" Value="VENDOR" NavigateUrl="/displayVendor.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="PARTS" Value="PARTS" NavigateUrl="/displayParts.aspx"></asp:MenuItem>
                     </asp:MenuItem>
-                    <asp:MenuItem Text="TRANSACTION" Value="Transaction">
+                    <asp:MenuItem Text="TRANSACTION" Value="TRANSACTION">
                         <asp:MenuItem Text="DPR LIST" NavigateUrl="/DPRlist.aspx"></asp:MenuItem>
                         <asp:MenuItem Text="FPA LIST" NavigateUrl="/FPAlist.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="ADD" Value="ADD">
-                            <asp:MenuItem Text="DPR" NavigateUrl="/DPR.aspx"></asp:MenuItem>
-                            <asp:MenuItem Text="FPA" NavigateUrl="/FPA.aspx"></asp:MenuItem>
-                        </asp:MenuItem>
+                            <asp:MenuItem Text="ADD" Value="ADD">
+                                <asp:MenuItem Text="DPR" NavigateUrl="/DPR.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="FPA" NavigateUrl="/FPA.aspx"></asp:MenuItem>
+                            </asp:MenuItem>
                     </asp:MenuItem>
-                    <asp:MenuItem Text="REPORTS" Value="DisplayList">
-                        
-                        <asp:MenuItem Text="REPORT GENERATION" Value="Reports">
+                    <asp:MenuItem Text="REPORTS" Value="REPORTS">
+                        <asp:MenuItem Text="REPORT GENERATION" Value="REPORT GENERATION">
                             <asp:MenuItem Text="DPR REPORTS" NavigateUrl="/dprReports.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="FPA REPORTS" NavigateUrl="/fpaReports.aspx"></asp:MenuItem>
                         </asp:MenuItem>

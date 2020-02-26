@@ -551,6 +551,9 @@ namespace ERP_Demo
                 Application["masterbatch"] = masterbatchDropDownList.SelectedItem.Text;
                 Application["altRawMaterial"] = altRawMaterialDropDownList.SelectedItem.Text;
                 Application["altMasterbatch"] = altRawMaterialMasterBatchDropDownList.SelectedItem.Text;
+                Application["mbFlag"] = string.Empty;
+                Application["altRmFlag"] = string.Empty;
+                Application["altMBFlag"] = string.Empty;
 
                 if (Application["masterbatch"].ToString() == "YES")
                 {

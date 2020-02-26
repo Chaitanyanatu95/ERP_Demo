@@ -23,12 +23,12 @@
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle Font-Size="Smaller" ForeColor="black" BackColor="WhiteSmoke"/>   
                 <Columns>
-                    <asp:TemplateField HeaderText="ASSEMBLE PART NO">
+                    <asp:TemplateField HeaderText="ASSEMBLY PART NO">
                         <ItemTemplate>
                             <asp:Label ID="assembleNo" Text='<%# Eval("assembly_no") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="ASSEMBLE PART">
+                    <asp:TemplateField HeaderText="ASSEMBLY PART NAME">
                         <ItemTemplate>
                             <asp:Label ID="assemblePartName" Text='<%# Eval("assembly_name") %>' runat="server" />
                         </ItemTemplate>

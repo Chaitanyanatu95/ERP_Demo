@@ -41,6 +41,10 @@ namespace ERP_Demo
                     actualQtyTextBox.ReadOnly = true;
                     LoadProductRejHisValues();
 
+                    var drop = (DropDownList)prodRejHisGrid.FooterRow.FindControl("rejectionCodeDropDownList");
+                    drop.Items.Insert(0, new ListItem("Select Rejection"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+
                     using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT worker_name FROM worker_master", connection1))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -91,16 +95,36 @@ namespace ERP_Demo
                         SqlDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
-                            Application["tempPartName"] = reader["part_name"].ToString();
+                            Application["tempPartName"] = reader["part_name"].ToString().Trim();
                         }
                         reader.Close();
 
                         if (Application["tempPartName"].ToString() != "")
                         {
+                            using (SqlCommand cmd2 = new SqlCommand("SELECT DISTINCT part_no FROM parts_master WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
+                            {
+                                SqlDataReader reader2 = cmd2.ExecuteReader();
+                                while (reader2.Read())
+                                {
+                                    Application["tempPartNo"] = reader2["part_no"].ToString().Trim();
+                                }
+                                reader2.Close();
+                            }
+
                             operatorNameDropDownList.Items.Clear();
                             dateDropDownList.Items.Clear();
                             noOfPartsTextBox.Text = "";
                             LoadShiftDetails();
+
+                            using (SqlCommand cmd3 = new SqlCommand("SELECT DISTINCT type FROM post_operation_details WHERE part_no='" + Application["tempPartNo"].ToString().Trim() + "'", con))
+                            {
+                                SqlDataReader Rreader = cmd3.ExecuteReader();
+                                operationTypeList.DataSource = Rreader;
+                                operationTypeList.DataBind();
+                                Rreader.Close();
+                                operationTypeList.Items.Insert(0, new ListItem("Select Operation", ""));
+                                operationTypeList.Items.Add(new ListItem("N/A", "-1"));
+                            }
                         }
                         else
                         {
@@ -111,15 +135,7 @@ namespace ERP_Demo
                             noOfPartsTextBox.Text = "";
                         }
                     }
-                    using (SqlCommand cmmd = new SqlCommand("SELECT DISTINCT type FROM post_operation_details WHERE part_name='" + partNameDropDownList.SelectedItem.Text + "'", con))
-                    {
-                        SqlDataReader Rreader = cmmd.ExecuteReader();
-                        operationTypeList.DataSource = Rreader;
-                        operationTypeList.DataBind();
-                        Rreader.Close();
-                        operationTypeList.Items.Insert(0, new ListItem("Select Operation", ""));
-                        operationTypeList.Items.Insert(1, new ListItem("N/A", ""));
-                    }
+                    
                     con.Close();
                 }
                 else

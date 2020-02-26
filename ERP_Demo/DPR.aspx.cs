@@ -144,21 +144,20 @@ namespace ERP_Demo
                             machineUsedDropDownList.Items.Insert(0, new ListItem("Select Machine Used", ""));
                         }
 
-                        using (SqlCommand cmd2 = new SqlCommand("SELECT DISTINCT rm_grade,alt_rm_grade FROM parts_master where part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
+                        using (SqlCommand cmd2 = new SqlCommand("SELECT DISTINCT rm_grade,alt_rm_grade FROM parts_master WHERE part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
                         {
+                            string item1 = "";
+                            string item2 = "";
                             DataTable dt = new DataTable();
                             SqlDataAdapter ad = new SqlDataAdapter(cmd2);
                             ad.Fill(dt);
-
                             materialGradeDropDownList.Items.Clear();
                             if (dt.Rows.Count > 0)
                             {
-
                                 for (int i = 0; i < dt.Rows.Count; i++)
                                 {
-
-                                    string item1 = dt.Rows[i]["rm_grade"].ToString();
-                                    string item2 = dt.Rows[i]["alt_rm_grade"].ToString();
+                                    item1 = dt.Rows[i]["rm_grade"].ToString();
+                                    item2 = dt.Rows[i]["alt_rm_grade"].ToString();
 
                                     materialGradeDropDownList.Items.Insert(0, new ListItem("Select Material Grade", ""));
                                     materialGradeDropDownList.Items.Add(new ListItem(item1, dt.Rows[i]["rm_grade"].ToString()));

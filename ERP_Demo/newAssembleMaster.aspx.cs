@@ -36,7 +36,7 @@ namespace ERP_Demo
                 }
                 else
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT unit_of_measurement FROM unit_of_measurement_master;", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT abbreviation FROM unit_of_measurement_master;", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         uomDropDownList.DataSource = reader;
@@ -224,7 +224,7 @@ namespace ERP_Demo
                         reader.Close();
                     }
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT unit_of_measurement FROM unit_of_measurement_master where unit_of_measurement NOT IN('" + Application["uom"].ToString() + "')", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT abbreviation FROM unit_of_measurement_master where unit_of_measurement NOT IN('" + Application["uom"].ToString() + "')", con))
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
                         uomDropDownList.DataSource = reader;

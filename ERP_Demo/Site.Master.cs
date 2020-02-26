@@ -21,141 +21,139 @@ namespace ERP_Demo
                     {
                         if (Menu1.Items.Count > 0)
                         {
-                            if (Session["roleFullAccess"].ToString() == "NO")
-                            {
-                                Menu1.Items.Remove(Menu1.FindItem("Masters"));
-                            }
                             if (Session["roleTransactions"].ToString() == "NO")
                             {
-                                Menu1.Items.Remove(Menu1.FindItem("Transaction"));
+                                Menu1.Items.Remove(Menu1.FindItem("TRANSACTION"));
                             }
                         }
                     }
-                    else if(Session["roleSelectedAccess"].ToString() == "YES")
+                    if(Session["roleSelectedAccess"].ToString() == "YES")
                     {
                         //Menu1.Items.Remove(Menu1.FindItem("Masters"));
 
                         if (Menu1.Items.Count > 0)
                         {
-                            if (Session["roleTransactions"].ToString() == "NO")
+                            if (Session["roleReports"].ToString().Trim() == "NO")
                             {
-                                Menu1.Items.Remove(Menu1.FindItem("Transaction"));
+                                Menu1.Items.Remove(Menu1.FindItem("REPORTS"));
                             }
 
-                            if (Session["roleReports"].ToString() == "NO")
-                            {
-                                Menu1.Items.Remove(Menu1.FindItem("Reports"));
-                            }
-
-                            if (Session["roleAccess"].ToString().Trim() == "Product Category")
+                            if (Session["roleAccess"].ToString().Trim() == "ASSEMBLY")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
+                                temp.NavigateUrl = "/displayAssemble.aspx";
+                            }
+                            if (Session["roleAccess"].ToString().Trim() == "PRODUCT CATEGORY")
+                            {
+                                MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayFamily.aspx";
                             }
                             if (Session["roleAccess"].ToString().Trim() == "UOM")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayUnitOfMeasurement.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Raw Material")
+                            if (Session["roleAccess"].ToString().Trim() == "RAW MATERIAL")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayRawMaterial.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Masterbatch")
+                            if (Session["roleAccess"].ToString().Trim() == "MASTERBATCH")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayMasterBatch.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Post Operation")
+                            if (Session["roleAccess"].ToString().Trim() == "POST OPERATION")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayPostOperation.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Packaging")
+                            if (Session["roleAccess"].ToString().Trim() == "PACKAGING")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayPackaging.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Rejection")
+                            if (Session["roleAccess"].ToString().Trim() == "REJECTION")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayRejection.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Shift")
+                            if (Session["roleAccess"].ToString().Trim() == "SHIFT")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayShift.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Machine")
+                            if (Session["roleAccess"].ToString().Trim() == "MACHINE")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayMachine.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Down Time Code")
+                            if (Session["roleAccess"].ToString().Trim() == "DOWN TIME CODE")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayDownTimeCode.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Customer")
+                            if (Session["roleAccess"].ToString().Trim() == "CUSTOMER")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayCustomer.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Worker")
+                            if (Session["roleAccess"].ToString().Trim() == "WORKER")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayWorker.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Vendor")
+                            if (Session["roleAccess"].ToString().Trim() == "VENDOR")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayVendor.aspx";
                             }
-                            if (Session["roleAccess"].ToString().Trim() == "Parts")
+                            if (Session["roleAccess"].ToString().Trim() == "PARTS")
                             {
                                 MenuItem temp = new MenuItem(Session["roleAccess"].ToString());
-                                Menu1.FindItem("Masters").ChildItems.Clear();
-                                Menu1.FindItem("Masters").ChildItems.Add(temp);
+                                Menu1.FindItem("MASTERS").ChildItems.Clear();
+                                Menu1.FindItem("MASTERS").ChildItems.Add(temp);
                                 temp.NavigateUrl = "/displayParts.aspx";
                             }
                         }
                     }
-                    else if(Session["roleTransactions"].ToString() == "YES")
+                    if(Session["roleTransactions"].ToString() == "YES")
                     {
-                        Menu1.Items.Remove(Menu1.FindItem("Masters"));
+                        Menu1.Items.Remove(Menu1.FindItem("MASTERS"));
 
                         if (Menu1.Items.Count > 0)
                         {
-                            if (Session["roleReports"].ToString() == "NO")
+                            if (Session["roleReports"].ToString().Trim() == "NO")
                             {
-                                Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                                Menu1.Items.Remove(Menu1.FindItem("REPORTS"));
                             }
                             Menu1.Items.Add(new MenuItem()
                             {

@@ -71,20 +71,21 @@
                     <asp:ListItem Value="Selected Access"></asp:ListItem>
                 </asp:CheckBoxList>
                 <asp:DropDownList ID="selectedAccessDropDownList" runat="server" style="text-align:center; margin-left:auto; margin-right:auto; margin-top:2em">
-                    <asp:ListItem Text="Product Category" Value="Product Category"></asp:ListItem>
+                    <asp:ListItem Text="Product Category" Value="PRODUCT CATEGORY"></asp:ListItem>
+                    <asp:ListItem Text="Assembly" Value="ASSEMBLY"></asp:ListItem>
                     <asp:ListItem Text="UOM" Value="UOM"></asp:ListItem>
-                    <asp:ListItem Text="Raw Material" Value="Raw Material"></asp:ListItem>
-                    <asp:ListItem Text="Masterbatch" Value="Masterbatch"></asp:ListItem>
-                    <asp:ListItem Text="Post Operation" Value="Post Operation"></asp:ListItem>
-                    <asp:ListItem Text="Packaging" Value="Packaging"></asp:ListItem>
-                    <asp:ListItem Text="Rejection" Value="Rejection"></asp:ListItem>
-                    <asp:ListItem Text="Shift" Value="Shift"></asp:ListItem>
-                    <asp:ListItem Text="Machine" Value="Machine"></asp:ListItem>
-                    <asp:ListItem Text="Down Time Code" Value="Down Time Code"></asp:ListItem>
-                    <asp:ListItem Text="Customer" Value="Customer"></asp:ListItem>
-                    <asp:ListItem Text="Worker" Value="Worker"></asp:ListItem>
-                    <asp:ListItem Text="Vendor" Value="Vendor"></asp:ListItem>
-                    <asp:ListItem Text="Parts" Value="Parts"></asp:ListItem>
+                    <asp:ListItem Text="Raw Material" Value="RAW MATERIAL"></asp:ListItem>
+                    <asp:ListItem Text="Masterbatch" Value="MASTERBATCH"></asp:ListItem>
+                    <asp:ListItem Text="Post Operation" Value="POST OPERATION"></asp:ListItem>
+                    <asp:ListItem Text="Packaging" Value="PACKAGING"></asp:ListItem>
+                    <asp:ListItem Text="Rejection" Value="REJECTION"></asp:ListItem>
+                    <asp:ListItem Text="Shift" Value="SHIFT"></asp:ListItem>
+                    <asp:ListItem Text="Machine" Value="MACHINE"></asp:ListItem>
+                    <asp:ListItem Text="Down Time Code" Value="DOWN TIME CODE"></asp:ListItem>
+                    <asp:ListItem Text="Customer" Value="CUSTOMER"></asp:ListItem>
+                    <asp:ListItem Text="Worker" Value="WORKER"></asp:ListItem>
+                    <asp:ListItem Text="Vendor" Value="VENDOR"></asp:ListItem>
+                    <asp:ListItem Text="Parts" Value="PARTS"></asp:ListItem>
                 </asp:DropDownList>
                 <asp:CustomValidator ID="CustomValidator1" ErrorMessage="Please select transaction rights!"
                 ForeColor="Red" ClientValidationFunction="ValidateCheckBoxList" runat="server" style="margin-left:40px;" />

@@ -23,14 +23,14 @@
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle ForeColor="black" Font-Size="Small" BackColor="WhiteSmoke"/>     
                 <Columns>
-                    <asp:TemplateField HeaderText="REJECTION TYPE">
-                        <ItemTemplate>
-                            <asp:Label Text='<%# Eval("rejection_type") %>' runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="CODE">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("code") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="REJECTION TYPE">
+                        <ItemTemplate>
+                            <asp:Label Text='<%# Eval("rejection_type") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="DESCRIPTION">

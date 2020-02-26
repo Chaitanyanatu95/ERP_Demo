@@ -12,7 +12,6 @@ namespace ERP_Demo
     public partial class postOperationsPage : Page
     {
         ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["PbplasticsConnectionString"];
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -85,12 +84,18 @@ namespace ERP_Demo
                 if (dtPostOperation.Rows.Count > 0)
                 {
                     BindPostGrid();
+                    var drop = (DropDownList)postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList");
+                    drop.Items.Insert(0, new ListItem("Select Type"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
                 }
                 else
                 {
                     dtPostOperation.Rows.Add(dtPostOperation.NewRow());
 
                     BindPostGrid();
+                    var drop = (DropDownList)postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList");
+                    drop.Items.Insert(0, new ListItem("Select Type"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
                     postOperationGrid.Rows[0].Cells.Clear();
                     postOperationGrid.Rows[0].Cells.Add(new TableCell());
                     postOperationGrid.Rows[0].Cells[0].ColumnSpan = dtPostOperation.Columns.Count;
@@ -161,11 +166,20 @@ namespace ERP_Demo
                 if (dtPackaging.Rows.Count > 0)
                 {
                     BindPackagingDetailsGrid();
+
+                    var drop2 = (DropDownList)packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList");
+                    drop2.Items.Insert(0, new ListItem("Select Packaging"));
+                    drop2.Items.Add(new ListItem("N/A", "-1"));
                 }
                 else
                 {
                     dtPackaging.Rows.Add(dtPackaging.NewRow());
                     BindPackagingDetailsGrid();
+
+                    var drop2 = (DropDownList)packagingDetailsGrid.FooterRow.FindControl("packagingDropDownList");
+                    drop2.Items.Insert(0, new ListItem("Select Packaging"));
+                    drop2.Items.Add(new ListItem("N/A", "-1"));
+
                     //packagingDetailsDropDownList.Items.Insert(0, new ListItem("Select Packaging Type", ""));
                     packagingDetailsGrid.Rows[0].Cells.Clear();
                     packagingDetailsGrid.Rows[0].Cells.Add(new TableCell());
@@ -291,6 +305,19 @@ namespace ERP_Demo
                             "jig_fixture_req='" + Application["jigReq"] + "',production_in_pcs = '" + Application["moldProductionCycle"] + "',sample_part_no = '" + Application["samplePartNo"] + "',part_photo='" + Application["partPhoto"] + "',mold_spec_sheet='" + Application["moldSpec"] + "',raw_material='" + Application["rawMaterial"] + "',rm_grade='" + Application["rmGrade"] + "',rm_make='" + Application["rmMake"] + "',rm_color='" + Application["rmColor"] + "',masterbatch='" + Application["masterbatch"] + "',alt_raw_material='" + Application["altRawMaterial"] + "',mb_name='" + Application["mbName"] + "',mb_grade='" + Application["mbGrade"] + "',mb_mfg='" + Application["mbMfg"] + "',mb_color='" + Application["mbColor"] + "',mb_color_code='" + Application["mbColorCode"] + "',mb_percentage='" + Application["mbPercentage"] + "',alt_rm_name='" + Application["altRMName"] + "',alt_rm_grade='" + Application["altRmGrade"] + "'" +
                             ",alt_rm_make='" + Application["altRmMake"] + "',alt_rm_color='" + Application["altRmColor"] + "',alt_masterbatch='" + Application["altMasterbatch"] + "',alt_mb_name='" + Application["altMasterbatchName"] + "',alt_mb_grade='" + Application["altMasterbatchGrade"] + "',alt_mb_mfg='" + Application["altMasterbatchMfg"] + "',alt_mb_color='" + Application["altMasterbatchColor"] + "',alt_mb_color_code='" + Application["altMasterbatchColorCode"] + "',alt_mb_percentage='" + Application["altMasterbatchPercentage"] + "',post_operation_required ='" + postOperationDropDownList.SelectedItem.Text + "' ,packaging_details_required = '" + packagingDetailsDropDownList.SelectedItem.Text + "' WHERE part_no = '" + Application["partNo"] + "'";
                         Application["query"] = query;
+
+                        if (Application["postOperationDetailsReq"].ToString() == "YES")
+                        {
+                            string query2 = "UPDATE post_operation_details SET part_name='" + Application["partName"] + "' WHERE part_no = '"+Application["partNo"]+"'";
+                            SqlCommand cmd2 = new SqlCommand(query2.ToString(), con);
+                            cmd2.ExecuteNonQuery();
+                        }
+                        if (Application["packagingDetailsReq"].ToString() == "YES")
+                        {
+                            string query3 = "UPDATE packaging_details_master SET part_name='" + Application["partName"] + "' WHERE part_no = '" + Application["partNo"] + "'";
+                            SqlCommand cmd3 = new SqlCommand(query3.ToString(), con);
+                            cmd3.ExecuteNonQuery();
+                        }
                     }
                     else
                     {

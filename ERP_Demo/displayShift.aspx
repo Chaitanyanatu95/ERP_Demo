@@ -23,7 +23,7 @@
                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Font-Size="Small"/>    
                 <Columns>
-                    <asp:TemplateField HeaderText="SHIFT TIME">
+                    <asp:TemplateField HeaderText="SHIFT NAME">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("shift_time") %>' runat="server" />
                         </ItemTemplate>

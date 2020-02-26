@@ -16,7 +16,7 @@
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin">SHIFT NAME</asp:TableCell>
-            <asp:TableCell runat="server" CssClass="margin">WORKING HOURS</asp:TableCell>
+            <asp:TableCell runat="server" CssClass="margin">SHIFT HOURS</asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server">
             <asp:TableCell runat="server" CssClass="margin"><div class="required" style="padding-left:12em">*</div><asp:TextBox ID="shiftNameTextBox" runat="server"></asp:TextBox><br /><asp:RequiredFieldValidator ID="shiftNameReq" CssClass="required" runat="server" ControlToValidate="shiftNameTextBox" ErrorMessage="please enter shift name"></asp:RequiredFieldValidator></asp:TableCell>

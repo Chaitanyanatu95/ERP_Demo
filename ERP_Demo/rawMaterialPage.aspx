@@ -45,8 +45,8 @@
             function validationOnFields() {
 
                 //rawmaterial
-                var rawMaterialName = document.getElementById("<%=rawMaterialDropDownList.ClientID%>");
-                var getRMName = rawMaterialName.options[rawMaterialName.selectedIndex].text;
+                var rawMaterialName = $('#<%=rawMaterialDropDownList.ClientID %> option:selected');
+                var getRMName = rawMaterialName.text();
 
                 if (getRMName == "Select Raw Material") {
                     document.getElementById("<%=rmNameLabel.ClientID%>").innerHTML = "Please select raw material.".fontcolor("red");
@@ -91,29 +91,29 @@
                         return false;
                     }
 
-                    var altRmGrade = document.getElementById("<%=altRawMaterialGradeDropDownList.ClientID%>");
-                    var getText = altRmGrade.options[altRmGrade.selectedIndex].text;
-                    if (getText == "Select Raw Material Grade") {
-                        document.getElementById("<%=altRMGradeLabel.ClientID%>").innerHTML = "Please select grade.".fontcolor("red");
+                    var altRmGrade = $('#<%=altRawMaterialGradeDropDownList.ClientID %> option:selected').text();
+                    if (altRmGrade == "Select Raw Material Grade") {
+                        document.getElementById("<%=altRMGradeLabel.ClientID%>").innerHTML = "Please select raw material grade.".fontcolor("red");
+                        return false;
+                    }
+                }
+                else {
+                    return true;
+                }
+
+                //alt rm masterbatch
+                var isAltRMMasterBatchSelected = $('#<%=altRawMaterialMasterBatchDropDownList.ClientID %> option:selected').text();
+                if (isAltRMMasterBatchSelected == "YES") {
+                    var altRmMbName = $('#<%=altRMBNameDropDownList.ClientID %> option:selected').text();
+                    if (altRmMbName == "Select Masterbatch") {
+                        document.getElementById("<%=altRMBNameLabel.ClientID%>").innerHTML = "Please select masterbatch.".fontcolor("red");
                         return false;
                     }
 
-                    //alt rm masterbatch
-                    var isAltRMMasterBatchSelected = $('#<%=altRawMaterialMasterBatchDropDownList.ClientID %> option:selected').text();
-                    if (isAltRMMasterBatchSelected == "YES") {
-                        var altRmMbName = document.getElementById("<%=altRMBNameDropDownList.ClientID%>");
-                        var getText = altRmMbName.options[altRmMbName.selectedIndex].text;
-                        if (getText == "Select Masterbatch") {
-                            document.getElementById("<%=altRMBNameLabel.ClientID%>").innerHTML = "Please select masterbatch.".fontcolor("red");
-                            return false;
-                        }
-
-                        var altRmMbGrade = document.getElementById("<%=altRMBGradeDropDownList.ClientID%>");
-                        var getText = altRmMbGrade.options[altRmMbGrade.selectedIndex].text;
-                        if (getText == "Select MasterBatch Grade") {
-                            document.getElementById("<%=altRMBGradeLabel.ClientID%>").innerHTML = "Please select grade.".fontcolor("red");
-                            return false;
-                        }
+                    var altRmMbGrade = $('#<%=altRMBGradeDropDownList.ClientID %> option:selected').text();
+                    if (altRmMbGrade == "Select MasterBatch Grade") {
+                        document.getElementById("<%=altRMBGradeLabel.ClientID%>").innerHTML = "Please select grade.".fontcolor("red");
+                        return false;
                     }
                 }
                 else {
@@ -135,18 +135,18 @@
 
         </script>
          <div style="display:block;margin-left:auto;margin-right:auto;height:40px;width:80%;background-color:whitesmoke;padding-top:5px;">
-        <div style="display:inline-block;text-align:center;border:1px solid black;background-color:transparent;width:20%;height:33px;padding-top:7px; color:black">
-            <b>STEP 1</b>
+            <div style="display:inline-block;text-align:center;border:1px solid black;background-color:transparent;width:20%;height:33px;padding-top:7px; color:black">
+                <b>STEP 1</b>
+            </div>
+            <div style="display:inline-block; height:1px; width:200px; background-color:black; padding-top:7px; margin-left:-4px;"></div>
+             <div style="display:inline-block;text-align:center;border:1px solid black;background-color:SkyBlue;width:20%;height:33px;padding-top:7px; margin-left:-4px; color:black">
+                <b>STEP 2</b>
+            </div>
+            <div style="display:inline-block; height:1px; width:200px; background-color:black; padding-top:7px; margin-left:-4px;"></div>
+             <div style="display:inline-block;text-align:center;border:1px solid black;background-color:transparent;width:20%;height:33px;padding-top:7px; margin-left:-4px; color:black">
+                <b>STEP 3</b>
+            </div>
         </div>
-        <div style="display:inline-block; height:1px; width:200px; background-color:black; padding-top:7px; margin-left:-4px;"></div>
-         <div style="display:inline-block;text-align:center;border:1px solid black;background-color:SkyBlue;width:20%;height:33px;padding-top:7px; margin-left:-4px; color:black">
-            <b>STEP 2</b>
-        </div>
-        <div style="display:inline-block; height:1px; width:200px; background-color:black; padding-top:7px; margin-left:-4px;"></div>
-         <div style="display:inline-block;text-align:center;border:1px solid black;background-color:transparent;width:20%;height:33px;padding-top:7px; margin-left:-4px; color:black">
-            <b>STEP 3</b>
-        </div>
-    </div>
         <br />
                                         <%-- RAW MATERIAL --%>
         <asp:Table ID="rawMaterialTable" runat="server" CssClass="Table1" Height="40%" Width="70%">

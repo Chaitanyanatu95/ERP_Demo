@@ -30,7 +30,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM fpa", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM fpa ORDER BY worker_date", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
@@ -61,6 +61,35 @@ namespace ERP_Demo
         {
             fpaGridView.PageIndex = e.NewPageIndex;
             PopulateGridview();
+        }
+
+        protected void fpaGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ dprFlag.Text.ToString()+"');", true);
+
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('In');", true);
+
+                lblErrorMessage.Text = "";
+                using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
+                {
+                    sqlCon.Open();
+
+                    string query = "DELETE FROM fpa WHERE id = @id";
+                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(fpaGridView.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.ExecuteNonQuery();
+
+                    sqlCon.Close();
+                }
+                    PopulateGridview();
+            }
+            catch (Exception ex)
+            {
+                lblErrorMessage.Text = ex.Message;
+                lblSuccessMessage.Text = "";
+            }
         }
     }
 }

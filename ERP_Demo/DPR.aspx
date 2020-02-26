@@ -20,7 +20,7 @@
         <asp:TableRow runat="server" HorizontalAlign="Center">
             <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="employeeName" runat="server" style="font-weight:700; color:black">Operator Name <div class="required" style="display:inline">*</div></asp:Label><br /><br /><asp:DropDownList ID="operatorNameDropDownList" DataTextField="worker_name" DataValueField="worker_name" runat="server" AutoPostBack="true"></asp:DropDownList><br /><asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="operatorNameDropDownList" CssClass="required" ErrorMessage="Please select worker name."></asp:RequiredFieldValidator></asp:TableCell>
             <asp:TableCell runat="server" ColumnSpan="3"><asp:Label ID="Date" runat="server" style="font-weight:700; color:black">Date <div class="required" style="display:inline">*</div></asp:Label><br />
-                <input type="date" id="dateSelection" runat="server" style="font-weight:500; color:black; text-align:center"/>
+               <input type="date" id="dateSelection" runat="server" style="font-weight:500; color:black; text-align:center"/>
                 <br /><asp:RequiredFieldValidator ID="dateReq" runat="server" ControlToValidate="dateSelection" CssClass="required" ErrorMessage="Please select date."></asp:RequiredFieldValidator></asp:TableCell>
         </asp:TableRow>
         <asp:TableRow runat="server" HorizontalAlign="Center" VerticalAlign="Bottom" >

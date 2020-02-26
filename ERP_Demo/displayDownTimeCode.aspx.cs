@@ -29,7 +29,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM down_time_master EXCEPT SELECT * FROM down_time_master WHERE down_time_type='N/A'", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM down_time_master EXCEPT SELECT * FROM down_time_master WHERE down_time_type='N/A' order by down_time_code", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
