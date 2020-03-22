@@ -205,11 +205,7 @@
       <Link>.editorconfig</Link>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\pbplastics - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\pbplastics - Web Deploy1.pubxml" />
-    <None Include="Properties\PublishProfiles\pbplasticserp - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\pbplasticserp - Web Deploy1.pubxml" />
-    <None Include="Properties\PublishProfiles\pbplasticserp - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\pbplasticserpapp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Login.aspx" />
     <Content Include="dprReports.aspx" />

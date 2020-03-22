@@ -16,10 +16,10 @@ namespace ERP_Demo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-                if (!IsPostBack)
-                {
-                    PopulateGridview();
-                }
+            if (!IsPostBack)
+            {
+                PopulateGridview();
+            }
         }
 
         void PopulateGridview()
@@ -30,7 +30,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT id,operator_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,downtime_hrs,down_time_code,efficiency,date_dpr,post_opr_req,fpa_status FROM production ORDER BY date_dpr", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT id,dpr_no,operator_name,part_name,material_grade,machine_no,shift_details,exp_qty,no_of_shots,rejection_pcs,rejection_kgs,act_qty,efficiency,date_dpr,post_opr_req,fpa_status FROM production ORDER BY date_dpr", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
@@ -68,37 +68,78 @@ namespace ERP_Demo
             try
             {
                 GridViewRow row = productionGridView.Rows[e.RowIndex];
-                Label dprFlag = (Label)row.FindControl("postStatusFlag");
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ dprFlag.Text.ToString()+"');", true);
+                Label partName = (Label)row.FindControl("partName");
+                Label shiftDetails = (Label)row.FindControl("shiftDetails");
+                Label dateDpr = (Label)row.FindControl("dateDpr");
+                Label postFlag = (Label)row.FindControl("postStatusFlag");
+                Label fpaFlag = (Label)row.FindControl("fpaStatusFlag");
+                HiddenField dprNo = (HiddenField)row.FindControl("dprNo");
+                var postFlagText = postFlag.Text;
+                var fpaFlagText = fpaFlag.Text;
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + postFlag.Text + "');", true);
 
-                if (dprFlag.Text.ToString().Trim() != "OPEN")
+                SqlConnection conn = new SqlConnection(settings.ToString());
+                conn.Open();
+                if ((postFlagText.ToString() != "CLOSED" || fpaFlagText.ToString() != "CLOSED") && fpaFlagText.ToString() != "")
                 {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('In');", true);
-
                     lblErrorMessage.Text = "";
-                    using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
-                    {
-                        sqlCon.Open();
+                    string query = "DELETE FROM production WHERE id = @id";
+                    SqlCommand sqlCmd = new SqlCommand(query, conn);
+                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(productionGridView.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.ExecuteNonQuery();
 
-                        string query = "DELETE FROM production WHERE id = @id";
-                        SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                        sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(productionGridView.DataKeys[e.RowIndex].Value.ToString()));
-                        sqlCmd.ExecuteNonQuery();
+                    string query2 = "DELETE FROM down_time_production WHERE dpr_no = @dprNo";
+                    SqlCommand sqlCmd2 = new SqlCommand(query2, conn);
+                    sqlCmd2.Parameters.AddWithValue("@dprNo", dprNo.Value);
+                    sqlCmd2.ExecuteNonQuery();
 
-                        sqlCon.Close();
-                    }
                     PopulateGridview();
+                }
+                else if(postFlagText.ToString() == "CLOSED" || fpaFlagText.ToString() == "CLOSED")
+                {
+                    lblErrorMessage.Text = "Cannot delete as operation is finished";
                 }
                 else
                 {
-                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Out');", true);
                     lblErrorMessage.Text = "Cannot delete the entry as it is used for FPA";
                 }
+                conn.Close();
             }
             catch (Exception ex)
             {
                 lblErrorMessage.Text = ex.Message;
                 lblSuccessMessage.Text = "";
+            }
+        }
+
+        protected void productionGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Edit")
+            {
+                GridViewRow gvr = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+                int RowIndex = gvr.RowIndex;
+
+                /*GridViewRow row = productionGridView.Rows[RowIndex];*/
+                Label postFlag = (Label)gvr.FindControl("postStatusFlag");
+                Label fpaFlag = (Label)gvr.FindControl("fpaStatusFlag");
+                if (postFlag.Text != "CLOSED")
+                {
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["partName"] = commandArgs[0];
+                    Application["operatorName"] = commandArgs[1];
+                    Application["dateDpr"] = commandArgs[2];
+                    Application["shiftDetails"] = commandArgs[3];
+                    Application["id"] = commandArgs[4];
+                    Application["fpaStatus"] = commandArgs[5];
+                    Application["dprNo"] = commandArgs[6];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/DPR.aspx/");
+                }
+                else
+                {
+                    lblErrorMessage.Text = "Cannot edit as operation is finished";
+                }
             }
         }
     }

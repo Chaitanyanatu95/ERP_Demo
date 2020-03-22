@@ -24,6 +24,24 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// dprNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dprNo;
+
+        /// <summary>
         /// employeeName control.
         /// </summary>
         /// <remarks>
@@ -60,13 +78,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.Label Date;
 
         /// <summary>
-        /// dateSelection control.
+        /// dateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSelection;
+        protected global::System.Web.UI.WebControls.TextBox dateTextBox;
 
         /// <summary>
         /// dateReq control.
@@ -249,40 +267,13 @@ namespace ERP_Demo
         protected global::System.Web.UI.WebControls.TextBox actQuantityTextBox;
 
         /// <summary>
-        /// downTimeCodeDropDownList control.
+        /// downTimeGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList downTimeCodeDropDownList;
-
-        /// <summary>
-        /// RequiredFieldValidator8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator8;
-
-        /// <summary>
-        /// downTimeTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox downTimeTextBox;
-
-        /// <summary>
-        /// RequiredFieldValidator9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
+        protected global::System.Web.UI.WebControls.GridView downTimeGridView;
 
         /// <summary>
         /// efficiencyTextBox control.

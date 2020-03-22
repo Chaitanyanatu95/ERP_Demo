@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FPAList.aspx.cs" Inherits="ERP_Demo.FPAList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:GridView ID="fpaGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id"
-        ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" OnRowDeleting="fpaGridView_RowDeleting" OnPageIndexChanging="fpaGridView_PageIndexChanging" AllowPaging="true" PageSize="10" BorderWidth="1px" CssClass="Table1" Width="90%">
+        ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" OnRowCommand="fpaGridView_RowCommand" OnRowDeleting="fpaGridView_RowDeleting" OnPageIndexChanging="fpaGridView_PageIndexChanging" AllowPaging="true" PageSize="10" BorderWidth="1px" CssClass="Table1" Width="90%">
         <%-- Theme Properties --%>
         <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NextPreviousFirstLast" NextPageText="Next" PreviousPageText="Previous"/>
         <%--<PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" /> --%>
@@ -9,12 +9,18 @@
         <PagerStyle BackColor="WhiteSmoke" ForeColor="Blue" HorizontalAlign="Center" CssClass="spacing"/>
         <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px"/>    
                 <Columns>
-                    <asp:TemplateField HeaderText="WORKER NAME">
+                    <asp:TemplateField HeaderText="Sr.No">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("operator_name") %>' runat="server" />
+                            <%#Container.DataItemIndex+1 %>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="OPERATOR NAME">
+                        <ItemTemplate>
+                            <asp:Label Text='<%# Eval("operator_name") %>' runat="server" />
+                            <asp:HiddenField ID="fpaNo" Value='<%# Eval("fpa_no") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="WORKER NAME">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("worker_name") %>' runat="server" />
                         </ItemTemplate>
@@ -26,12 +32,12 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="DATE">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("date") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("date_dpr") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="SHIFT DETAILS">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("shift") %>' runat="server" />
+                            <asp:Label Text='<%# Eval("shift_details") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="OPERATION TYPE">
@@ -67,6 +73,11 @@
                     <asp:TemplateField HeaderText="EFFICIENCY">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("efficiency") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">
+                        <ItemTemplate>
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" Width="15px" Height="15px" CommandArgument='<%#Eval("id")+","+ Eval("fpa_no")%>' OnClientClick="return confirm('Do you want to Edit?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText ="DELETE" HeaderStyle-Width="75px">

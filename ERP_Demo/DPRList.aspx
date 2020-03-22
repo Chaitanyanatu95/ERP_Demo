@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DPRList.aspx.cs" Inherits="ERP_Demo.DPRList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="productionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="True" DataKeyNames="id" OnRowDeleting="productionGridView_RowDeleting"
+    <asp:GridView ID="productionGridView" runat="server" AutoGenerateColumns="False" ShowFooter="False" DataKeyNames="id" OnRowCommand="productionGridView_RowCommand" OnRowDeleting="productionGridView_RowDeleting"
         ShowHeaderWhenEmpty="True" BackColor="#DFDDDD" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" CssClass="Table1" Width="90%" OnPageIndexChanging="productionGridView_PageIndexChanging" AllowPaging="true" PageSize="10">
                 <%-- Theme Properties --%>
                 <PagerSettings FirstPageText="First" LastPageText="Last" Mode="NumericFirstLast" PageButtonCount="4" />
@@ -9,19 +9,25 @@
                 <RowStyle ForeColor="black" BackColor="WhiteSmoke" Height="40px" />    
                 <FooterStyle BackColor="WhiteSmoke"/>
                 <Columns>
+                    <asp:TemplateField HeaderText="Sr.No">
+                        <ItemTemplate>
+                            <%#Container.DataItemIndex+1 %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="PART NAME">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("part_name") %>' runat="server" />
+                            <asp:Label ID="partName" Text='<%# Eval("part_name") %>' runat="server" />
+                            <asp:HiddenField ID="dprNo" Value='<%# Eval("dpr_no") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="DATE">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("date_dpr") %>' runat="server" />
+                            <asp:Label ID="dateDpr" Text='<%# Eval("date_dpr") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="OPERATOR NAME">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("operator_name") %>' runat="server" />
+                            <asp:Label ID="operatorName" Text='<%# Eval("operator_name") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="R/M GRADE">
@@ -36,7 +42,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="SHIFT DETAILS">
                         <ItemTemplate>
-                            <asp:Label Text='<%# Eval("shift_details") %>' runat="server" />
+                            <asp:Label ID="shiftDetails" Text='<%# Eval("shift_details") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="EXP QTY">
@@ -64,16 +70,6 @@
                             <asp:Label Text='<%# Eval("act_qty") %>' runat="server" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="DOWNTIME HOURS">
-                        <ItemTemplate>
-                            <asp:Label Text='<%# Eval("downtime_hrs") %>' runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="DOWNTIME CODE">
-                        <ItemTemplate>
-                            <asp:Label Text='<%# Eval("down_time_code") %>' runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="EFFICIENCY">
                         <ItemTemplate>
                             <asp:Label Text='<%# Eval("efficiency") %>' runat="server" />
@@ -87,6 +83,11 @@
                     <asp:TemplateField HeaderText=" FPA STATUS">
                         <ItemTemplate>
                              <asp:Label ID="fpaStatusFlag" Text='<%# Eval("fpa_status") %>' runat="server" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText ="EDIT" HeaderStyle-Width="50px">
+                        <ItemTemplate>
+                            <asp:ImageButton ImageUrl="~/Images/edit.png" runat="server" CommandName="Edit" ToolTip="EDIT" Width="15px" Height="15px" CommandArgument='<%#Eval("part_name")+","+ Eval("operator_name")+","+ Eval("date_dpr")+","+ Eval("shift_details")+","+ Eval("id")+","+ Eval("fpa_status")+","+ Eval("dpr_no")%>' OnClientClick="return confirm('Do you want to Edit?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText ="DELETE" HeaderStyle-Width="75px">

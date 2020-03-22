@@ -146,7 +146,7 @@
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     <asp:DropDownList ID="partNameDropDownListFooter" runat="server" DataTextField="part_name" DataValueField="part_name" DataSourceID="SqlDataSource1" AutoPostBack="true" OnSelectedIndexChanged="partNameDropDownListFooter_SelectedIndexChanged"></asp:DropDownList>
-                                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=PB-LAPTOP;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [part_name] FROM [parts_master]">
+                                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [part_name] FROM [parts_master]">
                                     </asp:SqlDataSource>
                                     <asp:Label ID="errorType" runat="server"></asp:Label>
                                 </FooterTemplate>

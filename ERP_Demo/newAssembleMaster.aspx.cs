@@ -16,23 +16,16 @@ namespace ERP_Demo
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SqlConnection con = new SqlConnection(settings.ToString());
+            con.Open();
+
             if (!IsPostBack)
             {
-                SqlConnection con = new SqlConnection(settings.ToString());
-                con.Open();
-
                 PopulateGridview();
 
                 if (Application["editFlag"] is true)
                 {
                     LoadEditValuesInController();
-                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                    qty.BackColor = Color.WhiteSmoke;
-                    drop.Items.Insert(0, new ListItem("Select Part"));
-                    drop.Items.Add(new ListItem("N/A", "-1"));
-                    var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
-                    img.Visible = false;
                 }
                 else
                 {
@@ -47,8 +40,6 @@ namespace ERP_Demo
 
                     using (SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM assembly_master ORDER BY ID DESC", con))
                     {
-                        // Int32 count = (Int32)cmd.ExecuteScalar();
-                        //System.Diagnostics.Debug.WriteLine(count);
                         SqlDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
@@ -60,6 +51,7 @@ namespace ERP_Demo
                         int input = int.Parse(Regex.Replace(Application["input"].ToString(), "[^0-9]+", string.Empty));
                         assemblyNo.Text = "PBPAY#" + (input + 1);
                     }
+
                     var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
                     var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
                     qty.BackColor = Color.WhiteSmoke;
@@ -68,9 +60,36 @@ namespace ERP_Demo
                     var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
                     img.Visible = false;
                 }
-                con.Close();
+
+                string postSelectQuery = "SELECT assembly_no FROM assembly_master where assembly_no= '" + assemblyNo.Text.Trim() + "'";
+                SqlCommand selCmd = new SqlCommand(postSelectQuery, con);
+                Application["assemblySelectData"] = "";
+                SqlDataReader selReader = selCmd.ExecuteReader();
+                while (selReader.Read())
+                {
+                    if (selReader["assembly_no"].ToString() != "")
+                    {
+                        Application["assemblySelectData"] = selReader["assembly_no"].ToString();
+                    }
+                }
+                selReader.Close();
+                if (Application["assemblySelectData"].ToString() == "" && Application["rowCommand"] is false)
+                {
+                    string postQuery = "DELETE FROM assembly_operation_details where assembly_id= '" + assemblyNo.Text.Trim() + "'";
+                    SqlCommand cmmd = new SqlCommand(postQuery, con);
+                    cmmd.ExecuteNonQuery();
+
+                    string postQuery2 = "DELETE FROM assembly_operation_saved_details where assembly_id= '" + assemblyNo.Text.Trim() + "'";
+                    SqlCommand cmmd2 = new SqlCommand(postQuery2, con);
+                    cmmd2.ExecuteNonQuery();
+                    Application["assemblySelectData"] = null;
+                }
             }
-           
+            else
+            {
+                Application["rowCommand"] = false;
+            }
+            con.Close();
         }
 
         void PopulateGridview()
@@ -81,6 +100,8 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
+                    
+
                     if (Application["editFlag"] is true)
                     {
                         SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_saved_details WHERE assembly_id = '"+Application["assemblyNo"].ToString()+"'", sqlCon);
@@ -88,7 +109,7 @@ namespace ERP_Demo
                     }
                     else
                     {
-                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_details", sqlCon);
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_details WHERE assembly_id = '"+assemblyNo.Text.ToString()+"'", sqlCon);
                         sqlDa.Fill(dtbl);
                     }
                 }
@@ -121,6 +142,7 @@ namespace ERP_Demo
             try
             {
                 /************** ASSEMBLY OPERATION ****************/
+                GridViewRow row = assemblyGridView.FooterRow;
                 DataTable dtAssembly = new DataTable();
                 dtAssembly.Columns.AddRange(new DataColumn[2] { new DataColumn("PART NAME"), new DataColumn("QTY") });
                 Application["AssemblyOperation"] = dtAssembly;
@@ -148,42 +170,34 @@ namespace ERP_Demo
                     }
                     else
                     {
-                        //SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
-                        string postSelectQuery = "SELECT assembly_id FROM assembly_operation_details where assembly_id= '" + assemblyNo.Text.Trim() + "'";
-                        SqlCommand selCmd = new SqlCommand(postSelectQuery, sqlCon);
-                        Application["assemblySelectData"] = string.Empty;
-                        SqlDataReader selReader = selCmd.ExecuteReader();
-                        while (selReader.Read())
-                        {
-                            if (selReader["assembly_id"].ToString() != "")
-                            {
-                                Application["assemblySelectData"] = selReader["assembly_id"].ToString();
-                            }
-                        }
-                        selReader.Close();
-                        if (Application["assemblySelectData"].ToString() != "" && Application["rowCommand"] is false)
-                        {
-                            string postQuery = "DELETE FROM assembly_operation_details where assembly_id= '" + assemblyNo.Text.Trim() + "'";
-                            SqlCommand cmmd = new SqlCommand(postQuery, sqlCon);
-                            cmmd.ExecuteNonQuery();
-                            Application["assemblySelectData"] = null;
-                        }
                         SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM assembly_operation_details where assembly_id = '" + assemblyNo.Text.Trim() + "'", sqlCon);
                         sqlDa.Fill(dtAssembly);
-
+                        
                         lblErrorMessage.Text = "";
                     }
-                    
                 }
-
                 if (dtAssembly.Rows.Count > 0)
                 {
                     BindPostGrid();
+                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                    qty.BackColor = Color.WhiteSmoke;
+                    drop.Items.Insert(0, new ListItem("Select Part"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+                    var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                    img.Visible = false;
                 }
                 else
                 {
                     dtAssembly.Rows.Add(dtAssembly.NewRow());
                     BindPostGrid();
+                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
+                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
+                    qty.BackColor = Color.WhiteSmoke;
+                    drop.Items.Insert(0, new ListItem("Select Part"));
+                    drop.Items.Add(new ListItem("N/A", "-1"));
+                    var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
+                    img.Visible = false;
                     assemblyGridView.Rows[0].Cells.Clear();
                     assemblyGridView.Rows[0].Cells.Add(new TableCell());
                     assemblyGridView.Rows[0].Cells[0].ColumnSpan = dtAssembly.Columns.Count;
@@ -404,6 +418,7 @@ namespace ERP_Demo
             Application["assemblyNo"] = null;
             Application["assemblyId"] = null;
             Application["assemblyName"] = null;
+            Application["rowCommand"] = false;
             Response.Redirect("~/displayAssemble.aspx");
         }
 
@@ -432,8 +447,8 @@ namespace ERP_Demo
                             string query = "INSERT INTO assembly_operation_details (child_part,child_part_qty,assembly_id) OUTPUT INSERTED.Id VALUES (@partName,@quantity,@assemblyId)";
                             SqlCommand cmd = new SqlCommand(query, sqlCon);
 
-                            cmd.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
-                            cmd.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
+                            cmd.Parameters.AddWithValue("@partName", (row.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
+                            cmd.Parameters.AddWithValue("@quantity", (row.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
                             cmd.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
                             //cmd.ExecuteNonQuery();
 
@@ -441,8 +456,8 @@ namespace ERP_Demo
 
                             string query2 = "INSERT INTO assembly_operation_saved_details (child_part,child_part_qty,assembly_id,operation_id) VALUES (@partName,@quantity,@assemblyId,@operationId)";
                             SqlCommand cmd2 = new SqlCommand(query2, sqlCon);
-                            cmd2.Parameters.AddWithValue("@partName", (assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
-                            cmd2.Parameters.AddWithValue("@quantity", (assemblyGridView.FooterRow.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
+                            cmd2.Parameters.AddWithValue("@partName", (row.FindControl("partNameDropDownListFooter") as DropDownList).SelectedItem.Text.Trim());
+                            cmd2.Parameters.AddWithValue("@quantity", (row.FindControl("txtQuantityFooter") as TextBox).Text.Trim());
                             cmd2.Parameters.AddWithValue("@assemblyId", assemblyNo.Text.ToString().Trim());
                             cmd2.Parameters.AddWithValue("@operationId", reservationId);
                             cmd2.ExecuteNonQuery();
@@ -452,25 +467,11 @@ namespace ERP_Demo
                             if (Application["editFlag"] is true)
                             {
                                 LoadEditValuesInController();
-                                var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                                drop.Items.Insert(0, new ListItem("Select Part"));
-                                drop.Items.Add(new ListItem("N/A", "-1"));
-                                var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                                qty.BackColor = Color.WhiteSmoke;
-                                var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
-                                img.Visible = false;
                             }
                             else
                             {
                                 Application["rowCommand"] = true;
                                 LoadValuesInController();
-                                var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                                drop.Items.Insert(0, new ListItem("Select Part"));
-                                drop.Items.Add(new ListItem("N/A", "-1"));
-                                var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                                qty.BackColor = Color.WhiteSmoke;
-                                var img = (ImageButton)assemblyGridView.FooterRow.FindControl("assImgBtn");
-                                img.Visible = false;
                             }
 
                             lblSuccessMessage.Text = "Record Added";
@@ -496,8 +497,8 @@ namespace ERP_Demo
             {
                 sqlCon.Open();
 
-                GridViewRow row = assemblyGridView.Rows[e.RowIndex];
-                Label assName = (Label)row.FindControl("partNameLabel");
+               /* GridViewRow row = assemblyGridView.Rows[e.RowIndex];
+                Label assName = (Label)row.FindControl("partNameLabel");*/
 
                // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ assemblyGridView.DataKeys[e.RowIndex].Value.ToString() + "')", true);
 
@@ -508,6 +509,7 @@ namespace ERP_Demo
                     sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
                     sqlCmd.ExecuteNonQuery();
                 }
+
                 string query2 = "DELETE FROM assembly_operation_saved_details WHERE operation_id = @id";
                 SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
                 sqlCmd2.Parameters.AddWithValue("@id", Convert.ToInt32(assemblyGridView.DataKeys[e.RowIndex].Value.ToString()));
@@ -521,20 +523,10 @@ namespace ERP_Demo
                 if (Application["editFlag"] is true)
                 {
                     LoadEditValuesInController();
-                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                    drop.Items.Insert(0, new ListItem("Select Part"));
-                    drop.Items.Add(new ListItem("N/A", "-1"));
-                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                    qty.BackColor = Color.WhiteSmoke;
                 }
                 else
                 {
                     LoadValuesInController();
-                    var drop = (DropDownList)assemblyGridView.FooterRow.FindControl("partNameDropDownListFooter");
-                    drop.Items.Insert(0, new ListItem("Select Part"));
-                    drop.Items.Add(new ListItem("N/A", "-1"));
-                    var qty = (TextBox)assemblyGridView.FooterRow.FindControl("txtQuantityFooter");
-                    qty.BackColor = Color.WhiteSmoke;
                 }
                 lblSuccessMessage.Text = "Selected Record Deleted";
                 lblErrorMessage.Text = "";

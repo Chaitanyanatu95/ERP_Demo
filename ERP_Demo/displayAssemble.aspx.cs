@@ -27,7 +27,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT assembly_no,id,assembly_name FROM (SELECT assembly_name, MAX(id) id, MAX(assembly_no) assembly_no FROM assembly_master GROUP BY assembly_name) A ORDER BY assembly_no;", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT assembly_no,id,assembly_name FROM (SELECT assembly_name, MAX(id) id, MAX(assembly_no) assembly_no FROM assembly_master GROUP BY assembly_name) A ORDER BY len(assembly_no), assembly_no;", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)

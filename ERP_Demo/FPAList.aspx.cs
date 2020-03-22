@@ -68,7 +68,6 @@ namespace ERP_Demo
             try
             {
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ dprFlag.Text.ToString()+"');", true);
-
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('In');", true);
 
                 lblErrorMessage.Text = "";
@@ -76,10 +75,26 @@ namespace ERP_Demo
                 {
                     sqlCon.Open();
 
-                    string query = "DELETE FROM fpa WHERE id = @id";
+                    GridViewRow row = fpaGridView.Rows[e.RowIndex];
+                    HiddenField fpaNo = (HiddenField)row.FindControl("fpaNo");
+
+                    //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ assNo.Text.ToString()+"');", true);
+                    //int rowIndex = ((sender as Button).NamingContainer as GridViewRow).RowIndex;
+
+                    string query = "DELETE FROM production_rejection_history WHERE fpa_no = @fpaNo";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(fpaGridView.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.Parameters.AddWithValue("@fpaNo", fpaNo.Value.ToString());
                     sqlCmd.ExecuteNonQuery();
+
+                    string query2 = "DELETE FROM fpa_operation WHERE fpa_no = @fpaNo";
+                    SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
+                    sqlCmd2.Parameters.AddWithValue("@fpaNo", fpaNo.Value.ToString());
+                    sqlCmd2.ExecuteNonQuery();
+
+                    string query3 = "DELETE FROM fpa WHERE id = @id";
+                    SqlCommand sqlCmd3 = new SqlCommand(query3, sqlCon);
+                    sqlCmd3.Parameters.AddWithValue("@id", Convert.ToInt32(fpaGridView.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd3.ExecuteNonQuery();
 
                     sqlCon.Close();
                 }
@@ -89,6 +104,32 @@ namespace ERP_Demo
             {
                 lblErrorMessage.Text = ex.Message;
                 lblSuccessMessage.Text = "";
+            }
+        }
+
+        protected void fpaGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Edit")
+            {
+                //GridViewRow gvr = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+                //int RowIndex = gvr.RowIndex;
+
+                /*GridViewRow row = productionGridView.Rows[RowIndex];*/
+               // Label postFlag = (Label)gvr.FindControl("postStatusFlag");
+                //Label fpaFlag = (Label)gvr.FindControl("fpaStatusFlag");
+                //if (postFlag.Text != "CLOSED")
+                //{
+                    string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+                    Application["id"] = commandArgs[0];
+                    Application["fpaNo"] = commandArgs[1];
+                    bool editFlag = true;
+                    Application["editFlag"] = editFlag;
+                    Response.Redirect("~/FPA.aspx/");
+                //}
+                //else
+               // {
+               //    lblErrorMessage.Text = "Cannot edit as operation is finished";
+               // }
             }
         }
     }

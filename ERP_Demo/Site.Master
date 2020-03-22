@@ -60,12 +60,14 @@
                         <asp:MenuItem Text="PARTS" Value="PARTS" NavigateUrl="/displayParts.aspx"></asp:MenuItem>
                     </asp:MenuItem>
                     <asp:MenuItem Text="TRANSACTION" Value="TRANSACTION">
-                        <asp:MenuItem Text="DPR LIST" NavigateUrl="/DPRlist.aspx"></asp:MenuItem>
-                        <asp:MenuItem Text="FPA LIST" NavigateUrl="/FPAlist.aspx"></asp:MenuItem>
-                            <asp:MenuItem Text="ADD" Value="ADD">
-                                <asp:MenuItem Text="DPR" NavigateUrl="/DPR.aspx"></asp:MenuItem>
-                                <asp:MenuItem Text="FPA" NavigateUrl="/FPA.aspx"></asp:MenuItem>
-                            </asp:MenuItem>
+                        <asp:MenuItem Text="DPR" Value="DPR">
+                            <asp:MenuItem Text="DPR LIST" NavigateUrl="/DPRlist.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="ADD DPR" NavigateUrl="/DPR.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="FPA" Value="FPA">
+                            <asp:MenuItem Text="FPA LIST" NavigateUrl="/FPAlist.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="ADD FPA" NavigateUrl="/FPA.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
                     </asp:MenuItem>
                     <asp:MenuItem Text="REPORTS" Value="REPORTS">
                         <asp:MenuItem Text="REPORT GENERATION" Value="REPORT GENERATION">

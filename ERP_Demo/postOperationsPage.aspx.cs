@@ -52,8 +52,8 @@ namespace ERP_Demo
                     if (Application["tempPartNo"].ToString() != "")
                     {
                         SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM post_operation_details where part_no = '" + Application["partNo"].ToString() + "'", sqlCon);
-                        Application["tempPartNo"] = null;
                         sqlDa.Fill(dtPostOperation);
+                        Application["tempPartNo"] = null;
                     }
                     else
                     {
@@ -91,7 +91,6 @@ namespace ERP_Demo
                 else
                 {
                     dtPostOperation.Rows.Add(dtPostOperation.NewRow());
-
                     BindPostGrid();
                     var drop = (DropDownList)postOperationGrid.FooterRow.FindControl("postOperationTypeDropDownList");
                     drop.Items.Insert(0, new ListItem("Select Type"));

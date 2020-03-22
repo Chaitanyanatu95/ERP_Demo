@@ -30,7 +30,7 @@ namespace ERP_Demo
                 using (SqlConnection sqlCon = new SqlConnection(settings.ToString()))
                 {
                     sqlCon.Open();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM vendor_master ORDER BY vendor_id", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM vendor_master ORDER BY len(vendor_id), vendor_id", sqlCon);
                     sqlDa.Fill(dtbl);
                 }
                 if (dtbl.Rows.Count > 0)
