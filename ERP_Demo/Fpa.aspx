@@ -119,7 +119,7 @@
                         </ItemTemplate>
                         <FooterTemplate>
                             <asp:DropDownList ID="rejectionCodeDropDownList" runat="server" DataSourceID="SqlDataSource1" DataTextField="code" DataValueField="code" OnSelectedIndexChanged="rejectionCodeDropDownList_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [code] FROM [rejection_master]"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Server=tcp:erppbp.database.windows.net,1433;Initial Catalog=Pbplastics;Persist Security Info=False;User ID=erppbp;Password=Pranav_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [code] FROM [rejection_master]"></asp:SqlDataSource>
                             <asp:Label ID="checkRejectionLbl" runat="server"></asp:Label>
                         </FooterTemplate>
                     </asp:TemplateField>

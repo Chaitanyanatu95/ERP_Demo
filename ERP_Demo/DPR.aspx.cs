@@ -459,8 +459,8 @@ namespace ERP_Demo
 
                         using (SqlCommand cmd2 = new SqlCommand("SELECT DISTINCT rm_grade,alt_rm_grade FROM parts_master WHERE part_name = '" + partNameDropDownList.SelectedItem.Value + "'", con))
                         {
-                            string item1 = "";
-                            string item2 = "";
+                            string item1 = string.Empty;
+                            string item2 = string.Empty;
                             DataTable dt = new DataTable();
                             SqlDataAdapter ad = new SqlDataAdapter(cmd2);
                             ad.Fill(dt);
@@ -695,10 +695,6 @@ namespace ERP_Demo
                                     Application["postOprReq"] = "CLOSED";
                             }
                         }
-                        SqlCommand cmd2 = new SqlCommand("UPDATE production SET operator_name = '" + operatorNameDropDownList.SelectedItem.Text + "', part_name = '" + partNameDropDownList.SelectedItem.Text + "', material_grade = '" + materialGradeDropDownList.SelectedItem.Text + "', machine_no = '" + machineUsedDropDownList.SelectedItem.Text + "', shift_details = '" + shiftDetailsDropDownList.SelectedItem.Text + "', exp_qty = '" + expQuantityTextBox.Text + "', no_of_shots_start = '" + noShotsStartTextBox.Text + "', no_of_shots_end = '" + noShotsEndTextBox.Text + "', no_of_shots = '" + noShotsTextBox.Text + "', rejection_pcs = '" + rejectionPCSTextBox.Text + "', rejection_kgs = '" + rejectionKGSTextBox.Text + "', act_qty = '" + actQuantityTextBox.Text + "', efficiency = '" + efficiencyTextBox.Text + "', date_dpr = @dateDpr, post_opr_req = '" + Application["postOprReq"].ToString() + "' WHERE id = '" + Application["id"] + "'", con);
-                        cmd2.Parameters.AddWithValue("@dateDpr", DateTime.Parse(dateTextBox.Text.ToString()));
-                        cmd2.ExecuteNonQuery();
-
                         /************FPA CHANGES************/
                         if (Application["newActualQty"] is true)
                         {
@@ -754,23 +750,27 @@ namespace ERP_Demo
                                     cmdUpdateWip.ExecuteNonQuery();
                                     lblErrorMessage.Text = "";
                                 }
-                                Application["newActualQty"] = null;
-                                Application["editFlag"] = null;
-                                Application["id"] = null;
-                                Application["partName"] = null;
-                                Application["materialGrade"] = null;
-                                Application["operatorName"] = null;
-                                Application["dateDpr"] = null;
-                                Application["dprNo"] = null;
-                                Application["shiftDetails"] = null;
-                                Application["status"] = null;
-                                Response.Redirect("~/DPRList.aspx");
                             }
                             else
                             {
                                 lblErrorMessage.Text = "Quantity exceeds WIP quantity";
                             }
                         }
+                        SqlCommand cmd2 = new SqlCommand("UPDATE production SET operator_name = '" + operatorNameDropDownList.SelectedItem.Text + "', part_name = '" + partNameDropDownList.SelectedItem.Text + "', material_grade = '" + materialGradeDropDownList.SelectedItem.Text + "', machine_no = '" + machineUsedDropDownList.SelectedItem.Text + "', shift_details = '" + shiftDetailsDropDownList.SelectedItem.Text + "', exp_qty = '" + expQuantityTextBox.Text + "', no_of_shots_start = '" + noShotsStartTextBox.Text + "', no_of_shots_end = '" + noShotsEndTextBox.Text + "', no_of_shots = '" + noShotsTextBox.Text + "', rejection_pcs = '" + rejectionPCSTextBox.Text + "', rejection_kgs = '" + rejectionKGSTextBox.Text + "', act_qty = '" + actQuantityTextBox.Text + "', efficiency = '" + efficiencyTextBox.Text + "', date_dpr = @dateDpr, post_opr_req = '" + Application["postOprReq"].ToString() + "' WHERE id = '" + Application["id"] + "'", con);
+                        cmd2.Parameters.AddWithValue("@dateDpr", DateTime.Parse(dateTextBox.Text.ToString()));
+                        cmd2.ExecuteNonQuery();
+
+                        Application["newActualQty"] = null;
+                        Application["editFlag"] = null;
+                        Application["id"] = null;
+                        Application["partName"] = null;
+                        Application["materialGrade"] = null;
+                        Application["operatorName"] = null;
+                        Application["dateDpr"] = null;
+                        Application["dprNo"] = null;
+                        Application["shiftDetails"] = null;
+                        Application["status"] = null;
+                        Response.Redirect("~/DPRList.aspx");
                     }
                     else
                     {

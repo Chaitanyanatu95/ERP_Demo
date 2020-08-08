@@ -1,5 +1,6 @@
 ﻿#page-container {
     position: relative;
+    width:100%;
     padding-top: 120px;
     min-height: 100vh;
     background-color: whitesmoke;
@@ -45,9 +46,8 @@
 .MYMenuClass {
     color: grey;
     background-color: whitesmoke;
-    width: 120%;
+    width: 100%;
     font-size:12px;
-    margin-left:-20px;
 }
 
     .MYMenuClass ul {

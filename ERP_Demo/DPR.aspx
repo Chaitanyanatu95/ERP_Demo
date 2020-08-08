@@ -105,7 +105,7 @@
                                         </ItemTemplate>
                                         <FooterTemplate>
                                             <asp:DropDownList ID="downTimeDropDownListFooter" runat="server" DataSourceID="SqlDataSource1" DataTextField="down_time_type" DataValueField="down_time_type" OnSelectedIndexChanged="downTimeCodeDropDownList_SelectedIndexChanged1" AutoPostBack="true"></asp:DropDownList>
-                                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=DESKTOP-3F3SRHJ\SQLNEW;Initial Catalog=Pbplastics;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [down_time_type] FROM [down_time_master]"></asp:SqlDataSource>
+                                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Server=tcp:erppbp.database.windows.net,1433;Initial Catalog=Pbplastics;Persist Security Info=False;User ID=erppbp;Password=Pranav_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [down_time_type] FROM [down_time_master]"></asp:SqlDataSource>
                                             <asp:Label ID="checkdownTimeCodeLbl" runat="server"></asp:Label>
                                         </FooterTemplate>
                                     </asp:TemplateField>

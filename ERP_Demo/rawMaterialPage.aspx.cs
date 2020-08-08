@@ -576,7 +576,6 @@ namespace ERP_Demo
 
                 if (Application["altRawMaterial"].ToString() == "YES")
                 {
-
                     Application["altRMName"] = altRMDropDownList.SelectedItem.Text;
                     Application["altRmGrade"] = altRawMaterialGradeDropDownList.SelectedItem.Text;
                     Application["altRmMake"] = altRawMaterialMakeTextBox.Text;
@@ -623,6 +622,10 @@ namespace ERP_Demo
 
                 if (Application["masterbatch"].ToString() == "YES" && Application["altRawMaterial"].ToString() == "NO")
                 {
+                    Application["altRMName"] = string.Empty;
+                    Application["altRmGrade"] = string.Empty;
+                    Application["altRmMake"] = string.Empty;
+                    Application["altRmColor"] = string.Empty;
                     if (Application["mbFlag"].ToString() == "YES")
                     {
                         Response.Redirect("~/postOperationsPage.aspx");
@@ -661,6 +664,12 @@ namespace ERP_Demo
                 }
                 else if (Application["masterbatch"].ToString() == "NO" && Application["altRawMaterial"].ToString() == "YES")
                 {
+                    Application["mbName"] = string.Empty;
+                    Application["mbGrade"] = string.Empty;
+                    Application["mbMfg"] = string.Empty;
+                    Application["mbColor"] = string.Empty;
+                    Application["mbColorCode"] = string.Empty;
+                    Application["mbPercentage"] = string.Empty;
                     if (Application["altRmFlag"].ToString() == "YES")
                     {
                         if (Application["altMasterbatch"].ToString() == "YES")

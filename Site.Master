@@ -1,0 +1,94 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ERP_Demo.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <link href="~/Content/Menu1.css" rel="stylesheet" runat="server" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - PB PLASTICS ERP</title>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body runat="server">
+    <form runat="server">
+        <!--<asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>-->
+    <header id="header">
+        <div class="col-md-12">
+            <img src="~/Images/logoc.png" alt="Plastic Injection Molding" height="70" runat="server" style="margin-top:6px;padding-top:10px; float:left;">
+            <h1 style="text-align:center; display:inline-block; font-size:40px; float:left; margin-left:10px; margin-top:33px;">PB PLASTICS ERP
+            </h1>
+            <asp:label id="Message" style="float:right; font-size:15px; margin-top:70px; font-weight:bold;" runat="server"/>
+            <asp:Menu ID="Menu1" runat="server" OnMenuItemClick="Menu1_MenuItemClick" CssClass="MYMenuClass" Orientation="Horizontal">
+                <Items>
+                    <asp:MenuItem Text="HOME" Value="Home" NavigateUrl="/Default.aspx"></asp:MenuItem>
+                    <asp:MenuItem Text="MASTERS" Value="MASTERS">
+                        <asp:MenuItem Text="PRODUCT CATEGORY" Value="PRODUCT CATEGORY" NavigateUrl="/displayFamily.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="UOM" Value="UOM" NavigateUrl="/displayUnitOfMeasurement.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="RAW MATERIAL" Value="RAW MATERIAL" NavigateUrl="/displayRawMaterial.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="MASTERBATCH" Value="MASTERBATCH" NavigateUrl="/displayMasterBatch.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="POST OPERATION" Value="POST OPERATION"  NavigateUrl="/displayPostOperation.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="PACKAGING" Value="PACKAGING"  NavigateUrl="/displayPackaging.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="REJECTION" Value="REJECTION"  NavigateUrl="/displayRejection.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="SHIFT" Value="SHIFT" NavigateUrl="/displayShift.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="ASSEMBLY" Value="ASSEMBLY" NavigateUrl="/displayAssemble.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="MACHINE" Value="MACHINE"  NavigateUrl="/displayMachine.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="DOWN TIME CODE" Value="DOWN TIME CODE"  NavigateUrl="/displayDownTimeCode.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="CUSTOMER" Value="CUSTOMER" NavigateUrl="/displayCustomer.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="WORKER" Value="WORKER" NavigateUrl="/displayWorker.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="VENDOR" Value="VENDOR" NavigateUrl="/displayVendor.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="PARTS" Value="PARTS" NavigateUrl="/displayParts.aspx"></asp:MenuItem>
+                    </asp:MenuItem>
+                    <asp:MenuItem Text="TRANSACTION" Value="TRANSACTION">
+                        <asp:MenuItem Text="DPR" Value="DPR">
+                            <asp:MenuItem Text="DPR LIST" NavigateUrl="/DPRlist.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="ADD DPR" NavigateUrl="/DPR.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="FPA" Value="FPA">
+                            <asp:MenuItem Text="FPA LIST" NavigateUrl="/FPAlist.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="ADD FPA" NavigateUrl="/FPA.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                    </asp:MenuItem>
+                    <asp:MenuItem Text="REPORTS" Value="REPORTS">
+                        <asp:MenuItem Text="REPORT GENERATION" Value="REPORT GENERATION">
+                            <asp:MenuItem Text="DPR REPORTS" NavigateUrl="/dprReports.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="FPA REPORTS" NavigateUrl="/fpaReports.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                    </asp:MenuItem>
+                    <asp:MenuItem Text="LOGOUT" Value="LogOut"></asp:MenuItem>
+                </Items>
+            </asp:Menu>
+            </div>
+                </header>
+            <div id="page-container">
+                <div id="content-wrap">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                </asp:ContentPlaceHolder>
+                </div>
+            </div>
+           <footer id="footer">
+               <b>Copyright © 2019 PB Plastics - All Rights Reserved</b>
+           </footer>
+        </form>
+    </body>
+</html>
